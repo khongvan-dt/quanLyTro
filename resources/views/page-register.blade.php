@@ -7,29 +7,10 @@
 
 <head>
     <!-- Title -->
-    <title>YashAdmin Laravel | Register</title>
+    <title> Register</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="author" content="DexignZone">
-    <meta name="robots" content="">
-    <meta name="csrf-token" content="r6S5gWpEDiE5HANAJUMegglZVuuRWae9LNMMQKcm">
-    <meta name="keywords"
-        content="bootstrap, courses, education admin template, educational, instructors, learning, learning admin, learning admin theme, learning application, lessons, lms admin template, lms rails, quizzes ui, school admin">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Some description for the page">
-    <meta property="og:title" content="Yashadmin Customer Relationship Management Laravel Admin">
-    <meta property="og:description" content="YashAdmin Laravel | Register">
-    <meta property="og:image" content="https://yashadmin.dexignzone.com/xhtml/page-error-404.html">
-    <meta name="format-detection" content="telephone=no">
-
-    <!-- Mobile Specific -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Favicons Icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
-
-    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
@@ -49,12 +30,12 @@
                                                 alt=""></a>
                                     </div>
                                     <h4 class="text-center mb-4">Sign up your account</h4>
-                                    <form action="{{ route('register') }}" method="post">
+                                    <form action="{{ route('register') }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Username</strong></label>
                                             <input type="text" class="form-control" placeholder="username"
-                                                name="username">
+                                                name="username" required>
                                         </div>
                                         @if (session('Error1'))
                                             <div class="alert alert-danger" style="color: white">
@@ -64,7 +45,7 @@
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Email</strong></label>
                                             <input type="email" class="form-control" placeholder="hello@example.com"
-                                                name="email">
+                                                name="email" required>
                                         </div>
                                         @if (session('Error2'))
                                             <div class="alert alert-danger" style="color: white">
@@ -74,7 +55,7 @@
                                         <div class="mb-3">
                                             <label class="mb-1"><strong>Password</strong></label>
                                             <input type="password" class="form-control" placeholder="Password"
-                                                name="password">
+                                                name="password" required>
                                         </div>
                                         @if (session('Error3'))
                                             <div class="alert alert-danger" style="color: white">
