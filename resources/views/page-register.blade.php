@@ -50,16 +50,6 @@
 
                                             </div>
                                         @endif
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Username</strong></label>
-                                            <input type="text" class="form-control" placeholder="username"
-                                                name="username" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" placeholder="hello@example.com"
-                                                name="email" required>
-                                        </div>
                                         @if (session('Error2'))
                                             <div class="alert alert-danger alert-dismissible fade show">
                                                 <svg viewBox="0 0 24 24" width="24" height="24"
@@ -77,11 +67,6 @@
 
                                             </div>
                                         @endif
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                name="password" required>
-                                        </div>
                                         @if (session('Error3'))
                                             <div class="alert alert-danger alert-dismissible fade show">
                                                 <svg viewBox="0 0 24 24" width="24" height="24"
@@ -101,6 +86,23 @@
 
                                             </div>
                                         @endif
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Username</strong></label>
+                                            <input type="text" class="form-control" placeholder="username"
+                                                name="username" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Email</strong></label>
+                                            <input type="email" class="form-control" placeholder="hello@example.com"
+                                                name="email" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="mb-1"><strong>Password</strong></label>
+                                            <input type="password" class="form-control" placeholder="Password"
+                                                name="password" required>
+                                        </div>
+
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary btn-block">Sign me
                                                 up</button>
