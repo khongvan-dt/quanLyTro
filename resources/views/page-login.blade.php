@@ -50,7 +50,6 @@
                                 dir="ltr">
                                 <div class="login-form style-2">
 
-
                                     <div class="card-body">
                                         <div class="logo-header">
                                             <a href="index.html" class="logo"><img
@@ -62,197 +61,153 @@
                                         </div>
 
                                         <nav>
-                                            <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
+                                            <form action="{{ route('login') }}" method="post">
 
-                                                <div class="tab-content w-100" id="nav-tabContent">
-                                                    <div class="tab-pane fade show active" id="nav-personal"
-                                                        role="tabpanel" aria-labelledby="nav-personal-tab">
-                                                        <form
-                                                            action="https://yashadmin.w3itexpert.com/laravel/demo/page-login"
-                                                            class=" dz-form pb-3">
+                                                <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">
+                                                    @if (session('success'))
+                                                        <div class="alert alert-success alert-dismissible fade show">
+                                                            <svg viewBox="0 0 24 24" width="24" height="24"
+                                                                stroke="currentColor" stroke-width="2" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="me-2">
+                                                                <polyline points="9 11 12 14 22 4"></polyline>
+                                                                <path
+                                                                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                                </path>
+                                                            </svg>
+                                                            <strong>Thành Công!</strong>Tạo Tài Khoản Thành Công!
+
+                                                        </div>
+                                                    @endif
+                                                    <div class="tab-content w-100" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active" id="nav-personal"
+                                                            role="tabpanel" aria-labelledby="nav-personal-tab">
+
+
                                                             <input type="hidden" name="_token"
                                                                 value="r6S5gWpEDiE5HANAJUMegglZVuuRWae9LNMMQKcm">
                                                             <h3 class="form-title m-t0">Personal Information</h3>
                                                             <div class="dz-separator-outer m-b5">
-                                                                <div class="dz-separator bg-primary style-liner"></div>
+                                                                <div class="dz-separator bg-primary style-liner">
+                                                                </div>
                                                             </div>
-                                                            <p>Enter your e-mail address and your password. </p>
+
                                                             <div class="form-group mb-3">
-                                                                <input type="email" class="form-control"
-                                                                    value="hello@example.com">
+                                                                <input type="text" class="form-control" required
+                                                                    name="name">
                                                             </div>
                                                             <div class="form-group mb-3">
-                                                                <input type="password" class="form-control"
-                                                                    value="Password">
+                                                                <input type="password" class="form-control" required
+                                                                    name="password">
                                                             </div>
                                                             <div class="form-group text-left mb-5 forget-main">
-                                                                <button type="submit" class="btn btn-primary">Sign Me
+                                                                <button type="submit" class="btn btn-primary">Sign
+                                                                    Me
                                                                     In</button>
-                                                                <span class="form-check d-inline-block">
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="check1" name="example1">
-                                                                    <label class="form-check-label"
-                                                                        for="check1">Remember me</label>
-                                                                </span>
+                                                                @if (session('login_failed'))
+                                                                    <div
+                                                                        class="alert alert-danger alert-dismissible fade show">
+                                                                        <svg viewBox="0 0 24 24" width="24"
+                                                                            height="24" stroke="currentColor"
+                                                                            stroke-width="2" fill="none"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round" class="me-2">
+                                                                            <polygon
+                                                                                points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                                                            </polygon>
+                                                                            <line x1="15" y1="9"
+                                                                                x2="9" y2="15"></line>
+                                                                            <line x1="9" y1="9"
+                                                                                x2="15" y2="15"></line>
+                                                                        </svg>
+                                                                        <strong>Lỗi!</strong>Đăng nhập thất bại
+
+                                                                    </div>
+                                                                @endif
+
                                                                 <button
                                                                     class="nav-link m-auto btn tp-btn-light btn-primary forget-tab "
                                                                     id="nav-forget-tab" data-bs-toggle="tab"
                                                                     data-bs-target="#nav-forget" type="button"
                                                                     role="tab" aria-controls="nav-forget"
-                                                                    aria-selected="false">Forget Password ?</button>
+                                                                    aria-selected="false">Forget Password
+                                                                    ?</button>
                                                             </div>
-                                                            <div class="dz-social ">
-                                                                <h5 class="form-title fs-20">Sign In With</h5>
-                                                                <ul
-                                                                    class="dz-social-icon dz-border dz-social-icon-lg text-white">
-                                                                    <li><a target="_blank"
-                                                                            href="https://www.facebook.com/"
-                                                                            class="fab fa-facebook-f btn-facebook"></a>
-                                                                    </li>
-                                                                    <li><a target="_blank"
-                                                                            href="https://www.google.com/"
-                                                                            class="fab fa-google-plus-g btn-google-plus"></a>
-                                                                    </li>
-                                                                    <li><a target="_blank"
-                                                                            href="https://www.linkedin.com/"
-                                                                            class="fab fa-linkedin-in btn-linkedin"></a>
-                                                                    </li>
-                                                                    <li><a target="_blank" href="https://twitter.com/"
-                                                                            class="fab fa-twitter btn-twitter"></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </form>
-                                                        <div class="text-center bottom">
-                                                            <button class="btn btn-primary button-md btn-block"
-                                                                id="nav-sign-tab" data-bs-toggle="tab"
-                                                                data-bs-target="#nav-sign" type="button"
-                                                                role="tab" aria-controls="nav-sign"
-                                                                aria-selected="false">Create an account</button>
-
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane fade" id="nav-forget" role="tabpanel"
-                                                        aria-labelledby="nav-forget-tab">
-                                                        <form class="dz-form">
-                                                            <input type="hidden" name="_token"
-                                                                value="r6S5gWpEDiE5HANAJUMegglZVuuRWae9LNMMQKcm">
-                                                            <h3 class="form-title m-t0">Forget Password ?</h3>
-                                                            <div class="dz-separator-outer m-b5">
-                                                                <div class="dz-separator bg-primary style-liner"></div>
-                                                            </div>
-                                                            <p>Enter your e-mail address below to reset your password.
-                                                            </p>
-                                                            <div class="form-group mb-4">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control" placeholder="Email Address"
-                                                                    type="text">
-                                                            </div>
-                                                            <div class="form-group clearfix text-left">
-                                                                <button class=" active btn btn-primary"
-                                                                    id="nav-personal-tab" data-bs-toggle="tab"
-                                                                    data-bs-target="#nav-personal" type="button"
-                                                                    role="tab" aria-controls="nav-personal"
-                                                                    aria-selected="true">Back</button>
-                                                                <button
-                                                                    class="btn btn-primary float-end">Submit</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="tab-pane fade" id="nav-sign" role="tabpanel"
-                                                        aria-labelledby="nav-sign-tab">
-                                                        <form class="dz-form py-2">
-                                                            <input type="hidden" name="_token"
-                                                                value="r6S5gWpEDiE5HANAJUMegglZVuuRWae9LNMMQKcm">
-                                                            <h3 class="form-title">Sign Up</h3>
-                                                            <div class="dz-separator-outer m-b5">
-                                                                <div class="dz-separator bg-primary style-liner"></div>
-                                                            </div>
-                                                            <p>Enter your personal details below: </p>
-                                                            <div class="form-group mt-3">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control" placeholder="Full Name"
-                                                                    type="text">
-                                                            </div>
-                                                            <div class="form-group mt-3">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control" placeholder="User Name"
-                                                                    type="text">
-                                                            </div>
-                                                            <div class="form-group mt-3">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control" placeholder="Email Address"
-                                                                    type="text">
-                                                            </div>
-
-                                                            <div class="form-group mt-3">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control" placeholder="Password"
-                                                                    type="password">
-                                                            </div>
-                                                            <div class="form-group mt-3 mb-3">
-                                                                <input name="dzName" required=""
-                                                                    class="form-control"
-                                                                    placeholder="Re-type Your Password"
-                                                                    type="password">
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <span class="form-check float-start me-2 ">
-                                                                    <input type="checkbox" class="form-check-input"
-                                                                        id="check2" name="example1">
-                                                                    <label class="form-check-label d-unset"
-                                                                        for="check2">I agree to the</label>
-                                                                </span>
-                                                                <label><a href="#">Terms of Service </a>&amp; <a
-                                                                        href="#">Privacy Policy</a></label>
-                                                            </div>
-                                                            <div class="form-group clearfix text-left">
-                                                                <button class="btn btn-primary outline gray"
-                                                                    data-bs-toggle="tab"
-                                                                    data-bs-target="#nav-personal" type="button"
-                                                                    role="tab" aria-controls="nav-personal"
-                                                                    aria-selected="true">Back</button>
-                                                                <button
-                                                                    class="btn btn-primary float-end">Submit</button>
-                                                            </div>
-                                                        </form>
-
-                                                    </div>
                                                 </div>
+                                                @csrf
+                                            </form>
+
+                                            <div class="dz-social ">
+                                                <h5 class="form-title fs-20">Sign In With</h5>
+                                                <ul class="dz-social-icon dz-border dz-social-icon-lg text-white">
+                                                    <li><a target="_blank" href="https://www.facebook.com/"
+                                                            class="fab fa-facebook-f btn-facebook"></a>
+                                                    </li>
+                                                    <li><a target="_blank" href="https://www.google.com/"
+                                                            class="fab fa-google-plus-g btn-google-plus"></a>
+                                                    </li>
+                                                    <li><a target="_blank" href="https://www.linkedin.com/"
+                                                            class="fab fa-linkedin-in btn-linkedin"></a>
+                                                    </li>
+                                                    <li><a target="_blank" href="https://twitter.com/"
+                                                            class="fab fa-twitter btn-twitter"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="text-center bottom">
+                                                <button class="btn btn-primary button-md btn-block" id="nav-sign-tab"
+                                                    data-bs-toggle="tab" data-bs-target="#nav-sign" type="button"
+                                                    role="tab" aria-controls="nav-sign"
+                                                    aria-selected="false">Create an account</button>
 
                                             </div>
-                                        </nav>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class=" bottom-footer clearfix m-t10 m-b20 row text-center">
-                                            <div class="col-lg-12 text-center">
-                                                <span> © Copyright by <span class="heart"></span>
-                                                    <a href="javascript:void(0);">DexignZone </a> All rights
-                                                    reserved.</span>
+                                    <div class="tab-pane fade" id="nav-forget" role="tabpanel"
+                                        aria-labelledby="nav-forget-tab">
+                                        <form class="dz-form">
+                                            <input type="hidden" name="_token"
+                                                value="r6S5gWpEDiE5HANAJUMegglZVuuRWae9LNMMQKcm">
+                                            <h3 class="form-title m-t0">Forget Password ?</h3>
+                                            <div class="dz-separator-outer m-b5">
+                                                <div class="dz-separator bg-primary style-liner">
+                                                </div>
                                             </div>
-                                        </div>
+                                            <p>Enter your e-mail address below to reset your
+                                                password.
+                                            </p>
+                                            <div class="form-group mb-4">
+                                                <input name="dzName" required="" class="form-control"
+                                                    placeholder="Email Address" type="text">
+                                            </div>
+                                            <div class="form-group clearfix text-left">
+                                                <button class=" active btn btn-primary" id="nav-personal-tab"
+                                                    data-bs-toggle="tab" data-bs-target="#nav-personal"
+                                                    type="button" role="tab" aria-controls="nav-personal"
+                                                    aria-selected="true">Back</button>
+                                                <button class="btn btn-primary float-end">Submit</button>
+                                            </div>
+                                        </form>
                                     </div>
 
                                 </div>
+
                             </div>
-                            <div id="mCSB_1_scrollbar_vertical"
-                                class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical"
-                                style="display: block;">
-                                <div class="mCSB_draggerContainer">
-                                    <div id="mCSB_1_dragger_vertical" class="mCSB_dragger"
-                                        style="position: absolute; min-height: 0px; display: block; height: 652px; max-height: 643px; top: 0px;">
-                                        <div class="mCSB_dragger_bar" style="line-height: 0px;"></div>
-                                        <div class="mCSB_draggerRail"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            </nav>
                         </div>
+
                     </div>
                 </div>
+
             </div>
-            <!-- Full Blog Page Contant -->
         </div>
-        <!-- Content END-->
+    </div>
+    </div>
+    <!-- Full Blog Page Contant -->
+    </div>
+    <!-- Content END-->
     </div>
     <!--**********************************
  Scripts
