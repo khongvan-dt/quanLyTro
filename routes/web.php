@@ -14,11 +14,15 @@ Route::get('/login', function () {
 })->name('pageLogin');
 
 Route::post('/login', [registerController::class,'login'])->name('login');
+
 Route::get('/pageError400', function () {
     return view('web.page-error-400');
 })->name('pageError400');
-Route::middleware(['CheckRoleMiddleware::user'])->group(function () {
 
+
+Route::middleware(['CheckRoleMiddleware::user'])->group(function () {
+    
+//check cố tình đăng nhập vào bằng user
     Route::get('/ecomProductList', function () {
         return redirect()->route('pageError400');
     });
