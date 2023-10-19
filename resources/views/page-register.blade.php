@@ -1,136 +1,119 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
-
-<!-- Mirrored from yashadmin.w3itexpert.com/laravel/demo/page-register by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 Oct 2023 17:56:39 GMT -->
-<!-- Added by HTTrack -->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
-
-<head>
-    <!-- Title -->
-    <title> Register</title>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-</head>
-
-
-<body>
-    <div class="h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100 align-items-center">
-                <div class="col-md-6">
-                    <div class="authincation-content">
-                        <div class="row no-gutters">
-                            <div class="col-xl-12">
-                                <div class="auth-form">
-                                    <div class="text-center mb-3">
-                                        <a href="index.html"><img src="public/images/logo/logo-full.png"
-                                                alt=""></a>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Register - SB Admin</title>
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-body">
+                                        <form action="{{ route('register') }}" method="POST">
+                                            @csrf
+    
+                                            @if (session('Error1'))
+                                                 <div class="alert alert-danger alert-dismissible fade show">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24"
+                                                        stroke="currentColor" stroke-width="2" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                                                        <polygon
+                                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                                        </polygon>
+                                                        <line x1="15" y1="9" x2="9" y2="15">
+                                                        </line>
+                                                        <line x1="9" y1="9" x2="15" y2="15">
+                                                        </line>
+                                                    </svg>
+                                                    <strong>Lỗi!</strong> Tên tài khoản đã tồn tại!
+    
+                                                </div>
+                                            @endif
+                                            @if (session('Error2'))
+                                                <div class="alert alert-danger alert-dismissible fade show">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24"
+                                                        stroke="currentColor" stroke-width="2" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                                                        <polygon
+                                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                                        </polygon>
+                                                        <line x1="15" y1="9" x2="9" y2="15">
+                                                        </line>
+                                                        <line x1="9" y1="9" x2="15" y2="15">
+                                                        </line>
+                                                    </svg>
+                                                    <strong>Lỗi!</strong> Email đã tồn tại!
+    
+                                                </div>
+                                            @endif
+                                            @if (session('Error3'))
+                                                <div class="alert alert-danger alert-dismissible fade show">
+                                                    <svg viewBox="0 0 24 24" width="24" height="24"
+                                                        stroke="currentColor" stroke-width="2" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                                                        <polygon
+                                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                                        </polygon>
+                                                        <line x1="15" y1="9" x2="9" y2="15">
+                                                        </line>
+                                                        <line x1="9" y1="9" x2="15" y2="15">
+                                                        </line>
+                                                    </svg>
+                                                    <strong>Lỗi!</strong> Mật khẩu phải có ít nhất
+                                                    8 ký tự!
+    
+    
+                                                </div>
+                                            @endif
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" name="username" required />
+                                                        <label for="inputFirstName">First name</label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com"  name="email" required/>
+                                                <label for="inputEmail">Email address</label>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" name="password" required/>
+                                                        <label for="inputPassword">Password</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid"><a class="btn btn-primary btn-block"   href="{{ route('pageLogin') }}">Create Account</a></div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <h4 class="text-center mb-4">Sign up your account</h4>
-                                    <form action="{{ route('register') }}" method="POST">
-                                        @csrf
-
-                                        @if (session('Error1'))
-                                            <div class="alert alert-danger alert-dismissible fade show">
-                                                <svg viewBox="0 0 24 24" width="24" height="24"
-                                                    stroke="currentColor" stroke-width="2" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                                                    <polygon
-                                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                                    </polygon>
-                                                    <line x1="15" y1="9" x2="9" y2="15">
-                                                    </line>
-                                                    <line x1="9" y1="9" x2="15" y2="15">
-                                                    </line>
-                                                </svg>
-                                                <strong>Lỗi!</strong> Tên tài khoản đã tồn tại!
-
-                                            </div>
-                                        @endif
-                                        @if (session('Error2'))
-                                            <div class="alert alert-danger alert-dismissible fade show">
-                                                <svg viewBox="0 0 24 24" width="24" height="24"
-                                                    stroke="currentColor" stroke-width="2" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                                                    <polygon
-                                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                                    </polygon>
-                                                    <line x1="15" y1="9" x2="9" y2="15">
-                                                    </line>
-                                                    <line x1="9" y1="9" x2="15" y2="15">
-                                                    </line>
-                                                </svg>
-                                                <strong>Lỗi!</strong> Email đã tồn tại!
-
-                                            </div>
-                                        @endif
-                                        @if (session('Error3'))
-                                            <div class="alert alert-danger alert-dismissible fade show">
-                                                <svg viewBox="0 0 24 24" width="24" height="24"
-                                                    stroke="currentColor" stroke-width="2" fill="none"
-                                                    stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                                                    <polygon
-                                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                                    </polygon>
-                                                    <line x1="15" y1="9" x2="9" y2="15">
-                                                    </line>
-                                                    <line x1="9" y1="9" x2="15" y2="15">
-                                                    </line>
-                                                </svg>
-                                                <strong>Lỗi!</strong> Mật khẩu phải có ít nhất
-                                                8 ký tự!
-
-
-                                            </div>
-                                        @endif
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Username</strong></label>
-                                            <input type="text" class="form-control" placeholder="username"
-                                                name="username" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" placeholder="hello@example.com"
-                                                name="email" required>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" placeholder="Password"
-                                                name="password" required>
-                                        </div>
-
-                                        <div class="text-center mt-4">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign me
-                                                up</button>
-                                        </div>
-                                    </form>
-
-                                    <div class="new-account mt-3">
-                                        <p>Already have an account? <a class="text-primary"
-                                                href="{{ route('pageLogin') }}">Sign
-                                                in</a></p>
+                                    <div class="card-footer text-center py-3">
+                                        <div class="small"><a   href="{{ route('pageLogin') }}">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
             </div>
+            
         </div>
-    </div>
-    <script src="{{ asset('js/global.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/bootstrap-select.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/sweetalert2.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/sweetalert.init.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/custom.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/deznav-init.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/demo.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/styleSwitcher.js') }}" type="text/javascript"></script>
-</body>
-
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/scripts.js') }}"></script>
+    </body>
 </html>
