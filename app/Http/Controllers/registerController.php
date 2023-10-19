@@ -46,9 +46,11 @@ class registerController extends Controller
         'name' => 'required',
         'password' => 'required',
     ]);
-   
-    $credentials = $request->only('name', 'password');
+  
+    $credentials = $request->only('name', 'password','role');
+    // dd($credentials);
 
+    // exit();
     if (Auth::attempt($credentials)) {
         // Authentication successful
         $user = Auth::user();
@@ -68,6 +70,10 @@ class registerController extends Controller
     // Nếu đăng nhập không thành công, chuyển hướng trở lại trang đăng nhập với thông báo lỗi
     return redirect()->route('pageLogin')->with('login_failed', true);
     }
-
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
     
 }
