@@ -37,6 +37,12 @@ Route::middleware(['CheckRoleMiddleware::admin'])->group(function () {
     Route::get('/table', function () {
         return view('admin.tables'); 
     })->name('table');
+    Route::get('/addAddress', function () {
+        return view('admin.addAddress'); 
+    })->name('addAddress');
+    Route::get('/data', function () {
+        return view('admin.data'); 
+    })->name('data');
     
     
 });
