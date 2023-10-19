@@ -47,7 +47,7 @@
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="text"
                                                 placeholder="name@example.com" name="name" required />
-                                            <label for="inputEmail">Email address</label>
+                                            <label for="inputEmail">Name</label>
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputPassword" type="password"
@@ -58,7 +58,6 @@
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="password.html">Forgot Password?</a>
                                             <button class="btn btn-primary" type="submit">Login</button>
-
                                         </div>
                                         @csrf
                                     </form>
