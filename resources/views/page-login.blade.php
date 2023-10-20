@@ -25,7 +25,7 @@
                                     <h3 class="text-center font-weight-light my-4">Login</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form action="{{ route('login') }}" method="post">
+                                    <form action="{{ route('login')}}" method="post">
 
 
                                         <div class="nav nav-tabs border-bottom-0" id="nav-tab" role="tablist">

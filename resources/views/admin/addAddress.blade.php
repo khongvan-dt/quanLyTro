@@ -35,7 +35,12 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+
+                    <li>
+                        <form action="{{ route('logout') }}" method="post">
+                            <button class="dropdown-item">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -69,16 +74,73 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Tables</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Tables</li>
-                    </ol>
+
+
                     <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            DataTable Example
+                        </div>
                         <div class="card-body">
-                            DataTables is a third party plugin that is used to generate the demo table below. For more
-                            information about DataTables, please visit the
-                            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                            .
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="me-2">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                        </path>
+                                    </svg>
+                                    <strong>Thành Công!</strong>Thêm Thông Tin Thành Công!
+
+                                </div>
+                            @endif
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="me-2">
+                                        <polygon
+                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                        </polygon>
+                                        <line x1="15" y1="9" x2="9" y2="15">
+                                        </line>
+                                        <line x1="9" y1="9" x2="15" y2="15">
+                                        </line>
+                                    </svg>
+                                    <strong>Lỗi!</strong> Thêm Thông Tin!
+                                </div>
+                            @endif
+                            <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
+                                @csrf
+                                <div class="col-md-4">
+                                    <select class="form-select form-select-sm mb-3" id="city"
+                                        aria-label=".form-select-sm" name="city">
+                                        <option value="" selected>Chọn tỉnh thành</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select form-select-sm mb-3" id="district"
+                                        aria-label=".form-select-sm" name="district">
+                                        <option value="" selected>Chọn quận huyện</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select form-select-sm" id="ward"
+                                        aria-label=".form-select-sm" name="commune">
+                                        <option value="" selected>Chọn phường xã</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputAddress2" class="form-label"></label>
+                                    <input type="text" class="form-control" name="specifically"
+                                        id="inputAddress2" placeholder="Đường Cụ Thể">
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="card mb-4">
@@ -87,69 +149,89 @@
                             DataTable Example
                         </div>
                         <div class="card-body">
-                            <form class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputPassword4" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4">
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress"
-                                        placeholder="1234 Main St">
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputAddress2" class="form-label">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2"
-                                        placeholder="Apartment, studio, or floor">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="inputCity">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputState" class="form-label">State</label>
+                            <table id="datatablesSimple" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Thành Phố</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
+                                        <th>Đường</th>
+                                        <th>Sửa</th>
 
-                                    <select class="form-select form-select-sm mb-3" id="city"
-                                        aria-label=".form-select-sm">
-                                        <option value="" selected>Chọn tỉnh thành</option>
-                                    </select>
 
-                                    <select class="form-select form-select-sm mb-3" id="district"
-                                        aria-label=".form-select-sm">
-                                        <option value="" selected>Chọn quận huyện</option>
-                                    </select>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
 
-                                    <select class="form-select form-select-sm" id="ward"
-                                        aria-label=".form-select-sm">
-                                        <option value="" selected>Chọn phường xã</option>
-                                    </select>
+                                        <th>Thành Phố</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
+                                        <th>Đường</th>
+                                        <th>Sửa</th>
 
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="inputZip" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip">
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Check me out
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Sign in</button>
-                                </div>
-                            </form>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach ($combinedData as $data)
+                                        <tr>
+                                            <td>{{ $data['city'] }}</td>
+                                            <td>{{ $data['district'] }}</td>
+                                            <td>{{ $data['wardCommune'] }}</td>
+                                            <td>{{ $data['streetAddress'] }}</td>
+                                            <td><button class="product-review btn btn-primary" type="submit"
+                                                    data-bs-toggle="modal" data-bs-target="#reviewModal">Write a
+                                                    review?</button></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </main>
 
+        </div>
+        {{-- modal --}}
+        <div class="modal fade" id="reviewModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Review</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3">
+                            <div class="col-md-4">
+                                <select class="form-select form-select-sm mb-3" id="city"
+                                    aria-label=".form-select-sm" name="city">
+                                    <option value="" selected>Chọn tỉnh thành</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select form-select-sm mb-3" id="district"
+                                    aria-label=".form-select-sm" name="district">
+                                    <option value="" selected>Chọn quận huyện</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-select form-select-sm" id="ward"
+                                    aria-label=".form-select-sm" name="commune">
+                                    <option value="" selected>Chọn phường xã</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="inputAddress2" class="form-label"></label>
+                                <input type="text" class="form-control" name="specifically" id="inputAddress2"
+                                    placeholder="Đường Cụ Thể">
+                            </div>
+                            <button class="btn btn-success btn-block">RATE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -157,7 +239,9 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
-    <script src="{{ asset('js/d.js') }}"></script>
+    <script src="{{ asset('js/custom.min.js') }}"></script>
+    <script src="{{ asset('js/global.min.js') }}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
         var citis = document.getElementById("city");
@@ -201,6 +285,9 @@
             };
         }
     </script>
+
+
+
 </body>
 
 </html>

@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class registerController extends Controller
 {
     public function insertRegister(Request $request)
@@ -14,9 +16,11 @@ class registerController extends Controller
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:8',
         ]);
-        $username = $request->input('username');
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $username = strip_tags($request->input('username'));
+        $email = strip_tags($request->input('email'));
+        $password = strip_tags($request->input('password'));
+        
+
         $existingUsername = User::where('name', $username)->first();
         $existingEmail = User::where('email', $email)->first(); 
         if ($existingUsername) {
@@ -40,25 +44,22 @@ class registerController extends Controller
         }
     }
     public function login(Request $request)
-    {
+{
     // Kiểm tra dữ liệu đầu vào
     $request->validate([
         'name' => 'required',
         'password' => 'required',
     ]);
-  
-    $credentials = $request->only('name', 'password','role');
-    // dd($credentials);
 
-    // exit();
+    $credentials = $request->only('name', 'password', 'role');
+
     if (Auth::attempt($credentials)) {
         // Authentication successful
         $user = Auth::user();
-
         // Kiểm tra tài khoản
         if ($user->role === 'admin') {
-            // Redirect admin users to the 'ecomProductList' route
-            return redirect()->route('ecomProductList');
+            // Redirect admin users to the 'addAddress' route
+            return redirect()->route('addAddress');
         } elseif ($user->role === 'user') {
             // Nếu người dùng có vai trò "user", chuyển hướng đến trang lỗi 400 (pageError400)
             return redirect()->route('pageError400');
@@ -69,11 +70,12 @@ class registerController extends Controller
     }
     // Nếu đăng nhập không thành công, chuyển hướng trở lại trang đăng nhập với thông báo lỗi
     return redirect()->route('pageLogin')->with('login_failed', true);
-    }
+}
+
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('pageLogin');
     }
     
 }
