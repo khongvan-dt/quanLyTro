@@ -114,31 +114,30 @@
                             <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
                                 @csrf
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-sm mb-3" id="city"
-                                        aria-label=".form-select-sm" name="city">
+                                    <select class="form-select form-select-sm mb-3 city" aria-label=".form-select-sm"
+                                        name="city">
                                         <option value="" selected>Chọn tỉnh thành</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-sm mb-3" id="district"
+                                    <select class="form-select form-select-sm mb-3 district"
                                         aria-label=".form-select-sm" name="district">
                                         <option value="" selected>Chọn quận huyện</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <select class="form-select form-select-sm" id="ward"
-                                        aria-label=".form-select-sm" name="commune">
+                                    <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
+                                        name="commune">
                                         <option value="" selected>Chọn phường xã</option>
                                     </select>
                                 </div>
-
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label"></label>
                                     <input type="text" class="form-control" name="specifically"
                                         id="inputAddress2" placeholder="Đường Cụ Thể">
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </div>
                             </form>
                         </div>
@@ -157,35 +156,22 @@
                                         <th>Phường/Xã</th>
                                         <th>Đường</th>
                                         <th>Sửa</th>
-
-
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-
                                         <th>Thành Phố</th>
                                         <th>Quận/Huyện</th>
                                         <th>Phường/Xã</th>
                                         <th>Đường</th>
                                         <th>Sửa</th>
-
                                     </tr>
                                 </tfoot>
-                                <tbody>
-                                    @foreach ($combinedData as $data)
-                                        <tr>
-                                            <td>{{ $data['city'] }}</td>
-                                            <td>{{ $data['district'] }}</td>
-                                            <td>{{ $data['wardCommune'] }}</td>
-                                            <td>{{ $data['streetAddress'] }}</td>
-                                            <td><button class="product-review btn btn-primary" type="submit"
-                                                    data-bs-toggle="modal" data-bs-target="#reviewModal">Write a
-                                                    review?</button></td>
-                                        </tr>
-                                    @endforeach
+                                <tbody id="tableBody">                                  
+
                                 </tbody>
                             </table>
+                            
                         </div>
                     </div>
                 </div>
@@ -203,31 +189,33 @@
                     </div>
                     <div class="modal-body">
                         <form class="row g-3">
+                            @csrf
                             <div class="col-md-4">
-                                <select class="form-select form-select-sm mb-3" id="city"
-                                    aria-label=".form-select-sm" name="city">
+                                <select class="form-select form-select-sm mb-3 city" aria-label=".form-select-sm"
+                                    name="city">
                                     <option value="" selected>Chọn tỉnh thành</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select class="form-select form-select-sm mb-3" id="district"
-                                    aria-label=".form-select-sm" name="district">
+                                <select class="form-select form-select-sm mb-3 district" aria-label=".form-select-sm"
+                                    name="district">
                                     <option value="" selected>Chọn quận huyện</option>
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <select class="form-select form-select-sm" id="ward"
-                                    aria-label=".form-select-sm" name="commune">
+                                <select class="form-select form-select-sm ward" aria-label=".form-select-sm" name="commune">
                                     <option value="" selected>Chọn phường xã</option>
                                 </select>
                             </div>
-
+                            
                             <div class="col-12">
                                 <label for="inputAddress2" class="form-label"></label>
                                 <input type="text" class="form-control" name="specifically" id="inputAddress2"
                                     placeholder="Đường Cụ Thể">
                             </div>
-                            <button class="btn btn-success btn-block">RATE</button>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -239,52 +227,75 @@
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
-    <script src="{{ asset('js/custom.min.js') }}"></script>
-    <script src="{{ asset('js/global.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/global.min.js') }}"></script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-        var citis = document.getElementById("city");
-        var districts = document.getElementById("district");
-        var wards = document.getElementById("ward");
+        var cities = document.querySelectorAll(".city");
+        var districts = document.querySelectorAll(".district");
+        var wards = document.querySelectorAll(".ward");
         var Parameter = {
             url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
             method: "GET",
             responseType: "application/json",
         };
         var promise = axios(Parameter);
+
         promise.then(function(result) {
             renderCity(result.data);
         });
 
         function renderCity(data) {
             for (const x of data) {
-                citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                cities.forEach(function(citySelect) {
+                    citySelect.options[citySelect.options.length] = new Option(x.Name, x.Id);
+                });
             }
-            citis.onchange = function() {
-                district.length = 1;
-                ward.length = 1;
-                if (this.value != "") {
-                    const result = data.filter(n => n.Id === this.value);
 
-                    for (const k of result[0].Districts) {
-                        district.options[district.options.length] = new Option(k.Name, k.Id);
-                    }
-                }
-            };
-            district.onchange = function() {
-                ward.length = 1;
-                const dataCity = data.filter((n) => n.Id === citis.value);
-                if (this.value != "") {
-                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+            cities.forEach(function(citySelect) {
+                citySelect.onchange = function() {
+                    districts.forEach(function(districtSelect) {
+                        districtSelect.length = 1;
+                    });
+                    wards.forEach(function(wardSelect) {
+                        wardSelect.length = 1;
+                    });
 
-                    for (const w of dataWards) {
-                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                    if (this.value != "") {
+                        const result = data.filter(n => n.Id === this.value);
+
+                        districts.forEach(function(districtSelect) {
+                            for (const k of result[0].Districts) {
+                                districtSelect.options[districtSelect.options.length] = new Option(k
+                                    .Name, k.Id);
+                            }
+                        });
                     }
-                }
-            };
+                };
+            });
+
+            districts.forEach(function(districtSelect) {
+                districtSelect.onchange = function() {
+                    wards.forEach(function(wardSelect) {
+                        wardSelect.length = 1;
+                    });
+
+                    const dataCity = data.filter((n) => n.Id === cities[0].value);
+                    if (this.value != "") {
+                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                        wards.forEach(function(wardSelect) {
+                            for (const w of dataWards) {
+                                wardSelect.options[wardSelect.options.length] = new Option(w.Name, w
+                                .Id);
+                            }
+                        });
+                    }
+                };
+            });
         }
     </script>
+      <script src="{{ asset('getApiJs/getAddress.js') }}"></script>
 
 
 

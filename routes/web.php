@@ -36,10 +36,11 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('table');
     Route::get('/addAddress', function () {
         return view('admin.addAddress'); 
-    })->name('addAddress');
+    })->name('addAddres'); // Đặt tên route là 'addAddres'
+    
+    
    
 });
-Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress'); 
 Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
 Route::post('/login', [registerController::class, 'login'])->name('login');
 Route::post('/pageRegister', [registerController::class, 'insertRegister'])->name('register');

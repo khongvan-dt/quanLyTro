@@ -1,53 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\accommodationareaModel;
-use Illuminate\Support\Facades\Auth;
 
-class AdressController extends Controller
+class AdressController2 extends Controller
 {
-    public function insertAddress(Request $request)
-    {
-        // Check if the user is authenticated
-        if (Auth::check()) {
-
-            $id = Auth::id();
-
-            $request->validate([
-                'specifically' => 'required',
-                'city' => 'required',
-                'district' => 'required',
-                'commune' => 'required',
-            ]);
-
-            $specifically = $request->input('specifically');
-            $city = $request->input('city');
-            $district = $request->input('district');
-            $commune = $request->input('commune');
-
-            $address = new accommodationareaModel();
-            $address->idUser = $id; // Associate the user with the address
-            $address->city = $city;
-            $address->districts = $district;
-            $address->wardsCommunes = $commune;
-            $address->streetAddress = $specifically;
-
-            $saved = $address->save();
-
-            if ($saved) {
-                return redirect()->route('insertAddress')->with('success', true);
-            } else {
-                return redirect()->route('insertAddress')->with('error', true);
-            }
-        } else {
-            return redirect()->route('pageLogin');
-        }
-    }
-   
     public function getAddress(Request $request)
     {
         // Lấy dữ liệu từ cơ sở dữ liệu
@@ -124,6 +84,4 @@ class AdressController extends Controller
         }
         return 'Không tìm thấy';
     }
-
-    public function updateAddress(Request $request) {}
 }

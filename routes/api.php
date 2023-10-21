@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AddressController;
-use App\Http\Controllers\registerController;
+use App\Http\Controllers\AdressController;
 
 
 
@@ -17,7 +16,7 @@ use App\Http\Controllers\registerController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/addAddress', 'AdressController@getAddress');
+Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress');
 
 
 
