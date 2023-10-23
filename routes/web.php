@@ -36,10 +36,9 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('table');
     Route::get('/addAddress', function () {
         return view('admin.addAddress'); 
-    })->name('addAddres'); // Đặt tên route là 'addAddres'
-    
-    
-   
+    })->name('addAddres'); 
+    Route::get('/editAddress/{id}', [AdressController::class, 'editAddress'])->name('editAddress');
+    Route::post('/updateaddress/{id}', [AdressController::class, 'updateAddress'])->name('updateAddress');
 });
 Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
 Route::post('/login', [registerController::class, 'login'])->name('login');

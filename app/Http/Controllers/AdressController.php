@@ -125,5 +125,71 @@ class AdressController extends Controller
         return 'Không tìm thấy';
     }
 
-    public function updateAddress(Request $request) {}
+    public function editAddress(Request $request, $id) {
+        // Lấy đối tượng accommodationareaModel dựa trên ID
+        $idAddress = accommodationareaModel::find($id);
+    
+        // Kiểm tra xem đối tượng có tồn tại không
+        if (!$idAddress) {
+            return response()->json(['error' => 'Không tồn tại'], 404);
+        }
+    
+        // Lấy dữ liệu từ cơ sở dữ liệu dựa trên ID
+        $importProducts = DB::table('accommodationarea')
+            ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
+            ->where('id', $idAddress->id)
+            ->get();
+    
+        // Check if the collection is empty and set the specifically value
+        $specifically = $importProducts->isEmpty() ? '' : $importProducts[0]->streetAddress;
+    
+        // Access the id of the first item in the collection
+        $firstItemId = $importProducts->first()->id;
+    
+        // Pass the variables to the view
+        return view('admin.editAddress', [
+            'specifically' => $specifically,
+            'importProducts' => $importProducts,
+            'firstItemId' => $firstItemId
+        ]);
+    }
+    
+    public function updateAddress(Request $request, $id) {
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            $idUser = Auth::id();
+            $request->validate([
+                'specifically' => 'required',
+                'city' => 'required',
+                'district' => 'required',
+                'commune' => 'required',
+            ]);
+    
+            // Find the user's address by their ID
+            $userAddress = AccommodationAreaModel::find($id);
+    
+            // Update the address fields
+            $userAddress->idUser  = $idUser;
+            $userAddress->city = $request->input('city');
+            $userAddress->districts = $request->input('district');
+            $userAddress->wardsCommunes = $request->input('commune');
+            $userAddress->streetAddress = $request->input('specifically');
+    
+            $saved = $userAddress->save();
+    
+            if ($saved) {
+                // Redirect with success message
+                return redirect()->route('addAddres')->with('successUpdelete', true);
+            } else {
+                // Redirect with error message
+                return redirect()->route('editAddress')->with('error', true);
+            }
+        } else {
+            // User is not authenticated, redirect to login page
+            return redirect()->route('pageLogin');
+        }
+    }
+    
+    
+    
 }

@@ -1,4 +1,7 @@
+
 const table = document.getElementById("datatablesSimple");
+const tbody = table.querySelector("tbody");
+const hiddenRow = tbody.querySelector(".hidden-row");
 
 fetch("/api/addAddress")
     .then((response) => {
@@ -8,17 +11,18 @@ fetch("/api/addAddress")
         return response.json();
     })
     .then((data) => {
-        const tbody = table.querySelector("tbody");
-        let i = 1;
         data.data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.city}</td>
-                <td>${item.district}</td>
-                <td>${item.wardCommune}</td>
-                <td>${item.streetAddress}</td>
-                <td><a href="/edit/${item.id}">Sửa</a></td>`; 
-            table.appendChild(row); 
+            const row = hiddenRow.cloneNode(true);
+            row.classList.remove("hidden-row");
+
+            const cells = row.querySelectorAll("td");
+            cells[0].textContent = item.city;
+            cells[1].textContent = item.district;
+            cells[2].textContent = item.wardCommune;
+            cells[3].textContent = item.streetAddress;
+            cells[4].innerHTML = `<a href="/editAddress/${item.id}">Sửa</a>`;
+
+            tbody.appendChild(row);
         });
     })
     .catch((error) => {
