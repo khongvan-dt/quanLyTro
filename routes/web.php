@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\AdressController;
+use App\Http\Controllers\addTotalFloorController;
 
 
 
@@ -34,13 +35,26 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/table', function () {
         return view('admin.tables'); 
     })->name('table');
+
+
     Route::get('/addAddress', function () {
         return view('admin.addAddress'); 
     })->name('addAddres'); 
+    Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
     Route::get('/editAddress/{id}', [AdressController::class, 'editAddress'])->name('editAddress');
     Route::post('/updateaddress/{id}', [AdressController::class, 'updateAddress'])->name('updateAddress');
+
+
+
+    Route::get('/addTotalFloor', function () {
+            return view('admin.addFloor'); 
+    })->name('addTotalFloor'); 
+    Route::get('/addTotalFloor', [addTotalFloorController::class, 'getFloor'])->name('addTotalFloor');
+    Route::post('/addTotalFloor', [addTotalFloorController::class, 'insertFloor'])->name('insertFloor'); 
+    Route::get('/delete-floor/{id}', 'addTotalFloorController@deleteFloor')->name('deleteFloor');
+
+
 });
-Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
 Route::post('/login', [registerController::class, 'login'])->name('login');
 Route::post('/pageRegister', [registerController::class, 'insertRegister'])->name('register');
 Route::post('/logout', [registerController::class, 'logout'])->name('logout');
