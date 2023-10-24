@@ -24,7 +24,7 @@ return new class extends Migration
         $table->string("roomName"); // tên phòng, số phòng
         $table->float("priceRoom"); // giá phòng
         $table->string("interior"); // nội thất
-        $table->string("capacity"); // sức chứaF
+        $table->string("capacity"); // sức chứa
 
         $table->timestamps();
 

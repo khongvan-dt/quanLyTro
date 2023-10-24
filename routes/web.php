@@ -43,6 +43,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
     Route::get('/editAddress/{id}', [AdressController::class, 'editAddress'])->name('editAddress');
     Route::post('/updateaddress/{id}', [AdressController::class, 'updateAddress'])->name('updateAddress');
+    Route::get('/deleteAddress/{id}', [AdressController::class, 'deleteAddress'])->name('deleteAddress');
 
 
 
@@ -51,7 +52,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('addTotalFloor'); 
     Route::get('/addTotalFloor', [addTotalFloorController::class, 'getFloor'])->name('addTotalFloor');
     Route::post('/addTotalFloor', [addTotalFloorController::class, 'insertFloor'])->name('insertFloor'); 
-    Route::get('/delete-floor/{id}', 'addTotalFloorController@deleteFloor')->name('deleteFloor');
+    Route::delete('/deleteFloor/{id}',[addTotalFloorController::class, 'deleteFloor'])->name('deleteFloor');
 
 
 });

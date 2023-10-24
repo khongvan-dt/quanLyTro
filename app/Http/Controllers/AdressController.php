@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\accommodationareaModel;
+use App\Models\roomsModel;
+
 use Illuminate\Support\Facades\Auth;
 
 class AdressController extends Controller
@@ -189,7 +191,33 @@ class AdressController extends Controller
             return redirect()->route('pageLogin');
         }
     }
+    public function deleteAddress($id) {
+        if (Auth::check()) {
+            // Tìm địa chỉ của người dùng dựa trên ID
+            $userAddress = accommodationareaModel::find($id);
     
+            // Kiểm tra xem địa chỉ có tồn tại không
+            if ($userAddress) {
+                // Kiểm tra xem địa chỉ có đang được sử dụng bởi phòng không
+                $isAddressInUse = roomsModel::where('idAccommodationArea', $id)->exists();
     
+                if ($isAddressInUse) {
+                    // Nếu địa chỉ đang được sử dụng, trả về thông báo lỗi
+                    return redirect()->route('addAddres')->with('errorDelete', true);
+                } else {
+                    // Xóa địa chỉ
+                    $userAddress->delete();
+                    // Chuyển hướng với thông báo thành công
+                    return redirect()->route('addAddres')->with('successDelete', true);
+                }
+            } else {
+                // Nếu địa chỉ không tồn tại, trả về thông báo lỗi
+                return redirect()->route('addAddres')->with('errorDelete', true);
+            }
+        } else {
+            // Người dùng chưa xác thực, chuyển hướng đến trang đăng nhập
+            return redirect()->route('pageLogin');
+        }
+    }    
     
 }

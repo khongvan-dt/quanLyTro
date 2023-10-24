@@ -20,8 +20,8 @@ fetch("/api/addAddress")
             cells[1].textContent = item.district;
             cells[2].textContent = item.wardCommune;
             cells[3].textContent = item.streetAddress;
-            cells[4].innerHTML = `<a href="/editAddress/${item.id}">Sửa</a>`;
-
+            cells[4].innerHTML = `<a href="/editAddress/${item.id}">Sửa</a> 
+            || <a href="/deleteAddress/${item.id}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="main__table-btn main__table-btn--banned open-modal" >xóa</a>`;
             tbody.appendChild(row);
         });
     })
