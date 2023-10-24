@@ -52,8 +52,12 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('addTotalFloor'); 
     Route::get('/addTotalFloor', [addTotalFloorController::class, 'getFloor'])->name('addTotalFloor');
     Route::post('/addTotalFloor', [addTotalFloorController::class, 'insertFloor'])->name('insertFloor'); 
-    Route::delete('/deleteFloor/{id}',[addTotalFloorController::class, 'deleteFloor'])->name('deleteFloor');
+    Route::get('/deleteFloor/{id}',[addTotalFloorController::class, 'deleteFloor'])->name('deleteFloor');
 
+
+    Route::get('/addRoom', function () {
+        return view('admin.addRoom'); 
+    })->name('addRoom'); 
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');
