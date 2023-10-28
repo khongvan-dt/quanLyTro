@@ -12,6 +12,8 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -164,13 +166,11 @@
                                     <select class="form-select form-select-sm mb-3 district"
                                         aria-label=".form-select-sm" name="district" id="totalFloors">
                                         <option value="" selected>Tổng Tầng</option>
-                                       
-                                            @foreach ($listFloors as $item)
-                                                <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
-                                            @endforeach
-                                      
-                                        
+                                        @foreach ($listFloors as $item)
+                                            <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
+                                        @endforeach
                                     </select>
+
                                 </div>
 
                                 <div class="col-md-1">
@@ -239,35 +239,38 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
-    <script src="{{ asset('getApiJs/getRoom.js') }}"></script>
 
-    {{-- <script>
+
+    {{-- <script src="{{ asset('getApiJs/numberFloor.js') }}"></script> --}}
+    <script src="{{ asset('getApiJs/getRoom.js') }}"></script>
+    <script>
         $(document).ready(function() {
-            // Listen for changes in the "Tổng Tầng" dropdown
-            $('#totalFloors').change(function() {
+            $('#totalFloorId').change(function() {
                 var selectedTotalFloorId = $(this).val();
 
-                // Make an AJAX request to get corresponding "Tầng" data
                 $.ajax({
-                    url: '/get-number-floors', // Change this URL to match your route
+                    url: '/api/get-number-floors', // Đúng đường dẫn API đã đăng ký
                     method: 'GET',
                     data: {
                         totalFloorId: selectedTotalFloorId
                     },
                     success: function(data) {
-                        // Clear existing options in the "Tầng" dropdown
+                        // Xóa tất cả các tùy chọn hiện có trong dropdown "Tầng"
                         $('#numberFloors').empty();
 
-                        // Populate the "Tầng" dropdown with the new options
+                        // Thêm các tùy chọn mới dựa trên dữ liệu từ API
                         $.each(data, function(key, value) {
                             $('#numberFloors').append('<option value="' + key + '">' +
                                 value + '</option>');
                         });
+                    },
+                    error: function() {
+                        console.log('Lỗi khi gửi yêu cầu AJAX');
                     }
                 });
             });
         });
-    </script> --}}
+    </script>
 </body>
 
 </html>

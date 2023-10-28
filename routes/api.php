@@ -20,6 +20,8 @@ use App\Http\Controllers\addRoomController;
 */
 Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress');
 Route::get('/addRoom', [addRoomController::class, 'getAddress'])->name('getAddressRoom');
+Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors'])->name('getNumberFloors');
+
 
 
 
