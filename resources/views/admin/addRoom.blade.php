@@ -60,9 +60,10 @@
                             Thêm Tổng Số Tầng
                         </a>
                         <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
+
                     </div>
                 </div>
             </nav>
@@ -153,24 +154,32 @@
 
                             <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
                                 @csrf
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <select class="form-select form-select-sm mb-3 city" aria-label=".form-select-sm"
                                         name="city">
-                                        <option value="" selected>Chọn tỉnh thành</option>
+
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-1">
                                     <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district">
-                                        <option value="" selected>Chọn quận huyện</option>
+                                        aria-label=".form-select-sm" name="district" id="totalFloors">
+                                        <option value="" selected>Tổng Tầng</option>
+                                       
+                                            @foreach ($listFloors as $item)
+                                                <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
+                                            @endforeach
+                                      
+                                        
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-1">
                                     <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
-                                        name="commune">
-                                        <option value="" selected>Chọn phường xã</option>
+                                        name="commune" id="numberFloors">
+                                        <option value="" selected>Tầng</option>
                                     </select>
                                 </div>
+
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label"></label>
                                     <input type="text" class="form-control" name="specifically"
@@ -197,7 +206,7 @@
                                         <th>Phường/Xã</th>
                                         <th>Đường</th>
                                         <th>Sửa</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
@@ -207,7 +216,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                      
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -229,74 +238,36 @@
     <script src="{{ asset('js/global.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-        var cities = document.querySelectorAll(".city");
-        var districts = document.querySelectorAll(".district");
-        var wards = document.querySelectorAll(".ward");
-        var Parameter = {
-            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-            method: "GET",
-            responseType: "application/json",
-        };
-        var promise = axios(Parameter);
 
-        promise.then(function(result) {
-            renderCity(result.data);
-        });
+    <script src="{{ asset('getApiJs/getRoom.js') }}"></script>
 
-        function renderCity(data) {
-            for (const x of data) {
-                cities.forEach(function(citySelect) {
-                    citySelect.options[citySelect.options.length] = new Option(x.Name, x.Id);
+    {{-- <script>
+        $(document).ready(function() {
+            // Listen for changes in the "Tổng Tầng" dropdown
+            $('#totalFloors').change(function() {
+                var selectedTotalFloorId = $(this).val();
+
+                // Make an AJAX request to get corresponding "Tầng" data
+                $.ajax({
+                    url: '/get-number-floors', // Change this URL to match your route
+                    method: 'GET',
+                    data: {
+                        totalFloorId: selectedTotalFloorId
+                    },
+                    success: function(data) {
+                        // Clear existing options in the "Tầng" dropdown
+                        $('#numberFloors').empty();
+
+                        // Populate the "Tầng" dropdown with the new options
+                        $.each(data, function(key, value) {
+                            $('#numberFloors').append('<option value="' + key + '">' +
+                                value + '</option>');
+                        });
+                    }
                 });
-            }
-
-            cities.forEach(function(citySelect) {
-                citySelect.onchange = function() {
-                    districts.forEach(function(districtSelect) {
-                        districtSelect.length = 1;
-                    });
-                    wards.forEach(function(wardSelect) {
-                        wardSelect.length = 1;
-                    });
-
-                    if (this.value != "") {
-                        const result = data.filter(n => n.Id === this.value);
-
-                        districts.forEach(function(districtSelect) {
-                            for (const k of result[0].Districts) {
-                                districtSelect.options[districtSelect.options.length] = new Option(k
-                                    .Name, k.Id);
-                            }
-                        });
-                    }
-                };
             });
-
-            districts.forEach(function(districtSelect) {
-                districtSelect.onchange = function() {
-                    wards.forEach(function(wardSelect) {
-                        wardSelect.length = 1;
-                    });
-
-                    const dataCity = data.filter((n) => n.Id === cities[0].value);
-                    if (this.value != "") {
-                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                        wards.forEach(function(wardSelect) {
-                            for (const w of dataWards) {
-                                wardSelect.options[wardSelect.options.length] = new Option(w.Name, w
-                                    .Id);
-                            }
-                        });
-                    }
-                };
-            });
-        }
-    </script>
-    <script src="{{ asset('getApiJs/getAddress.js') }}"></script>
-  
-
+        });
+    </script> --}}
 </body>
 
 </html>

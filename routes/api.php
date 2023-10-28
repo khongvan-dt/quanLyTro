@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdressController;
+use App\Http\Controllers\addRoomController;
+
 
 
 
@@ -17,6 +19,8 @@ use App\Http\Controllers\AdressController;
 |
 */
 Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress');
+Route::get('/addRoom', [addRoomController::class, 'getAddress'])->name('getAddressRoom');
+
 
 
 

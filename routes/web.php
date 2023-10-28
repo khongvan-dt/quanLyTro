@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\AdressController;
 use App\Http\Controllers\addTotalFloorController;
+use App\Http\Controllers\addRoomController;
+
 
 
 
@@ -58,6 +60,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/addRoom', function () {
         return view('admin.addRoom'); 
     })->name('addRoom'); 
+    Route::get('/addRoom', [addRoomController::class, 'getFloor'])->name('addRoom');
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');
