@@ -20,4 +20,5 @@ class roomsModel extends Model
         'priceRoom',
         'interior',
         'capacity',
-    ];}
+    ];
+}

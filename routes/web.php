@@ -5,6 +5,8 @@ use App\Http\Controllers\registerController;
 use App\Http\Controllers\AdressController;
 use App\Http\Controllers\addTotalFloorController;
 use App\Http\Controllers\addRoomController;
+use App\Http\Controllers\ServiceFeeSummaryController;
+
 
 
 
@@ -61,6 +63,14 @@ Route::middleware(['checkRole:admin'])->group(function () {
         return view('admin.addRoom'); 
     })->name('addRoom'); 
     Route::get('/addRoom', [addRoomController::class, 'getFloor'])->name('addRoom');
+
+
+    Route::get('/addServiceFeeSummary', function () {
+        return view('admin.addServiceFeeSummary'); 
+    })->name('addServiceFeeSummary'); 
+    Route::post('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'insertServiceFeeSummary'])->name('insertServiceFeeSummary'); 
+    Route::get('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'getServiceFeeSummary'])->name('addServiceFeeSummary');
+
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');
