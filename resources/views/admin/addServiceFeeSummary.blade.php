@@ -191,12 +191,11 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $item->name }}</td>
                                             <td>
-                                                {{-- <a href="{{ route('deleteFloor', ['id' => $item->id]) }}"
+                                                <a href="{{ route('deleteServiceFeeSummary', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class="main__table-btn main__table-btn--banned open-modal">delete
-                                                </a> --}}
+                                                    class="btn btn-primary main__table-btn main__table-btn--banned open-modal">delete
+                                                </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>

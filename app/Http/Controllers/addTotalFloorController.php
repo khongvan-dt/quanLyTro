@@ -54,39 +54,26 @@ class addTotalFloorController extends Controller
     }
     public function deleteFloor($id) {
         if (Auth::check()) {
-            // Find the totalFlorModel record to be deleted
             $totalFloor = totalFlorModel::find($id);
     
             if (!$totalFloor) {
-                // Total floor not found, return an error or redirect as needed
                 return redirect()->route('addTotalFloor')->with('error', true);
             }
-    
-            // Check if the total floor is in use
-            $isAddressInUse = roomsModel::where('idTotalFloors', $totalFloor->id)->exists();
+                $isAddressInUse = roomsModel::where('idTotalFloors', $totalFloor->id)->exists();
     
             if ($isAddressInUse) {
-                // If the floor is in use, return an error message
                 return redirect()->route('addTotalFloor')->with('errorDelete', true);
             }
-    
-            // Find all related numberFloorsModel records with matching idTotalFloors
-            $numberFloors = numberFloorsModel::where('idTotalFloors', $totalFloor->id)->get();
-    
-            // Check if any numberFloorsModel records are in use
-            foreach ($numberFloors as $numberFloor) {
+                $numberFloors = numberFloorsModel::where('idTotalFloors', $totalFloor->id)->get();
+                foreach ($numberFloors as $numberFloor) {
                 $isNumberFloorInUse = roomsModel::where('idNumberFloors', $numberFloor->id)->exists();
                 if ($isNumberFloorInUse) {
                     return redirect()->route('addTotalFloor')->with('errorDelete', true);
                 }
             }
-    
-            // If none of the related records are in use, delete them
-            foreach ($numberFloors as $numberFloor) {
+                foreach ($numberFloors as $numberFloor) {
                 $numberFloor->delete();
             }
-    
-            // Delete the totalFlorModel record
             $totalFloor->delete();
     
             return redirect()->route('addTotalFloor')->with('successDelete', true);

@@ -39,6 +39,21 @@ class ServiceFeeSummaryController extends Controller
             return redirect()->route('pageLogin');
         }
     }
+    public function deleteServiceFeeSummary($id) {
+        if (Auth::check()) {
+            $userId = Auth::id();
+            $serviceFeeSummary = ServiceFeeSummaryModel::where('idUser', $userId)->find($id);
     
+            if ($serviceFeeSummary) {
+                $serviceFeeSummary->delete();
+                return redirect()->route('addServiceFeeSummary')->with('successDelete', true);
+            } else {
+                return redirect()->route('addServiceFeeSummary')->with('errorDelete', true);
+            }
+        } else {
+            return redirect()->route('pageLogin');
+        }
+    }
     public function updateServiceFeeSummary( Request $request){}
+
 }
