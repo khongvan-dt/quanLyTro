@@ -171,15 +171,15 @@
                                         @endforeach
                                     </select>
 
-                                </div>
 
+                                </div>
                                 <div class="col-md-1">
                                     <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
                                         name="commune" id="numberFloors">
                                         <option value="" selected>Tầng</option>
                                     </select>
-                                </div>
 
+                                </div>
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label"></label>
                                     <input type="text" class="form-control" name="specifically"
@@ -245,7 +245,7 @@
     <script src="{{ asset('getApiJs/getRoom.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('#totalFloorId').change(function() {
+            $('#totalFloors').change(function() {
                 var selectedTotalFloorId = $(this).val();
 
                 $.ajax({
