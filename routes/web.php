@@ -71,6 +71,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::post('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'insertServiceFeeSummary'])->name('insertServiceFeeSummary'); 
     Route::get('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'getServiceFeeSummary'])->name('addServiceFeeSummary');
     Route::get('/deleteServiceFeeSummary/{id}',[ServiceFeeSummaryController::class, 'deleteServiceFeeSummary'])->name('deleteServiceFeeSummary');
+    Route::get('/editServiceFeeSummary/{id}', [ServiceFeeSummaryController::class, 'editServiceFeeSummary'])->name('editServiceFeeSummary');
+    Route::post('/updateServiceFeeSummary/{id}', [ServiceFeeSummaryController::class, 'updateServiceFeeSummary'])->name('updateServiceFeeSummary');
 
 
 
