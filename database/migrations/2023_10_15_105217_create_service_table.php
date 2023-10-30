@@ -23,9 +23,7 @@ return new class extends Migration
             $table->float("fine")->nullable();//tiền phạt
             $table->float("other_fees")->nullable();// khoản khác
             $table->float("sumServices");//tổng tiền dịch vụ
-
             $table->timestamps();
-
             // Tạo khóa ngoại cho user_id
             $table->foreign('user_id')->references('id')->on('users');
         });

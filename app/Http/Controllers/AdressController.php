@@ -52,34 +52,37 @@ class AdressController extends Controller
    
     public function getAddress(Request $request)
     {
-        // Lấy dữ liệu từ cơ sở dữ liệu
-        $dbData = DB::table('accommodationarea')->select('id', 'city', 'districts', 'wardsCommunes', 'streetAddress')->get();
+        if (Auth::check()) {
+            $userId = Auth::id(); // Lấy id của người dùng hiện tại
+            $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
+            // Lấy dữ liệu từ cơ sở dữ liệu dựa trên idUser
+            $dbData = accommodationareaModel::where('idUser', $userId)->get();
     
-        // Lấy dữ liệu từ JSON
-        $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
-    
-        // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
-        $combinedData = [];
-    
-        // Duyệt qua dữ liệu từ cơ sở dữ liệu
-        foreach ($dbData as $row) {
-            $cityId = $row->city;
-            $districtId = $row->districts;
-            $wardCommuneId = $row->wardsCommunes;
-    
-            // Tìm tên tương ứng từ JSON
-            $cityName = $this->findNameById($jsonData, $cityId);
-            $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
-            $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
-    
-            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
-            $combinedData[] = [
-                'id' => $row->id, // Thêm ID vào mảng
-                'city' => $cityName,
-                'district' => $districtName,
-                'wardCommune' => $wardCommuneName,
-                'streetAddress' => $row->streetAddress,
-            ];
+            // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
+            $combinedData = [];
+        
+            // Duyệt qua dữ liệu từ cơ sở dữ liệu
+            foreach ($dbData as $row) {
+                $cityId = $row->city;
+                $districtId = $row->districts;
+                $wardCommuneId = $row->wardsCommunes;
+        
+                // Tìm tên tương ứng từ JSON
+                $cityName = $this->findNameById($jsonData, $cityId);
+                $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
+                $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
+        
+                // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+                $combinedData[] = [
+                    'id' => $row->id, // Thêm ID vào mảng
+                    'city' => $cityName,
+                    'district' => $districtName,
+                    'wardCommune' => $wardCommuneName,
+                    'streetAddress' => $row->streetAddress,
+                ];
+            }
+        } else {
+            return redirect()->route('pageLogin');
         }
         return response()->json(['data' => $combinedData]);
 

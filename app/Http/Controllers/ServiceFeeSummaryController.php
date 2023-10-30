@@ -64,7 +64,6 @@ class ServiceFeeSummaryController extends Controller
             if (!$idServiceFeeSummary) {
                 return response()->json(['error' => 'Không tồn tại'], 404);
             }
-    
             // Access the name property of the specific model instance
             $specificName = $idServiceFeeSummary->name;
             $firstItemId = $idServiceFeeSummary->id;
@@ -78,9 +77,6 @@ class ServiceFeeSummaryController extends Controller
             return redirect()->route('pageLogin');
         }
     }
-    
-    
-    
     public function updateServiceFeeSummary($id, Request $request) {
         if (Auth::check()) {
             $userId = Auth::id();
