@@ -50,7 +50,6 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/deleteAddress/{id}', [AdressController::class, 'deleteAddress'])->name('deleteAddress');
 
 
-
     Route::get('/addTotalFloor', function () {
             return view('admin.addFloor'); 
     })->name('addTotalFloor'); 
