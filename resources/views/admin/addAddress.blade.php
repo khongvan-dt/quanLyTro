@@ -199,20 +199,14 @@
                                         <th>Phường/Xã</th>
                                         <th>Đường</th>
                                         <th>Sửa</th>
-                                       
                                     </tr>
                                 </thead>
-                                <tbody id="tableBody">
-                                    <tr class="hidden-row">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                      
-                                    </tr>
+                                <tbody id="tableBody">                                  
+
+                                    <!-- Data will be populated here -->
                                 </tbody>
                             </table>
+                            
                            
                         </div>
                     </div>
