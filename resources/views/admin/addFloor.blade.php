@@ -51,6 +51,10 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
+                        <a class="nav-link" href="{{ route('addRoom') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Phòng
+                        </a>
                         <a class="nav-link" href="{{ route('addAddres') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Địa Chỉ
@@ -59,9 +63,9 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Tổng Số Tầng
                         </a>
-                        <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Thêm Phòng
+                        <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Tên Dịch Vụ
                         </a>
                     </div>
                 </div>

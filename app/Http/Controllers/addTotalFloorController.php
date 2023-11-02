@@ -48,10 +48,15 @@ class addTotalFloorController extends Controller
     }
 }
 
-    public function getFloor(){
-        $listFloors=totalFlorModel::all();
-        return view('admin.addFloor', ['listFloors' => $listFloors]);
-    }
+public function getFloor() {
+    // Get the authenticated user's ID
+    $id = Auth::id();
+
+    // Retrieve the list of floors for the authenticated user
+    $listFloors = totalFlorModel::where('idUser', $id)->get();
+
+    return view('admin.addFloor', ['listFloors' => $listFloors]);
+}
     public function deleteFloor($id) {
         if (Auth::check()) {
             $totalFloor = totalFlorModel::find($id);

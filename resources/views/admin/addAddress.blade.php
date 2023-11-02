@@ -201,13 +201,22 @@
                                         <th>Sửa</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tableBody">                                  
-
-                                    <!-- Data will be populated here -->
+                                <tbody id="tableBody">
+                                    <?php $i = 1; ?>
+                                    @foreach ($combinedData as $item)
+                                        <tr>
+                                            <td>{{ $item['city'] }}</td>
+                                            <td>{{ $item['district'] }}</td>
+                                            <td>{{ $item['wardCommune'] }}</td>
+                                            <td>{{ $item['streetAddress'] }}</td>
+                                            <td><a href="/editAddress/{{ $item['id'] }}">Sửa</a></td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             
-                           
+
+
                         </div>
                     </div>
                 </div>
@@ -290,7 +299,7 @@
         }
     </script>
     <script src="{{ asset('getApiJs/getAddress.js') }}"></script>
-  
+
 
 </body>
 

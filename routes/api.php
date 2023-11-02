@@ -18,9 +18,9 @@ use App\Http\Controllers\addRoomController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress');
-Route::get('/addRoom', [addRoomController::class, 'getAddress'])->name('getAddressRoom');
-Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors'])->name('getNumberFloors');
+// Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('getAddress');
+// Route::get('/addRoom', [addRoomController::class, 'getAddress'])->name('getAddressRoom');
+// Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors'])->name('getNumberFloors');
 
 
 

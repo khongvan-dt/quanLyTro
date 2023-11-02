@@ -54,40 +54,49 @@ class AdressController extends Controller
     
     public function getAddress(Request $request)
     {
+        // Get the authenticated user's ID
         $id = Auth::id();
-
-        // Lấy dữ liệu từ cơ sở dữ liệu
-        $dbData = DB::table('accommodationarea')->select('id', 'city', 'districts', 'wardsCommunes', 'streetAddress')->get();
     
-        // Lấy dữ liệu từ JSON
+        // Retrieve address data from the database for the authenticated user
+        $dbData = DB::table('accommodationarea')
+            ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
+            ->where('idUser', $id)
+            ->get();
+    
+        // Load JSON data
         $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
     
-        // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
+        // Create an array to store the combined data
         $combinedData = [];
     
-        // Duyệt qua dữ liệu từ cơ sở dữ liệu
+        // Iterate through the database data
         foreach ($dbData as $row) {
             $cityId = $row->city;
+            $idUser = $row->idUser;
             $districtId = $row->districts;
             $wardCommuneId = $row->wardsCommunes;
     
-            // Tìm tên tương ứng từ JSON
+            // Find the corresponding names from JSON
             $cityName = $this->findNameById($jsonData, $cityId);
             $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
             $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
     
-            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+            // Add the extracted data to the combined array
             $combinedData[] = [
-                'id' => $row->id, // Thêm ID vào mảng
+                'id' => $row->id,
+                'idUser' => $idUser,
                 'city' => $cityName,
                 'district' => $districtName,
                 'wardCommune' => $wardCommuneName,
                 'streetAddress' => $row->streetAddress,
             ];
         }
-        return response()->json(['data' => $combinedData]);
-
+    
+        // Return the combined data as JSON
+        return view('admin.addAddress', ['combinedData' => $combinedData]);
     }
+    
+
     
     // Hàm tìm tên thành phố dựa trên ID từ JSON
     private function findNameById($jsonData, $id) {
