@@ -65,6 +65,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
+                        <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Tên Dịch Vụ
+                        </a>
                     </div>
                 </div>
             </nav>
