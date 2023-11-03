@@ -12,6 +12,8 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body class="sb-nav-fixed">
@@ -51,10 +53,6 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Phòng
-                        </a>
                         <a class="nav-link" href="{{ route('addAddres') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Địa Chỉ
@@ -62,6 +60,10 @@
                         <a class="nav-link" href="{{ route('addTotalFloor') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Tổng Số Tầng
+                        </a>
+                        <a class="nav-link" href="{{ route('addRoom') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Phòng
                         </a>
                         <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
@@ -78,11 +80,11 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4"> Thêm Tổng Số Tầng</h1>
+                    <h1 class="mt-4"> Thêm Tên Khoản Tiền Dịch Vụ</h1>
 
 
                     <div class="card mb-4">
-                      
+                       
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
@@ -97,24 +99,11 @@
 
                                 </div>
                             @endif
-                            @if (session('successDelete'))
-                                <div class="alert alert-success alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
-                                        <polyline points="9 11 12 14 22 4"></polyline>
-                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                        </path>
-                                    </svg>
-                                    <strong>Thành Công!</strong>Xóa Thông Tin Thành Công!
-
-                                </div>
-                            @endif
                             @if (session('error'))
                                 <div class="alert alert-danger alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="me-2">
                                         <polygon
                                             points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
                                         </polygon>
@@ -142,12 +131,72 @@
                                     <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại!
                                 </div>
                             @endif
-                            <form action="{{ route('insertFloor') }}" method="POST" class="row g-3">
-                                @csrf
-                                <div class="col-12">
-                                    <input type="text" class="form-control" name="sumFloors" id="totalFloor"
-                                        placeholder="Tổng số tầng" required>
+                            @if (session('successUpdelete'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                        </path>
+                                    </svg>
+                                    <strong>Thành Công!</strong>Sửa Thông Tin Thành Công!
 
+                                </div>
+                            @endif
+                            @if (session('successDelete'))
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                        </path>
+                                    </svg>
+                                    <strong>Thành Công!</strong>Xóa Thông Tin Thành Công!
+
+                                </div>
+                            @endif
+
+                            <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
+                                @csrf
+
+                                <div class="col-12">
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
+                                    <div>
+                                        <label for="inputAddress2" class="form-label"></label>
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể">
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Lưu</button>
@@ -161,30 +210,33 @@
                             DataTable Example
                         </div>
                         <div class="card-body">
-
+                            {{-- 
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
+                                        <th>Thành Phố</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
                                         <th>Đường</th>
-                                        <th>Chức năng</th>
+                                        <th>Sửa</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    @foreach ($listFloors as $item)
+                                    @foreach ($combinedData as $item)
                                         <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $item->sumFloors }}</td>
-                                            <td><a href="{{ route('deleteFloor', ['id' => $item->id]) }}"
-                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class="main__table-btn main__table-btn--banned open-modal">delete</a>
-                                            </td>
-
+                                            <td>{{ $item['city'] }}</td>
+                                            <td>{{ $item['district'] }}</td>
+                                            <td>{{ $item['wardCommune'] }}</td>
+                                            <td>{{ $item['streetAddress'] }}</td>
+                                            <td><a href="/editAddress/{{ $item['id'] }}">Sửa</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                             --}}
+
+
                         </div>
                     </div>
                 </div>
@@ -201,6 +253,8 @@
     <script src="{{ asset('js/global.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+
 
 </body>
 

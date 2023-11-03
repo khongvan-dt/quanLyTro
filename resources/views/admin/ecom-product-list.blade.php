@@ -61,7 +61,11 @@
                         </a>
                         <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tên Dịch Vụ
+                            Thêm Danh sách các tùy chọn tính tiền
+                        </a>
+                        <a class="nav-link" href="{{ route('addservices') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Tên Khoản Tiền Dịch Vụ
                         </a>
                     </div>
                 </div>

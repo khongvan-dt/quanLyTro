@@ -53,6 +53,10 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
+                        <a class="nav-link" href="{{ route('addRoom') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Phòng
+                        </a>
                         <a class="nav-link" href="{{ route('addAddres') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Địa Chỉ
@@ -61,13 +65,13 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Tổng Số Tầng
                         </a>
-                        <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Phòng
-                        </a>
                         <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tên Dịch Vụ
+                            Thêm Danh sách các tùy chọn tính tiền
+                        </a>
+                        <a class="nav-link" href="{{ route('addservices') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Tên Khoản Tiền Dịch Vụ
                         </a>
                     </div>
                 </div>
@@ -76,14 +80,11 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Tables</h1>
+                    <h1 class="mt-4"> Thêm Địa Chỉ</h1>
 
 
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            DataTable Example
-                        </div>
+                        
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">

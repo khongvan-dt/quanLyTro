@@ -41,41 +41,43 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('table');
 
 
-    Route::get('/addAddress', function () {
+    Route::get('/Address', function () {
         return view('admin.addAddress'); 
     })->name('addAddres'); 
-    Route::post('/addAddress', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
+    Route::post('/Address', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
     Route::get('/editAddress/{id}', [AdressController::class, 'editAddress'])->name('editAddress');
     Route::post('/updateaddress/{id}', [AdressController::class, 'updateAddress'])->name('updateAddress');
     Route::get('/deleteAddress/{id}', [AdressController::class, 'deleteAddress'])->name('deleteAddress');
-    Route::get('/addAddress', [AdressController::class, 'getAddress'])->name('addAddres');
+    Route::get('/Address', [AdressController::class, 'getAddress'])->name('addAddres');
 
 
-    Route::get('/addTotalFloor', function () {
+    Route::get('/TotalFloor', function () {
             return view('admin.addFloor'); 
     })->name('addTotalFloor'); 
-    Route::get('/addTotalFloor', [addTotalFloorController::class, 'getFloor'])->name('addTotalFloor');
-    Route::post('/addTotalFloor', [addTotalFloorController::class, 'insertFloor'])->name('insertFloor'); 
+    Route::get('/TotalFloor', [addTotalFloorController::class, 'getFloor'])->name('addTotalFloor');
+    Route::post('/TotalFloor', [addTotalFloorController::class, 'insertFloor'])->name('insertFloor'); 
     Route::get('/deleteFloor/{id}',[addTotalFloorController::class, 'deleteFloor'])->name('deleteFloor');
     Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors'])->name('getNumberFloors');
 
 
-    Route::get('/addRoom', function () {
+    Route::get('/Room', function () {
         return view('admin.addRoom'); 
     })->name('addRoom'); 
-    Route::get('/addRoom', [addRoomController::class, 'getFloor'])->name('addRoom');
+    Route::get('/Room', [addRoomController::class, 'getFloor'])->name('addRoom');
 
 
-    Route::get('/addServiceFeeSummary', function () {
+    Route::get('/ServiceFeeSummary', function () {
         return view('admin.addServiceFeeSummary'); 
-    })->name('addServiceFeeSummary'); 
-    Route::post('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'insertServiceFeeSummary'])->name('insertServiceFeeSummary'); 
-    Route::get('/addServiceFeeSummary', [ServiceFeeSummaryController::class, 'getServiceFeeSummary'])->name('addServiceFeeSummary');
+    })->name('ServiceFeeSummary'); 
+    Route::post('/ServiceFeeSummary', [ServiceFeeSummaryController::class, 'insertServiceFeeSummary'])->name('insertServiceFeeSummary'); 
+    Route::get('/ServiceFeeSummary', [ServiceFeeSummaryController::class, 'getServiceFeeSummary'])->name('addServiceFeeSummary');
     Route::get('/deleteServiceFeeSummary/{id}',[ServiceFeeSummaryController::class, 'deleteServiceFeeSummary'])->name('deleteServiceFeeSummary');
     Route::get('/editServiceFeeSummary/{id}', [ServiceFeeSummaryController::class, 'editServiceFeeSummary'])->name('editServiceFeeSummary');
     Route::post('/updateServiceFeeSummary/{id}', [ServiceFeeSummaryController::class, 'updateServiceFeeSummary'])->name('updateServiceFeeSummary');
 
-
+    Route::get('/services', function () {
+        return view('admin.services'); 
+    })->name('addservices'); 
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');
