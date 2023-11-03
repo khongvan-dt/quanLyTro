@@ -51,22 +51,34 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
-                        <a class="nav-link" href="{{ route('addAddres') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Địa Chỉ
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Thêm Thông Tin
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <a class="nav-link" href="{{ route('addTotalFloor') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tổng Số Tầng
-                        </a>
-                        <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Danh sách các tùy chọn tính tiền
-                        </a>
-                        <a class="nav-link" href="{{ route('addservices') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tên Khoản Tiền Dịch Vụ
-                        </a>
+
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('addAddres') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Địa Chỉ
+                                </a>
+                                <a class="nav-link" href="{{ route('addTotalFloor') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Tổng Số Tầng
+                                </a>
+                                <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Danh sách các tùy chọn tính tiền
+                                </a>
+                                <a class="nav-link" href="{{ route('addservices') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Tên Khoản Tiền Dịch Vụ
+                                </a>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -89,7 +101,8 @@
                                     <div class="col-md-5 col-xxl-12">
                                         <div class="new-arrival-product mb-4 mb-xxl-4 mb-md-0">
                                             <div class="new-arrivals-img-contnent">
-                                                <img class="img-fluid" src="public/images/product/2.jpg" alt="">
+                                                <img class="img-fluid" src="public/images/product/2.jpg"
+                                                    alt="">
                                             </div>
                                         </div>
                                     </div>

@@ -86,9 +86,9 @@ class ServiceFeeSummaryController extends Controller
             $serviceFeeSummary = ServiceFeeSummaryModel::where('idUser', $userId)->find($id);
             if ($serviceFeeSummary) {
                 $serviceFeeSummary->update(['name' => $request->input('serviceFeeSummary')]);
-                return redirect()->route('addServiceFeeSummary')->with('success', true);
+                return redirect()->route('addServiceFeeSummary')->with('successUpdate', true);
             } else {
-                return redirect()->route('addServiceFeeSummary')->with('error', true);
+                return redirect()->route('editServiceFeeSummary')->with('errorUpdate', true);
             }
         } else {
             return redirect()->route('pageLogin');

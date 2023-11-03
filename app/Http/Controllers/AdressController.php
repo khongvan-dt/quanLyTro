@@ -213,7 +213,7 @@ class AdressController extends Controller
             if ($userAddress) {
                 // Kiểm tra xem địa chỉ có đang được sử dụng bởi phòng không
                 $isAddressInUse = roomsModel::where('idAccommodationArea', $id)->exists();
-    
+     
                 if ($isAddressInUse) {
                     // Nếu địa chỉ đang được sử dụng, trả về thông báo lỗi
                     return redirect()->route('addAddres')->with('errorDelete', true);

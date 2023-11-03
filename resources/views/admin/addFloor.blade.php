@@ -55,22 +55,34 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
-                        <a class="nav-link" href="{{ route('addAddres') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Địa Chỉ
-                        </a>
-                        <a class="nav-link" href="{{ route('addTotalFloor') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tổng Số Tầng
-                        </a>
-                        <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Danh sách các tùy chọn tính tiền
-                        </a>
-                        <a class="nav-link" href="{{ route('addservices') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tên Khoản Tiền Dịch Vụ
-                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                        data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Thêm Thông Tin
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                   
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ route('addAddres') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                Thêm Địa Chỉ
+                            </a>
+                            <a class="nav-link" href="{{ route('addTotalFloor') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                Thêm Tổng Số Tầng
+                            </a>
+                            <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                Thêm Danh sách các tùy chọn tính tiền
+                            </a>
+                            <a class="nav-link" href="{{ route('addservices') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                Thêm Tên Khoản Tiền Dịch Vụ
+                            </a>
+                        </nav>
+                    </div>
                     </div>
                 </div>
             </nav>
@@ -78,7 +90,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4"> Thêm Tổng Số Tầng</h1>
+                    <h3 class="mt-4"> Thêm Tổng Số Tầng</h3>
 
 
                     <div class="card mb-4">
@@ -178,7 +190,7 @@
                                             <td>{{ $item->sumFloors }}</td>
                                             <td><a href="{{ route('deleteFloor', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class="main__table-btn main__table-btn--banned open-modal">delete</a>
+                                                    class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
                                             </td>
 
                                         </tr>

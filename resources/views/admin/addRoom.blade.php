@@ -57,22 +57,34 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
-                        <a class="nav-link" href="{{ route('addAddres') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Địa Chỉ
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Thêm Thông Tin
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <a class="nav-link" href="{{ route('addTotalFloor') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tổng Số Tầng
-                        </a>
-                        <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Danh sách các tùy chọn tính tiền
-                        </a>
-                        <a class="nav-link" href="{{ route('addservices') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Tên Khoản Tiền Dịch Vụ
-                        </a>
+
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('addAddres') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Địa Chỉ
+                                </a>
+                                <a class="nav-link" href="{{ route('addTotalFloor') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Tổng Số Tầng
+                                </a>
+                                <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Danh sách các tùy chọn tính tiền
+                                </a>
+                                <a class="nav-link" href="{{ route('addservices') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Tên Khoản Tiền Dịch Vụ
+                                </a>
+                            </nav>
+                        </div>
 
                     </div>
                 </div>
@@ -81,17 +93,17 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4"> Thêm Phòng</h1>
+                    <h3 class="mt-4"> Thêm Phòng</h3>
 
 
                     <div class="card mb-4">
-                      
+
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
                                         <polyline points="9 11 12 14 22 4"></polyline>
                                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                         </path>
@@ -103,8 +115,8 @@
                             @if (session('error'))
                                 <div class="alert alert-danger alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
                                         <polygon
                                             points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
                                         </polygon>
@@ -210,7 +222,7 @@
                                         <th>Quận/Huyện</th>
                                         <th>Phường/Xã</th>
                                         <th>Đường</th>
-                                        <th>Sửa</th>
+                                        <th>Chức Năng</th>
 
                                     </tr>
                                 </thead>
