@@ -174,46 +174,48 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
+                            <form action="{{ route('insertService') }}" method="POST" class="row g-3">
                                 @csrf
 
                                 <div class="col-12">
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền 1 số điện">
+                                        <input type="text" class="form-control" name="electricityBill"
+                                            id="electricityBill"
+                                            placeholder="Tiền 1 số điện (nếu có,không có không cần điền)">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền một khối nước ">
+                                        <input type="text" class="form-control" name="waterBill" id="waterBill"
+                                            placeholder="Tiền một khối nước (nếu có,không có không cần điền) ">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền wifi">
+                                        <input type="text" class="form-control" name="wifiFee" id="wifiFee"
+                                            placeholder="Tiền wifi (nếu có,không có không cần điền)">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền dọn dẹp">
+                                        <input type="text" class="form-control" name="cleaningFee"
+                                            id="cleaningFee"
+                                            placeholder="Tiền dọn dẹp (nếu có,không có không cần điền)">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền để xe">
+                                        <input type="text" class="form-control" name="parkingFee" id="parkingFee"
+                                            placeholder="Tiền để xe (nếu có,không có không cần điền)">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền phạt">
+                                        <input type="text" class="form-control" name="fine" id="fine"
+                                            placeholder="Tiền phạt (nếu có,không có không cần điền)">
                                     </div>
                                     <div>
                                         <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="specifically"
-                                            id="inputAddress2" placeholder="Tiền khác">
+                                        <input type="text" class="form-control" name="other_fees" id="other_fees"
+                                            placeholder="Tiền khác (nếu có,không có không cần điền)">
                                     </div>
-                                
+
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Lưu</button>
@@ -227,31 +229,38 @@
                             DataTable Example
                         </div>
                         <div class="card-body">
-                            {{-- 
+
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
-                                        <th>Thành Phố</th>
-                                        <th>Quận/Huyện</th>
-                                        <th>Phường/Xã</th>
-                                        <th>Đường</th>
+                                        <th>Tiền/Điện</th>
+                                        <th>Nước/Khối</th>
+                                        <th>Tiền wifi</th>
+                                        <th>Vệ Sinh</th>
+                                        <th>Để Xe</th>
+                                        <th>Phạt</th>
+                                        <th>Khoản Khác</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    @foreach ($combinedData as $item)
+                                    @foreach ($listServices as $item)
                                         <tr>
-                                            <td>{{ $item['city'] }}</td>
-                                            <td>{{ $item['district'] }}</td>
-                                            <td>{{ $item['wardCommune'] }}</td>
-                                            <td>{{ $item['streetAddress'] }}</td>
-                                            <td><a href="/editAddress/{{ $item['id'] }}">Sửa</a></td>
+                                            <td>{{ number_format($item['electricityBill']) }}</td>
+                                            <td>{{number_format($item['waterBill'])}}</td>
+                                            <td>{{number_format($item['wifiFee'] )}}</td>
+                                            <td>{{number_format( $item['cleaningFee'] )}}</td>
+                                            <td>{{number_format($item['parkingFee'] )}}</td>
+                                            <td>{{number_format( $item['fine'] )}}</td>
+                                            <td>{{number_format( $item['other_fees'] )}}</td>
+                                            <td>{{number_format( $item['sumServices']) }}</td>
+                                            {{-- <td><a href="/editAddress/{{ $item['id'] }}">Sửa</a></td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                             --}}
+
 
 
                         </div>
@@ -271,6 +280,42 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script>
+        // Hàm để thêm dấu phẩy vào giá trị số
+        function addCommas(inputId) {
+            const inputElement = document.getElementById(inputId);
+            let value = inputElement.value.replace(/\D/g, ''); // Lấy ra chỉ số và loại bỏ các ký tự không phải số
+            inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Thêm dấu phẩy vào hàng nghìn
+        }
+
+        // Gán sự kiện 'input' cho các trường nhập liệu
+        document.getElementById('electricityBill').addEventListener('input', function() {
+            addCommas('electricityBill');
+        });
+
+        document.getElementById('waterBill').addEventListener('input', function() {
+            addCommas('waterBill');
+        });
+        document.getElementById('wifiFee').addEventListener('input', function() {
+            addCommas('wifiFee');
+        });
+        document.getElementById('cleaningFee').addEventListener('input', function() {
+            addCommas('cleaningFee');
+        });
+        document.getElementById('parkingFee').addEventListener('input', function() {
+            addCommas('parkingFee');
+        });
+        document.getElementById('fine').addEventListener('input', function() {
+            addCommas('fine');
+        });
+        document.getElementById('other_fees').addEventListener('input', function() {
+            addCommas('other_fees');
+        });
+      
+        // Gán sự kiện cho các trường nhập liệu khác tương tự
+    </script> --}}
 
 
 </body>

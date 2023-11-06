@@ -6,9 +6,7 @@ use App\Http\Controllers\AdressController;
 use App\Http\Controllers\addTotalFloorController;
 use App\Http\Controllers\addRoomController;
 use App\Http\Controllers\ServiceFeeSummaryController;
-
-
-
+use App\Http\Controllers\servicesController;
 
 
 Route::get('/pageRegister', function () {
@@ -78,6 +76,9 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/services', function () {
         return view('admin.services'); 
     })->name('addservices'); 
+    Route::get('/services', [servicesController::class, 'getServices'])->name('addservices');
+    Route::post('/services', [servicesController::class, 'insertService'])->name('insertService');
+
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');

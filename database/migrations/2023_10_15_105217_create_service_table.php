@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // tiền dịch vụ
+        // tiền dịch vụ 
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("user_id");
-            $table->float("electricityBill");//tiền 1 số điện
-            $table->float("waterBill");//tiền 1 khối nước
+            $table->float("electricityBill")->nullable();//tiền 1 số điện
+            $table->float("waterBill")->nullable();//tiền 1 khối nước
             $table->float("wifiFee")->nullable();//tiền wifi
             $table->float("cleaningFee")->nullable();//dọn dẹp
             $table->float("parkingFee")->nullable();// tiền để xe
