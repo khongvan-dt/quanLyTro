@@ -282,12 +282,12 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{-- <script>
+    <script>
         // Hàm để thêm dấu phẩy vào giá trị số
         function addCommas(inputId) {
             const inputElement = document.getElementById(inputId);
             let value = inputElement.value.replace(/\D/g, ''); // Lấy ra chỉ số và loại bỏ các ký tự không phải số
-            inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ','); // Thêm dấu phẩy vào hàng nghìn
+            inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu phẩy vào hàng nghìn
         }
 
         // Gán sự kiện 'input' cho các trường nhập liệu
@@ -315,7 +315,7 @@
         });
       
         // Gán sự kiện cho các trường nhập liệu khác tương tự
-    </script> --}}
+    </script>
 
 
 </body>
