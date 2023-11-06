@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\serviceModel;
 use Illuminate\Support\Facades\DB;
+use App\Models\roomsModel;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -66,5 +67,30 @@ class servicesController extends Controller
         $listServices = serviceModel::where('user_id', $id)->get();
     
         return view('admin.services', ['listServices' => $listServices]);
+    }
+    public function deleteService($id) {
+        if (Auth::check()) {
+            $serviceID = serviceModel::find($id);
+            if ($serviceID) {
+                // Kiểm tra xem địa chỉ có đang được sử dụng bởi phòng không
+                $isAddressInUse = roomsModel::where('idServices', $id)->exists();
+                if ($isAddressInUse) {
+                    // Nếu địa chỉ đang được sử dụng, trả về thông báo lỗi
+                    return redirect()->route('addservices')->with('errorDelete', true);
+                } else {
+                      // Xóa địa chỉ
+                      $serviceID->delete();
+                      // Chuyển hướng với thông báo thành công
+                      return redirect()->route('addservices')->with('successDelete', true);
+                }
+            }else {
+                // Nếu địa chỉ không tồn tại, trả về thông báo lỗi
+                return redirect()->route('addAddres')->with('errorDelete', true);
+            }
+        } else {
+            // Người dùng chưa xác thực, chuyển hướng đến trang đăng nhập
+            return redirect()->route('pageLogin');
+        }
+
     }
 }

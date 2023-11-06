@@ -240,6 +240,7 @@
                                         <th>Để Xe</th>
                                         <th>Phạt</th>
                                         <th>Khoản Khác</th>
+                                        <th>Tổng Tiền Dịch Vụ</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
@@ -255,7 +256,12 @@
                                             <td>{{number_format( $item['fine'] )}}</td>
                                             <td>{{number_format( $item['other_fees'] )}}</td>
                                             <td>{{number_format( $item['sumServices']) }}</td>
-                                            {{-- <td><a href="/editAddress/{{ $item['id'] }}">Sửa</a></td> --}}
+                                            <td>
+                                                <a class="btn btn-primary" href="/editService/{{ $item['id'] }}">Sửa</a>
+                                                <a href="{{ route('deleteService', ['id' => $item->id]) }}"
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                    class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

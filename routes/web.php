@@ -78,6 +78,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('addservices'); 
     Route::get('/services', [servicesController::class, 'getServices'])->name('addservices');
     Route::post('/services', [servicesController::class, 'insertService'])->name('insertService');
+    Route::get('/deleteService/{id}',[servicesController::class, 'deleteService'])->name('deleteService');
 
 
 });
