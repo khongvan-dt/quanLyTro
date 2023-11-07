@@ -177,7 +177,7 @@
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
+                                        <th>ID</th>
                                         <th>Đường</th>
                                         <th>Chức năng</th>
                                     </tr>

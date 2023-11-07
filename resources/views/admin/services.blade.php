@@ -233,6 +233,7 @@
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>v
                                         <th>Tiền/Điện</th>
                                         <th>Nước/Khối</th>
                                         <th>Tiền wifi</th>
@@ -240,7 +241,7 @@
                                         <th>Để Xe</th>
                                         <th>Phạt</th>
                                         <th>Khoản Khác</th>
-                                        <th>Tổng Tiền Dịch Vụ</th>
+                                        <th>Tổng Tiền</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
@@ -248,23 +249,25 @@
                                     <?php $i = 1; ?>
                                     @foreach ($listServices as $item)
                                         <tr>
-                                            <td>{{ number_format($item['electricityBill']) }}</td>
-                                            <td>{{number_format($item['waterBill'])}}</td>
-                                            <td>{{number_format($item['wifiFee'] )}}</td>
-                                            <td>{{number_format( $item['cleaningFee'] )}}</td>
-                                            <td>{{number_format($item['parkingFee'] )}}</td>
-                                            <td>{{number_format( $item['fine'] )}}</td>
-                                            <td>{{number_format( $item['other_fees'] )}}</td>
-                                            <td>{{number_format( $item['sumServices']) }}</td>
+                                            <td> <?php echo $i++ ?></td>
+                                            <td>{{ number_format($item['electricityBill'], 3) }} VND</td>
+                                            <td>{{ number_format($item['waterBill'], 3) }} VND</td>
+                                            <td>{{ number_format($item['wifiFee'], 3) }} VND</td>
+                                            <td>{{ number_format($item['cleaningFee'], 3) }} VND</td>
+                                            <td>{{ number_format($item['parkingFee'], 3) }} VND</td>
+                                            <td>{{ number_format($item['fine'], 3) }} VND</td>
+                                            <td>{{ number_format($item['other_fees'], 3) }} VND</td>
+                                            <td><b>{{ number_format($item['sumServices'], 3) }} VND</b></td>
                                             <td>
                                                 <a class="btn btn-primary" href="/editService/{{ $item['id'] }}">Sửa</a>
                                                 <a href="{{ route('deleteService', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
+                                                    class="btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                
                             </table>
 
 

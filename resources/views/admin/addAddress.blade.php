@@ -211,6 +211,7 @@
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Thành Phố</th>
                                         <th>Quận/Huyện</th>
                                         <th>Phường/Xã</th>
@@ -222,6 +223,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($combinedData as $item)
                                         <tr>
+                                            <td> <?php echo $i++ ?></td>
                                             <td>{{ $item['city'] }}</td>
                                             <td>{{ $item['district'] }}</td>
                                             <td>{{ $item['wardCommune'] }}</td>

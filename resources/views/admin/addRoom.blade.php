@@ -218,6 +218,7 @@
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Thành Phố</th>
                                         <th>Quận/Huyện</th>
                                         <th>Phường/Xã</th>
@@ -227,7 +228,9 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tableBody">
+                                    <?php $i = 1; ?>
                                     <tr class="hidden-row">
+                                        <td> <?php echo $i++ ?></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

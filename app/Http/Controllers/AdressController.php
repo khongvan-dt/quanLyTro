@@ -155,7 +155,7 @@ class AdressController extends Controller
             ->where('id', $idAddress->id)
             ->get();
     
-        // Check if the collection is empty and set the specifically value
+// Kiểm tra xem bộ sưu tập có trống không và đặt giá trị cụ thể
         $specifically = $importProducts->isEmpty() ? '' : $importProducts[0]->streetAddress;
     
         // Access the id of the first item in the collection

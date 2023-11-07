@@ -79,7 +79,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/services', [servicesController::class, 'getServices'])->name('addservices');
     Route::post('/services', [servicesController::class, 'insertService'])->name('insertService');
     Route::get('/deleteService/{id}',[servicesController::class, 'deleteService'])->name('deleteService');
-
+    Route::get('/editService/{id}', [servicesController::class, 'editService'])->name('editService');
+    Route::post('/updateServices/{id}', [servicesController::class, 'updateServices'])->name('updateServices');
 
 });
 Route::post('/login', [registerController::class, 'login'])->name('login');
