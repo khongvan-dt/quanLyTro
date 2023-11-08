@@ -21,6 +21,11 @@ Route::get('/pageError400', function () {
     return view('web.page-error-400');
 })->name('pageError400');
 
+
+Route::post('/login', [registerController::class, 'login'])->name('login');
+Route::post('/pageRegister', [registerController::class, 'insertRegister'])->name('register');
+Route::get('/logout', [registerController::class, 'logout'])->name('logout');
+
 Route::middleware(['checkRole::user'])->group(function () {
 
 //check cố tình đăng nhập vào bằng user
@@ -83,6 +88,4 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::post('/updateServices/{id}', [servicesController::class, 'updateServices'])->name('updateServices');
 
 });
-Route::post('/login', [registerController::class, 'login'])->name('login');
-Route::post('/pageRegister', [registerController::class, 'insertRegister'])->name('register');
-Route::post('/logout', [registerController::class, 'logout'])->name('logout');
+

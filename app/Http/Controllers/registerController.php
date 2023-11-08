@@ -44,38 +44,41 @@ class registerController extends Controller
         }
     }
     public function login(Request $request)
-{
-    // Kiểm tra dữ liệu đầu vào
-    $request->validate([
-        'name' => 'required',
-        'password' => 'required',
-    ]);
+    {
+        // Kiểm tra dữ liệu đầu vào
+        $request->validate([
+            'name' => 'required',
+            'password' => 'required',
+        ]);
 
-    $credentials = $request->only('name', 'password', 'role');
+        $credentials = $request->only('name', 'password', 'role');
 
-    if (Auth::attempt($credentials)) {
-        // Authentication successful
-        $user = Auth::user();
-        // Kiểm tra tài khoản
-        if ($user->role === 'admin') {
-            // Redirect admin users to the 'addAddress' route
-            return redirect()->route('addAddres');
-        } elseif ($user->role === 'user') {
-            // Nếu người dùng có vai trò "user", chuyển hướng đến trang lỗi 400 (pageError400)
-            return redirect()->route('pageError400');
-        } else {
-            // Xử lý trường hợp khác nếu cần
-            dd($user->role);
+        if (Auth::attempt($credentials)) {
+            // Authentication successful
+            $user = Auth::user();
+            // Kiểm tra tài khoản
+            if ($user->role === 'admin') {
+                // Redirect admin users to the 'addAddress' route
+                return redirect()->route('addAddres');
+            } elseif ($user->role === 'user') {
+                // Nếu người dùng có vai trò "user", chuyển hướng đến trang lỗi 400 (pageError400)
+                return redirect()->route('pageError400');
+            } else {
+                // Xử lý trường hợp khác nếu cần
+                dd($user->role);
+            }
         }
+        // Nếu đăng nhập không thành công, chuyển hướng trở lại trang đăng nhập với thông báo lỗi
+        return redirect()->route('pageLogin')->with('login_failed', true);
     }
-    // Nếu đăng nhập không thành công, chuyển hướng trở lại trang đăng nhập với thông báo lỗi
-    return redirect()->route('pageLogin')->with('login_failed', true);
-}
 
     public function logout()
     {
-        Auth::logout();
-        return redirect()->route('pageLogin');
+        Auth::logout(); // Log the user out
+    
+        return redirect()->route('pageLogin')->with('successLogout', true);
     }
+
+    
     
 }

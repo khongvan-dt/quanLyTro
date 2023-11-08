@@ -12,7 +12,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
 </head>
 
@@ -33,20 +33,15 @@
             </div>
         </form>
         <!-- Navbar-->
+       
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
-                    <li>
-                        <form action="{{ route('logout') }}" method="post">
-                            <button class="dropdown-item">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+                <a id="navbarDropdown" href="{{ route('logout') }}" role="button">
+                    <i class="fa-solid fa-right-from-bracket"></i> 
+                </a>
             </li>
         </ul>
+        
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -223,17 +218,18 @@
                                     <?php $i = 1; ?>
                                     @foreach ($combinedData as $item)
                                         <tr>
-                                            <td> <?php echo $i++ ?></td>
+                                            <td> <?php echo $i++; ?></td>
                                             <td>{{ $item['city'] }}</td>
                                             <td>{{ $item['district'] }}</td>
                                             <td>{{ $item['wardCommune'] }}</td>
                                             <td>{{ $item['streetAddress'] }}</td>
                                             <td>
-                                                <a href="/editAddress/{{ $item['id'] }}" class="btn btn-primary">Sửa</a>
-                                                
+                                                <a href="/editAddress/{{ $item['id'] }}"
+                                                    class="btn btn-primary">Sửa</a>
+
                                                 <a href="/deleteAddress/{{ $item['id'] }}"
-                                                onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                    class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
                                             </td>
                                         </tr>
                                     @endforeach

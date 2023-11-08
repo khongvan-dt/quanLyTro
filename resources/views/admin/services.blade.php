@@ -34,19 +34,11 @@
                         class="fas fa-search"></i></button>
             </div>
         </form>
-        <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
-                    <li>
-                        <form action="{{ route('logout') }}" method="post">
-                            <button class="dropdown-item">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+                <a id="navbarDropdown" href="{{ route('logout') }}" role="button">
+                    <i class="fa-solid fa-right-from-bracket"></i> 
+                </a>
             </li>
         </ul>
     </nav>
@@ -177,45 +169,64 @@
                             <form action="{{ route('insertService') }}" method="POST" class="row g-3">
                                 @csrf
 
-                                <div class="col-12">
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="electricityBill"
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="electricityBill" class="form-label"><b>Tiền 1 số điện:</b></label>
+                                        <input type="text" class="form-control thousands-separator" name="electricityBill"
                                             id="electricityBill"
-                                            placeholder="Tiền 1 số điện (nếu có,không có không cần điền)">
+                                            placeholder="Tiền 1 số điện (nếu có, không có không cần điền)"
+                                            >
                                     </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="waterBill" id="waterBill"
-                                            placeholder="Tiền một khối nước (nếu có,không có không cần điền) ">
+                                
+                                    <div class="col-md-6">
+                                        <label  for="waterBill" class="form-label"><b>Tiền một khối nước:</b></label>
+                                        <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill"
+                                            placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
+                                            >
                                     </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="wifiFee" id="wifiFee"
-                                            placeholder="Tiền wifi (nếu có,không có không cần điền)">
-                                    </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="cleaningFee"
-                                            id="cleaningFee"
-                                            placeholder="Tiền dọn dẹp (nếu có,không có không cần điền)">
-                                    </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="parkingFee" id="parkingFee"
-                                            placeholder="Tiền để xe (nếu có,không có không cần điền)">
-                                    </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="fine" id="fine"
-                                            placeholder="Tiền phạt (nếu có,không có không cần điền)">
-                                    </div>
-                                    <div>
-                                        <label for="inputAddress2" class="form-label"></label>
-                                        <input type="text" class="form-control" name="other_fees" id="other_fees"
-                                            placeholder="Tiền khác (nếu có,không có không cần điền)">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="wifiFee" class="form-label"><b>Tiền wifi:</b></label>
+                                        <input type="text" class="form-control thousands-separator" name="wifiFee"
+                                            id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
+                                           >
                                     </div>
 
+                                    <div class="col-md-6">
+                                        <label for="cleaningFee" class="form-label"><b>Tiền dọn dẹp:</b></label>
+                                        <input type="text" class="form-control thousands-separator"
+                                            name="cleaningFee" id="cleaningFee"
+                                            placeholder="Tiền dọn dẹp (nếu có, không có không cần điền)"
+                                           >
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="parkingFee" class="form-label"><b>Tiền để xe:</b></label>
+                                        <input type="text" class="form-control thousands-separator"
+                                            name="parkingFee" id="parkingFee"
+                                            placeholder="Tiền để xe (nếu có, không có không cần điền)"
+                                            >
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="fine" class="form-label"><b>Tiền phạt:</b></label>
+                                        <input type="text" class="form-control thousands-separator" name="fine"
+                                            id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
+                                            >
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="other_fees" class="form-label"><b>Tiền khác:</b></label>
+                                        <input type="text" class="form-control" name="other_fees" id="other_fees"
+                                            placeholder="Tiền khác (nếu có, không có không cần điền)"
+                                            >
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Lưu</button>
