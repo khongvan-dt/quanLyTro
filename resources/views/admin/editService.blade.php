@@ -51,7 +51,7 @@
                     <div class="nav">
 
                         <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div> 
                             Thêm Phòng
                         </a>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -122,14 +122,14 @@
                                         <input type="text" class="form-control thousands-separator" name="electricityBill"
                                             id="electricityBill"
                                             placeholder="Tiền 1 số điện (nếu có, không có không cần điền)"
-                                            value="{{ $service->electricityBill }}">
+                                            value="{{number_format($service->electricityBill, 3) }}">
                                     </div>
                                 
                                     <div class="col-md-6">
                                         <label  for="waterBill" class="form-label"><b>Tiền một khối nước</b></label>
                                         <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill"
                                             placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
-                                            value="{{ $service->waterBill }}">
+                                            value="{{number_format($service->waterBill, 3) }}">
                                     </div>
                                 </div>
 
@@ -138,7 +138,7 @@
                                         <label for="wifiFee" class="form-label"><b>Tiền wifi</b></label>
                                         <input type="text" class="form-control thousands-separator" name="wifiFee"
                                             id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
-                                            value="{{ $service->wifiFee }}">
+                                            value="{{number_format($service->wifiFee, 3) }}">
                                     </div>
 
                                     <div class="col-md-6">
@@ -146,7 +146,7 @@
                                         <input type="text" class="form-control thousands-separator"
                                             name="cleaningFee" id="cleaningFee"
                                             placeholder="Tiền dọn dẹp (nếu có, không có không cần điền)"
-                                            value="{{ $service->cleaningFee }}">
+                                            value="{{number_format($service->cleaningFee, 3) }}">
                                     </div>
                                 </div>
 
@@ -156,14 +156,14 @@
                                         <input type="text" class="form-control thousands-separator"
                                             name="parkingFee" id="parkingFee"
                                             placeholder="Tiền để xe (nếu có, không có không cần điền)"
-                                            value="{{ $service->parkingFee }}">
+                                            value="{{number_format($service->parkingFee, 3) }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="fine" class="form-label"><b>Tiền phạt</b></label>
                                         <input type="text" class="form-control thousands-separator" name="fine"
                                             id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
-                                            value="{{ $service->fine }}">
+                                            value="{{number_format($service->fine, 3) }}">
                                     </div>
                                 </div>
 
@@ -172,7 +172,7 @@
                                         <label for="other_fees" class="form-label"><b>Tiền khác</b></label>
                                         <input type="text" class="form-control" name="other_fees" id="other_fees"
                                             placeholder="Tiền khác (nếu có, không có không cần điền)"
-                                            value="{{ $service->other_fees }}">
+                                            value="{{number_format($service->other_fees, 3) }}">
                                     </div>
                                 </div>
 
