@@ -19,10 +19,10 @@ class addRoomController extends Controller
     public function getNumberFloors(Request $request) {
         $totalFloorId = $request->input('totalFloorId');
     
-        // Truy vấn dữ liệu "Tầng" dựa trên $totalFloorId
+        // Query the "Tầng" data based on $totalFloorId
         $numberFloors = NumberFloorsModel::where('idTotalFloors', $totalFloorId)->pluck('floors', 'id')->toArray();
-    
-        // Trả về dữ liệu dưới dạng JSON
+        
+        // Return the data as JSON
         return response()->json($numberFloors);
     }
     

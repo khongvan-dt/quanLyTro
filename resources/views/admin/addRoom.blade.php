@@ -172,24 +172,48 @@
 
                                     </select>
                                 </div>
+                                
                                 <div class="col-md-1">
-                                    <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district" id="totalFloors">
+                                    <select class="form-select form-select-sm mb-3 district" aria-label=".form-select-sm" name="district" id="totalFloors">
                                         <option value="" selected>Tổng Tầng</option>
                                         @foreach ($listFloors as $item)
                                             <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
                                         @endforeach
                                     </select>
-
-
                                 </div>
                                 <div class="col-md-1">
-                                    <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
-                                        name="commune" id="numberFloors">
+                                    <select class="form-select form-select-sm ward" aria-label=".form-select-sm" name="commune" id="numberFloors">
                                         <option value="" selected>Tầng</option>
                                     </select>
-
                                 </div>
+                                
+                                <script>
+                                $(document).ready(function () {
+                                    $('#totalFloors').on('change', function () {
+                                        var totalFloorId = $(this).val();
+                                        if (totalFloorId) {
+                                            // Send an Ajax request to fetch the corresponding "Tầng" values
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "/get-number-floors",
+                                                data: { totalFloorId: totalFloorId },
+                                                success: function (data) {
+                                                    // Clear and populate the "Tầng" dropdown with the received data
+                                                    var numberFloorsDropdown = $('#numberFloors');
+                                                    numberFloorsDropdown.empty();
+                                                    numberFloorsDropdown.append($('<option value="" selected>Tầng</option>'));
+                                
+                                                    $.each(data, function (key, value) {
+                                                        numberFloorsDropdown.append($('<option value="' + key + '">' + value + '</option>'));
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                });
+                                </script>
+                                </div>
+                                
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label"></label>
                                     <input type="text" class="form-control" name="specifically"

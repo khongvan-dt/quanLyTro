@@ -67,6 +67,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
         return view('admin.addRoom'); 
     })->name('addRoom'); 
     Route::get('/Room', [addRoomController::class, 'getFloor'])->name('addRoom');
+    Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors']);
 
 
     Route::get('/ServiceFeeSummary', function () {
