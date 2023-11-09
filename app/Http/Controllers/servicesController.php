@@ -14,52 +14,51 @@ use Illuminate\Support\Facades\Auth;
 class servicesController extends Controller
 {
     public function insertService(Request $request)
-    {
-        if (Auth::check()) {
-            $id = Auth::id();
+{
+    if (Auth::check()) {
+        $id = Auth::id();
 
-            $request->validate([
-                "electricityBill" => "nullable|numeric",
-                "waterBill" => "nullable|numeric",
-                "wifiFee" => "nullable|numeric",
-                "cleaningFee" => "nullable|numeric",
-                "parkingFee" => "nullable|numeric",
-                "fine" => "nullable|numeric",
-                "other_fees" => "nullable|numeric",
-            ]);
+        $request->validate([
+            "electricityBill" => "nullable|numeric",
+            "waterBill" => "nullable|numeric",
+            "wifiFee" => "nullable|numeric",
+            "cleaningFee" => "nullable|numeric",
+            "parkingFee" => "nullable|numeric",
+            "fine" => "nullable|numeric",
+            "other_fees" => "nullable|numeric",
+        ]);
 
-            $electricityBill = is_numeric($request->input("electricityBill")) ? $request->input("electricityBill") : 0;
-            $waterBill = is_numeric($request->input("waterBill")) ? $request->input("waterBill") : 0;
-            $wifiFee = is_numeric($request->input("cleaningFee")) ? $request->input("cleaningFee") : 0;
-            $cleaningFee = is_numeric($request->input("parkingFee")) ? $request->input("parkingFee") : 0;
-            $parkingFee = is_numeric($request->input("fine")) ? $request->input("fine") : 0;
-            $fine = is_numeric($request->input("fine")) ? $request->input("fine") : 0;
-            $other_fees = is_numeric($request->input("other_fees")) ? $request->input("other_fees") : 0;
+        $electricityBill = $request->input("electricityBill") ?? 0;
+        $waterBill = $request->input("waterBill") ?? 0;
+        $wifiFee = $request->input("wifiFee") ?? 0;
+        $cleaningFee = $request->input("cleaningFee") ?? 0;
+        $parkingFee = $request->input("parkingFee") ?? 0;
+        $fine = $request->input("fine") ?? 0;
+        $other_fees = $request->input("other_fees") ?? 0;
 
+        $serviceModel = new ServiceModel();
+        $serviceModel->user_id = $id;
+        $serviceModel->electricityBill = $electricityBill;
+        $serviceModel->waterBill = $waterBill;
+        $serviceModel->wifiFee = $wifiFee;
+        $serviceModel->cleaningFee = $cleaningFee;
+        $serviceModel->parkingFee = $parkingFee;
+        $serviceModel->fine = $fine;
+        $serviceModel->other_fees = $other_fees;
 
-            $serviceModel = new ServiceModel();
+        $sumServices = $electricityBill + $waterBill + $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
+        $serviceModel->sumServices = $sumServices;
 
-            $serviceModel->user_id = $id;
-            $serviceModel->electricityBill = $electricityBill;
-            $serviceModel->waterBill = $waterBill;
-            $serviceModel->wifiFee = $wifiFee;
-            $serviceModel->cleaningFee = $cleaningFee;
-            $serviceModel->parkingFee = $parkingFee;
-            $serviceModel->fine = $fine;
-            $serviceModel->other_fees = $other_fees;
-
-            $sumServices = $electricityBill + $waterBill + $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
-            $serviceModel->sumServices = $sumServices;
-
-            if ($serviceModel->save()) {
-                return redirect()->route('addservices')->with('success', true);
-            } else {
-                return redirect()->route('addservices')->with('error', true);
-            }
+        if ($serviceModel->save()) {
+            return redirect()->route('addservices')->with('success', true);
         } else {
-            return redirect()->route('pageLogin');
+            return redirect()->route('addservices')->with('error', true);
         }
+    } else {
+        return redirect()->route('pageLogin');
     }
+}
+
     public function getServices() {
         // Get the authenticated user's ID
         $id = Auth::id();
@@ -106,9 +105,9 @@ class servicesController extends Controller
         }
     }
     public function updateServices($id, Request $request) {
-        if(Auth::check()) {
+        if (Auth::check()) {
             $idUser = Auth::id();
-          
+    
             $request->validate([
                 "electricityBill" => "nullable|numeric",
                 "waterBill" => "nullable|numeric",
@@ -118,16 +117,21 @@ class servicesController extends Controller
                 "fine" => "nullable|numeric",
                 "other_fees" => "nullable|numeric",
             ]);
-            $electricityBill = is_numeric($request->input("electricityBill")) ? $request->input("electricityBill") : 0;
-            $waterBill = is_numeric($request->input("waterBill")) ? $request->input("waterBill") : 0;
-            $wifiFee = is_numeric($request->input("cleaningFee")) ? $request->input("cleaningFee") : 0;
-            $cleaningFee = is_numeric($request->input("parkingFee")) ? $request->input("parkingFee") : 0;
-            $parkingFee = is_numeric($request->input("fine")) ? $request->input("fine") : 0;
-            $fine = is_numeric($request->input("fine")) ? $request->input("fine") : 0;
-            $other_fees = is_numeric($request->input("other_fees")) ? $request->input("other_fees") : 0;
-
+    
+            $electricityBill = $request->input("electricityBill") ?? 0;
+            $waterBill = $request->input("waterBill") ?? 0;
+            $wifiFee = $request->input("wifiFee") ?? 0;
+            $cleaningFee = $request->input("cleaningFee") ?? 0;
+            $parkingFee = $request->input("parkingFee") ?? 0;
+            $fine = $request->input("fine") ?? 0;
+            $other_fees = $request->input("other_fees") ?? 0;
+    
             $serviceModel = serviceModel::find($id);
-
+            
+            if (!$serviceModel) {
+                return redirect()->route('addservices')->with('error', true);
+            }
+    
             $serviceModel->user_id = $idUser;
             $serviceModel->electricityBill = $electricityBill;
             $serviceModel->waterBill = $waterBill;
@@ -136,18 +140,18 @@ class servicesController extends Controller
             $serviceModel->parkingFee = $parkingFee;
             $serviceModel->fine = $fine;
             $serviceModel->other_fees = $other_fees;
-
+    
             $sumServices = $electricityBill + $waterBill + $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
             $serviceModel->sumServices = $sumServices;
-
+    
             if ($serviceModel->save()) {
                 return redirect()->route('addservices')->with('successUpdelete', true);
             } else {
-                return redirect()->route('editService')->with('error', true);
+                return redirect()->route('editService', ['id' => $id])->with('error', true);
             }
-            
-        }else {
+        } else {
             return redirect()->route('pageLogin');
         }
     }
+    
 }

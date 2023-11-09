@@ -10,7 +10,7 @@ class serviceModel extends Model
     protected $table = 'services';
 
     protected $fillable = [
-        'user_id',
+        'idUser',
         'electricityBill',
         'waterBill',
         'wifiFee',

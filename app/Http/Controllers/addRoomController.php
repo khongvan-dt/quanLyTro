@@ -7,34 +7,33 @@ use Illuminate\Http\Request;
 use App\Models\totalFlorModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\numberFloorsModel;
+use App\Models\serviceFeeSummaryModel;
+use App\Models\serviceModel;
+use Illuminate\Support\Facades\Auth;
+
+
 use App\Models\roomsModel;
 
 class addRoomController extends Controller
 {
-    public function getFloor(){
-        $listFloors = totalFlorModel::all();
-        return view('admin.addRoom', ['listFloors' => $listFloors]);
-    }
-    
-    public function getNumberFloors(Request $request) {
-        $totalFloorId = $request->input('totalFloorId');
-    
-        // Query the "Tầng" data based on $totalFloorId
-        $numberFloors = NumberFloorsModel::where('idTotalFloors', $totalFloorId)->pluck('floors', 'id')->toArray();
-        
-        // Return the data as JSON
-        return response()->json($numberFloors);
-    }
     
     
     public function getAddress(Request $request)
-    {
+    { 
+        $id = Auth::id();
         // Lấy dữ liệu từ cơ sở dữ liệu
-        $dbData = DB::table('accommodationarea')->select('id', 'city', 'districts', 'wardsCommunes', 'streetAddress')->get();
-    
+        $dbData =  DB::table('accommodationarea')
+        ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
+        ->where('idUser', $id)
+        ->get();
+        // $listFloors = totalFlorModel::all();
         // Lấy dữ liệu từ JSON
         $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
-    
+
+        $listFloors = totalFlorModel::where('idUser', $id)->get();
+        $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $id)->get();
+        $Services = serviceModel::where('idUser', $id)->get();        
+
         // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
         $combinedData = [];
     
@@ -58,7 +57,14 @@ class addRoomController extends Controller
                 'streetAddress' => $row->streetAddress,
             ];
         }
-        return response()->json(['data' => $combinedData]);
+        return view('admin.addRoom')->with([
+            'combinedData' => $combinedData,
+            'listFloors' => $listFloors,
+            'serviceFeeSummary' => $serviceFeeSummary,
+            'Services'=> $Services,
+        ]);
+
+        
 
     }
     
@@ -104,4 +110,11 @@ class addRoomController extends Controller
         return 'Không tìm thấy';
     }
 
+    public function getNumberFloors(Request $request) {
+        $totalFloorId = $request->input('totalFloorId');
+    
+        // Query the "Tầng" data based on $totalFloorId
+        $numberFloors = NumberFloorsModel::where('idTotalFloors', $totalFloorId)->pluck('floors', 'id')->toArray();
+        return response()->json($numberFloors);
+    }
 }

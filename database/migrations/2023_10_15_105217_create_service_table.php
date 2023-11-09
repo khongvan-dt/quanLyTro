@@ -14,7 +14,7 @@ return new class extends Migration
         // tiền dịch vụ 
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("idUser");
             $table->float("electricityBill", 10, 3)->nullable();//tiền 1 số điện
             $table->float("waterBill", 10, 3)->nullable();//tiền 1 khối nước
             $table->float("wifiFee", 10, 3)->nullable();//tiền wifi
