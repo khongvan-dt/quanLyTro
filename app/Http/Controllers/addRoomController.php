@@ -117,4 +117,56 @@ class addRoomController extends Controller
         $numberFloors = NumberFloorsModel::where('idTotalFloors', $totalFloorId)->pluck('floors', 'id')->toArray();
         return response()->json($numberFloors);
     }
+    
+    public function insertRoom(Request $request)
+    { 
+        // dd($request->all()); // Add this line to display the data
+        // exit(0);
+        if (Auth::check()) {
+            $id = Auth::id();
+    
+            $request->validate([
+                'idAccommodationArea' => 'required',
+                'idTotalFloors' => 'required',
+                'idNumberFloors' => 'required',
+                'idserviceFeeSummary' => 'required',
+                'idServices' => 'required',
+                'roomName' => 'required',
+                'interior' => 'required',
+                'capacity' => 'required',
+                'priceRoom' => 'nullable|numeric',
+            ]);
+           
+            $idAccommodationArea = $request->input('idAccommodationArea');
+            $idTotalFloors = $request->input('idTotalFloors');
+            $idNumberFloors = $request->input('idNumberFloors');
+            $idserviceFeeSummary = $request->input('idserviceFeeSummary');
+            $idServices = $request->input('idServices');
+            $roomName = $request->input('roomName');
+            $interior = $request->input('interior');
+            $capacity = $request->input('capacity');
+            $priceRoom = $request->input('priceRoom');
+    
+            $room = new roomsModel();
+            $room->user_id = $id;
+            $room->idAccommodationArea = $idAccommodationArea;
+            $room->idTotalFloors = $idTotalFloors;
+            $room->idNumberFloors = $idNumberFloors;
+            $room->idserviceFeeSummary = $idserviceFeeSummary;
+            $room->idServices = $idServices;
+            $room->roomName = $roomName;
+            $room->interior = $interior;
+            $room->capacity = $capacity;
+            $room->priceRoom = $priceRoom;
+    
+            $saved = $room->save();
+    
+            if ($saved) {
+                return redirect()->route('addRoom')->with('success', true);
+            } else {
+                return redirect()->route('addRoom')->with('error', true);
+            }
+        }
+    }
+    
 }

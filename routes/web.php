@@ -68,6 +68,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('addRoom'); 
     Route::get('/Room', [addRoomController::class, 'getAddress'])->name('addRoom');
     Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors']);
+    Route::post('/Room', [addRoomController::class, 'insertRoom'])->name('insertRoom');
+
 
 
 

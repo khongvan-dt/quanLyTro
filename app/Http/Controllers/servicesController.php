@@ -15,6 +15,8 @@ class servicesController extends Controller
 {
     public function insertService(Request $request)
 {
+    dd($request->all()); // Add this line to display the data
+        exit(0);
     if (Auth::check()) {
         $id = Auth::id();
 
@@ -63,7 +65,7 @@ class servicesController extends Controller
         // Get the authenticated user's ID
         $id = Auth::id();
         // Retrieve the list of floors for the authenticated user
-        $listServices = serviceModel::where('user_id', $id)->get();
+        $listServices = ServiceModel::where('idUser', $id)->get();
     
         return view('admin.services', ['listServices' => $listServices]);
     }
@@ -132,7 +134,7 @@ class servicesController extends Controller
                 return redirect()->route('addservices')->with('error', true);
             }
     
-            $serviceModel->user_id = $idUser;
+            $serviceModel->idUser  = $idUser;
             $serviceModel->electricityBill = $electricityBill;
             $serviceModel->waterBill = $waterBill;
             $serviceModel->wifiFee = $wifiFee;

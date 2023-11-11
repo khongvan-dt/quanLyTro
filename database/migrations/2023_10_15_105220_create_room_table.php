@@ -22,7 +22,7 @@ return new class extends Migration
         $table->unsignedBigInteger("idServices");
 
         $table->string("roomName"); // tên phòng, số phòng
-        $table->float("priceRoom"); // giá phòng
+        $table->float("priceRoom", 10, 3); // giá phòng
         $table->string("interior"); // nội thất
         $table->string("capacity"); // sức chứa
 

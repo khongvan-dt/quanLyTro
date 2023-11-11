@@ -88,9 +88,7 @@
                 <div class="container-fluid px-4">
                     <h3 class="mt-4"> Thêm Phòng</h3>
 
-
                     <div class="card mb-4">
-
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
@@ -164,11 +162,11 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
+                            <form action="{{ route('insertRoom') }}" method="POST" class="row g-3">
                                 @csrf
                                 <div class="col-md-4">
                                     <select class="form-select form-select-sm mb-3 city" aria-label=".form-select-sm"
-                                        name="city">
+                                        name="idAccommodationArea">
                                         <option value="" selected>Địa Chỉ</option>
                                         @foreach ($combinedData as $item)
                                             <option value="{{ $item['id'] }}">
@@ -181,7 +179,7 @@
 
                                 <div class="col-md-1">
                                     <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district" id="totalFloors">
+                                        aria-label=".form-select-sm" name="idTotalFloors" id="idTotalFloors">
                                         <option value="" selected>Tổng Tầng</option>
                                         @foreach ($listFloors as $item)
                                             <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
@@ -190,13 +188,14 @@
                                 </div>
                                 <div class="col-md-1">
                                     <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
-                                        name="commune" id="numberFloors">
+                                        name="idNumberFloors" id="idNumberFloors">
                                         <option value="" selected>Tầng</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2">
                                     <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district" id="totalFloors">
+                                        aria-label=".form-select-sm" name="idserviceFeeSummary"
+                                        id="idserviceFeeSummary">
                                         <option value="" selected>Tính tiền Dịch vụ</option>
                                         @foreach ($serviceFeeSummary as $item)
                                             <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -205,7 +204,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district" id="totalFloors">
+                                        aria-label=".form-select-sm" name="idServices" id="idServices">
                                         <option value="" selected>Chi Tiết Tiền Dịch Vụ</option>
                                         @foreach ($Services as $item)
                                             <option value="{{ $item->id }}">
@@ -220,122 +219,104 @@
                                         @endforeach
 
                                     </select>
+
+
                                 </div>
+                                <div class="card-body ">
 
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#totalFloors').on('change', function() {
-                                            var totalFloorId = $(this).val();
-                                            if (totalFloorId) {
-                                                // Send an Ajax request to fetch the corresponding "Tầng" values
-                                                $.ajax({
-                                                    type: "GET",
-                                                    url: "/get-number-floors",
-                                                    data: {
-                                                        totalFloorId: totalFloorId
-                                                    },
-                                                    success: function(data) {
-                                                        // Clear and populate the "Tầng" dropdown with the received data
-                                                        var numberFloorsDropdown = $('#numberFloors');
-                                                        numberFloorsDropdown.empty();
-                                                        numberFloorsDropdown.append($(
-                                                            '<option value="" selected>Tầng</option>'));
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="roomName" class="form-label"><b>Tên phòng, Số
+                                                    phòng</b></label>
+                                            <input type="text" class="form-control thousands-separator"
+                                                name="roomName" id="roomName">
+                                        </div>
 
-                                                        $.each(data, function(key, value) {
-                                                            numberFloorsDropdown.append($('<option value="' + key +
-                                                                '">' + value + '</option>'));
-                                                        });
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    });
-                                </script>
-                        </div>
-                        <div class="card-body ">
+                                        <div class="col-md-6">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="electricityBill" class="form-label"><b>Tên phòng, Số phòng</b></label>
-                                    <input type="text" class="form-control thousands-separator"
-                                        name="electricityBill" id="electricityBill"
-                                        placeholder="Tiền 1 số điện (nếu có, không có không cần điền)">
-                                </div>
+                                            <label for="priceRoom" class="form-label"><b>Giá Phòng</b></label>
 
-                                <div class="col-md-6" >
-                                    <div class="col-md-2 ">
-                                        <label for="waterBill" class="form-label"><b>Giá Phòng</b></label>
+
+                                            <input type="text" class="form-control thousands-separator"
+                                                name="priceRoom" id="priceRoom" placeholder="chỉ nhập số ">
+
+                                        </div>
                                     </div>
-                                    <div class="col-md-10">
-                                        <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill" placeholder="Giá Phòng (nếu có, không cần điền)">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="interior" class="form-label"><b>Đồ Có Sẵn </b></label>
+                                            <input type="text" class="form-control thousands-separator"
+                                                name="interior" id="interior">
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="capacity" class="form-label"><b>Số Người Ở</b></label>
+                                            <select class="form-select form-select-sm mb-3 district"
+                                                aria-label=".form-select-sm" name="capacity" id="capacity">
+                                                <option value="" selected>chọn</option>
+                                                <option value="1 người" selected>1 người</option>
+                                                <option value="2 người" selected>2 người</option>
+                                                <option value="3 người" selected>3 người</option>
+                                                <option value="4 người" selected>4 người</option>
+                                                <option value="5 người" selected>5 người</option>
+                                                <option value="6 người" selected>6 người</option>
+                                                <option value="7 người" selected>7 người</option>
+                                                <option value="8 người" selected>8 người</option>
+                                                <option value="9 người" selected>9 người</option>
+                                                <option value="10 người" selected>10 người</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="margin-top: 10px">
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
                                     </div>
                                 </div>
-                                
+                            </form>
 
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="wifiFee" class="form-label"><b>Đồ Có Sẵn </b></label>
-                                    <input type="text" class="form-control thousands-separator" name="wifiFee"
-                                        id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="cleaningFee" class="form-label"><b>Số Người Ở</b></label>
-                                    <input type="text" class="form-control thousands-separator" name="cleaningFee"
-                                        id="cleaningFee" placeholder="Tiền dọn dẹp (nếu có, không có không cần điền)">
-                                </div>
-                            </div>
 
                         </div>
+                    </div>
 
-                        <div class="col-12" style="margin-top: 10px">
-                            <button type="submit" class="btn btn-primary">Lưu</button>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            DataTable Example
                         </div>
-                        </form>
+                        <div class="card-body">
+
+                            <table id="datatablesSimple" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Thành Phố</th>
+                                        <th>Quận/Huyện</th>
+                                        <th>Phường/Xã</th>
+                                        <th>Đường</th>
+                                        <th>Chức Năng</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    <?php $i = 1; ?>
+                                    <tr class="hidden-row">
+                                        <td> <?php echo $i++; ?></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-
-                        <table id="datatablesSimple" class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Thành Phố</th>
-                                    <th>Quận/Huyện</th>
-                                    <th>Phường/Xã</th>
-                                    <th>Đường</th>
-                                    <th>Chức Năng</th>
-
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                                <?php $i = 1; ?>
-                                <tr class="hidden-row">
-                                    <td> <?php echo $i++; ?></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-
-                    </div>
-                </div>
+            </main>
         </div>
-        </main>
-
-    </div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
@@ -376,6 +357,48 @@
                         console.log('Lỗi khi gửi yêu cầu AJAX');
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        // Hàm để thêm dấu phẩy vào giá trị số
+        function addCommas(inputId) {
+            const inputElement = document.getElementById(inputId);
+            let value = inputElement.value.replace(/\D/g, ''); // Lấy ra chỉ số và loại bỏ các ký tự không phải số
+            inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu phẩy vào hàng nghìn
+        }
+
+        // Gán sự kiện 'input' cho các trường nhập liệu
+        document.getElementById('priceRoom').addEventListener('input', function() {
+            addCommas('priceRoom');
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#idTotalFloors').on('change', function() {
+                var totalFloorId = $(this).val();
+                if (totalFloorId) {
+                    // Send an Ajax request to fetch the corresponding "Tầng" values
+                    $.ajax({
+                        type: "GET",
+                        url: "/get-number-floors",
+                        data: {
+                            totalFloorId: totalFloorId
+                        },
+                        success: function(data) {
+                            // Clear and populate the "Tầng" dropdown with the received data
+                            var numberFloorsDropdown = $('#idNumberFloors');
+                            numberFloorsDropdown.empty();
+                            numberFloorsDropdown.append($(
+                                '<option value="" selected>Tầng</option>'));
+
+                            $.each(data, function(key, value) {
+                                numberFloorsDropdown.append($('<option value="' + key +
+                                    '">' + value + '</option>'));
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>
