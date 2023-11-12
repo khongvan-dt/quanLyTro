@@ -10,7 +10,7 @@ class roomsModel extends Model
     protected $table = 'room';
 
     protected $fillable = [
-        'idUser',
+        'user_id',
         'idAccommodationArea',
         'idTotalFloors',
         'idNumberFloors',

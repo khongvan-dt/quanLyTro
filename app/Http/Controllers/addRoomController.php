@@ -146,9 +146,8 @@ class addRoomController extends Controller
             $interior = $request->input('interior');
             $capacity = $request->input('capacity');
             $priceRoom = $request->input('priceRoom');
-    
             $room = new roomsModel();
-            $room->user_id = $id;
+            $room->user_id = $id; // adjust if needed
             $room->idAccommodationArea = $idAccommodationArea;
             $room->idTotalFloors = $idTotalFloors;
             $room->idNumberFloors = $idNumberFloors;
@@ -158,9 +157,9 @@ class addRoomController extends Controller
             $room->interior = $interior;
             $room->capacity = $capacity;
             $room->priceRoom = $priceRoom;
-    
+        
             $saved = $room->save();
-    
+        
             if ($saved) {
                 return redirect()->route('addRoom')->with('success', true);
             } else {
