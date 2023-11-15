@@ -300,14 +300,14 @@
                                 </thead>
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    <tr class="hidden-row">
-                                        <td> <?php echo $i++; ?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-
+                                    @foreach ($rooms as $item)
+                                        <tr class="hidden-row">
+                                            <td> <?php echo $i++; ?></td>
+                                            <td>{{ $item->roomName }}</td>
+                                            <td>{{ $item->priceRoom }}</td>
+                                            <td>{{ $item->interior }}</td>
+                                            <td>{{ $item->capacity }}</td>
+                                    @endforeach
                                     </tr>
                                 </tbody>
                             </table>
@@ -360,19 +360,19 @@
             });
         });
     </script>
-    <script>
+
+    {{-- <script>
         // Hàm để thêm dấu phẩy vào giá trị số
         function addCommas(inputId) {
             const inputElement = document.getElementById(inputId);
             let value = inputElement.value.replace(/\D/g, ''); // Lấy ra chỉ số và loại bỏ các ký tự không phải số
             inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu phẩy vào hàng nghìn
         }
-
-        // Gán sự kiện 'input' cho các trường nhập liệu
         document.getElementById('priceRoom').addEventListener('input', function() {
             addCommas('priceRoom');
         });
-    </script>
+    </script> --}}
+
     <script>
         $(document).ready(function() {
             $('#idTotalFloors').on('change', function() {

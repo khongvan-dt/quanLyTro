@@ -18,7 +18,7 @@ Route::get('/', function () {
 })->name('pageLogin');
 
 Route::get('/pageError400', function () {
-    return view('web.page-error-400');
+    return view('page-error-400');
 })->name('pageError400');
 
 

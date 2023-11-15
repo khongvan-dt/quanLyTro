@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\DB;
 use App\Models\numberFloorsModel;
 use App\Models\serviceFeeSummaryModel;
 use App\Models\serviceModel;
+use App\Models\roomsModel;
+
 use Illuminate\Support\Facades\Auth;
 
 
-use App\Models\roomsModel;
+
 
 class addRoomController extends Controller
 {
@@ -32,7 +34,24 @@ class addRoomController extends Controller
 
         $listFloors = totalFlorModel::where('idUser', $id)->get();
         $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $id)->get();
-        $Services = serviceModel::where('idUser', $id)->get();        
+        $Services = serviceModel::where('idUser', $id)->get();
+        $id = 123; // replace with the actual value of idUser you want to filter on
+
+        $rooms = DB::table('room')
+            ->join('users', 'room.user_id', '=', 'users.id')
+            ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+            ->join('totalFloors', 'room.idTotalFloors', '=', 'totalFloors.id')
+            ->join('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
+            ->join('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
+            ->join('services', 'room.idServices', '=', 'services.id')
+            ->select('room.*',
+             'accommodationArea.city',  'accommodationArea.districts',  'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
+            
+             'numberFloors.name as number_floors_name', 'servicefeesummary.name as service_fee_summary_name', 'services.name as services_name')
+            ->where('users.idUser', $id)
+            ->get();
+        
+    
 
         // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
         $combinedData = [];
@@ -62,6 +81,7 @@ class addRoomController extends Controller
             'listFloors' => $listFloors,
             'serviceFeeSummary' => $serviceFeeSummary,
             'Services'=> $Services,
+            'room'=> $rooms,
         ]);
 
         
@@ -135,6 +155,7 @@ class addRoomController extends Controller
                 'interior' => 'required',
                 'capacity' => 'required',
                 'priceRoom' => 'nullable|numeric',
+
             ]);
            
             $idAccommodationArea = $request->input('idAccommodationArea');
@@ -146,8 +167,9 @@ class addRoomController extends Controller
             $interior = $request->input('interior');
             $capacity = $request->input('capacity');
             $priceRoom = $request->input('priceRoom');
+
             $room = new roomsModel();
-            $room->user_id = $id; // adjust if needed
+            $room->user_id = $id; 
             $room->idAccommodationArea = $idAccommodationArea;
             $room->idTotalFloors = $idTotalFloors;
             $room->idNumberFloors = $idNumberFloors;

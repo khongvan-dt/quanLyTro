@@ -15,8 +15,8 @@ class servicesController extends Controller
 {
     public function insertService(Request $request)
 {
-    dd($request->all()); // Add this line to display the data
-        exit(0);
+    // dd($request->all()); // Add this line to display the data
+    //     exit(0);
     if (Auth::check()) {
         $id = Auth::id();
 
@@ -39,7 +39,7 @@ class servicesController extends Controller
         $other_fees = $request->input("other_fees") ?? 0;
 
         $serviceModel = new ServiceModel();
-        $serviceModel->user_id = $id;
+        $serviceModel->idUser = $id;
         $serviceModel->electricityBill = $electricityBill;
         $serviceModel->waterBill = $waterBill;
         $serviceModel->wifiFee = $wifiFee;

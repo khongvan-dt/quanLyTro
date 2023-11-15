@@ -25,7 +25,7 @@ return new class extends Migration
             $table->float("sumServices", 10, 3);//tổng tiền dịch vụ
             $table->timestamps();
             // Tạo khóa ngoại cho user_id
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('idUser')->references('id')->on('users');
         });
     }
 

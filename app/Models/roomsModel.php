@@ -21,4 +21,8 @@ class roomsModel extends Model
         'interior',
         'capacity',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

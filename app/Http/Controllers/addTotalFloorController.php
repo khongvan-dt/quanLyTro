@@ -37,9 +37,9 @@ class addTotalFloorController extends Controller
                 $saved2 = $numberFloor->save();
             }
             if ($saved2) {
-                return redirect()->route('addservices')->with('success', true);
+                return redirect()->route('addTotalFloor')->with('success', true);
             } else {
-                return redirect()->route('addservices')->with('error', true);
+                return redirect()->route('addTotalFloor')->with('error', true);
             }
         }
         

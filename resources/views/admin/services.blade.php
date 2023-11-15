@@ -302,6 +302,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         // Hàm để thêm dấu phẩy vào giá trị số
         function addCommas(inputId) {
@@ -333,8 +334,6 @@
         document.getElementById('other_fees').addEventListener('input', function() {
             addCommas('other_fees');
         });
-      
-        // Gán sự kiện cho các trường nhập liệu khác tương tự
     </script>
 
 
