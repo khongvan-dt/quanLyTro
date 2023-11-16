@@ -290,27 +290,50 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Thành Phố</th>
-                                        <th>Quận/Huyện</th>
-                                        <th>Phường/Xã</th>
-                                        <th>Đường</th>
+                                        <th>Địa Chỉ</th>
+                                        <th>Tên phòng</th>
+                                        <th>Giá Phòng</th>
+                                        <th>Tầng</th>
+                                        <th>Số người</th>
+                                        <th>Đồ Có Sẵn</th>
+                                        <th>Tiền dịch vụ</th>
+                                        <th>Chi tiết</th>
+                                        <th>Tổng tiền dịch</th>
                                         <th>Chức Năng</th>
-
                                     </tr>
                                 </thead>
+
+                               
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
                                     @foreach ($rooms as $item)
                                         <tr class="hidden-row">
-                                            <td> <?php echo $i++; ?></td>
+                                            <td><?php echo $i++; ?></td>
+                                            <td>{{ $item->city }} {{ $item->districts }} {{ $item->wardsCommunes }}
+                                                {{ $item->streetAddress }}</td>
+
                                             <td>{{ $item->roomName }}</td>
                                             <td>{{ $item->priceRoom }}</td>
-                                            <td>{{ $item->interior }}</td>
+                                            <td>Tầng {{ $item->number_floors_name }}</td>
                                             <td>{{ $item->capacity }}</td>
+                                            <td>{{ $item->interior }}</td>
+                                            <td>{{ $item->service_fee_summary_name }}</td>
+                                            <td>
+                                                Tiền điện: {{ number_format($item->electricityBill, 3) }}-
+                                                Tiền Nước: {{ number_format($item->waterBill, 3) }}-
+                                                Tiền wifi: {{ number_format($item->wifiFee, 3) }}-
+                                                Dọn Dẹp: {{ number_format($item->cleaningFee, 3) }}-
+                                                Tiền Để Xe: {{ number_format($item->parkingFee, 3) }}-
+                                                Tiền Phạt: {{ number_format($item->fine, 3) }}-
+                                                Tiền Khác: {{ number_format($item->other_fees, 3) }}
+                                            </td>
+                                            <td> {{ number_format($item->sumServices, 3) }}</td>
+                                            <td>Xóa</td>
+                                        </tr>
                                     @endforeach
-                                    </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
 
