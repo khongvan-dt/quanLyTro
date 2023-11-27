@@ -74,11 +74,48 @@ class addRoomController extends Controller
                 'streetAddress' => $row->streetAddress,
             ];
         }
+        $combinedData2 = [];
+
+        foreach ($rooms as $row1) {
+            $cityId = $row1->city;
+            $districtId = $row1->districts;
+            $wardCommuneId = $row1->wardsCommunes;
+        
+            // Tìm tên tương ứng từ JSON
+            $cityName = $this->findNameById($jsonData, $cityId);
+            $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
+            $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
+        
+            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+            $combinedData2[] = [
+                'city' => $cityName,
+                'district' => $districtName,
+                'wardCommune' => $wardCommuneName,
+                'streetAddress' => $row1->streetAddress,
+                'number_floors_name' => $row1->number_floors_name,
+                'service_fee_summary_name' => $row1->service_fee_summary_name,
+                'electricityBill' => $row1->electricityBill,
+                'waterBill' => $row1->waterBill,
+                'wifiFee' => $row1->wifiFee,
+                'cleaningFee' => $row1->cleaningFee,
+                'parkingFee' => $row1->parkingFee,
+                'fine' => $row1->fine,
+                'other_fees' => $row1->other_fees,
+                'sumServices' => $row1->sumServices,
+                'roomName' => $row1->roomName,
+                'priceRoom' => $row1->priceRoom,
+                'interior' => $row1->interior,
+                'capacity' => $row1->capacity,
+            ];
+        }
+        // Now $combinedData contains the combined information
+        
         return view('admin.addRoom')->with([
             'combinedData' => $combinedData,
             'listFloors' => $listFloors,
             'serviceFeeSummary' => $serviceFeeSummary,
             'Services'=> $Services,
+            'combinedData2'=> $combinedData2,
             'rooms'=> $rooms,
         ]);
 
