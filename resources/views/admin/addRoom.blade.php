@@ -303,34 +303,34 @@
                                     </tr>
                                 </thead>
 
-                               
+
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    @foreach ($rooms as $item)
+                                    @foreach ($combinedData2 as $item)
                                         <tr class="hidden-row">
-                                            <td><?php echo $i++; ?></td>
-                                            <td>{{ $item->city }} {{ $item->districts }} {{ $item->wardsCommunes }}
-                                                {{ $item->streetAddress }}</td>
-
-                                            <td>{{ $item->roomName }}</td>
-                                            <td>{{ $item->priceRoom }}</td>
-                                            <td>Tầng {{ $item->number_floors_name }}</td>
-                                            <td>{{ $item->capacity }}</td>
-                                            <td>{{ $item->interior }}</td>
-                                            <td>{{ $item->service_fee_summary_name }}</td>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item['city'] }} {{ $item['district'] }}
+                                                {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}</td>
+                                            <td>{{ $item['roomName'] }}</td>
+                                            <td>{{ $item['priceRoom'] }}</td>
+                                            <td>Tầng {{ $item['number_floors_name'] }}</td>
+                                            <td>{{ $item['capacity'] }}</td>
+                                            <td>{{ $item['interior'] }}</td>
+                                            <td>{{ $item['service_fee_summary_name'] }}</td>
                                             <td>
-                                                Tiền điện: {{ number_format($item->electricityBill, 3) }}-
-                                                Tiền Nước: {{ number_format($item->waterBill, 3) }}-
-                                                Tiền wifi: {{ number_format($item->wifiFee, 3) }}-
-                                                Dọn Dẹp: {{ number_format($item->cleaningFee, 3) }}-
-                                                Tiền Để Xe: {{ number_format($item->parkingFee, 3) }}-
-                                                Tiền Phạt: {{ number_format($item->fine, 3) }}-
-                                                Tiền Khác: {{ number_format($item->other_fees, 3) }}
+                                                Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
+                                                Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
+                                                Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
+                                                Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
+                                                Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
+                                                Tiền Phạt: {{ number_format($item['fine'], 3) }}-
+                                                Tiền Khác: {{ number_format($item['other_fees'], 3) }}
                                             </td>
-                                            <td> {{ number_format($item->sumServices, 3) }}</td>
+                                            <td>{{ number_format($item['sumServices'], 3) }}</td>
                                             <td>Xóa</td>
                                         </tr>
                                     @endforeach
+
                                 </tbody>
                             </table>
 

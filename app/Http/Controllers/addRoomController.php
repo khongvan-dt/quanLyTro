@@ -74,7 +74,7 @@ class addRoomController extends Controller
                 'streetAddress' => $row->streetAddress,
             ];
         }
-        $combinedData2 = [];
+        // $combinedData2 = [];
 
         foreach ($rooms as $row1) {
             $cityId = $row1->city;
@@ -108,7 +108,9 @@ class addRoomController extends Controller
                 'capacity' => $row1->capacity,
             ];
         }
-        // Now $combinedData contains the combined information
+        // dd($rooms);
+        // exit();
+        // // Now $combinedData contains the combined information
         
         return view('admin.addRoom')->with([
             'combinedData' => $combinedData,
@@ -223,6 +225,9 @@ class addRoomController extends Controller
                 return redirect()->route('addRoom')->with('error', true);
             }
         }
+    }
+    public function DeleteId($id){
+        
     }
     
 }
