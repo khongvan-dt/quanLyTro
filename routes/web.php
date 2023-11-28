@@ -94,7 +94,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/addTenant', function () {
         return view('admin.tenant'); 
     })->name('tenant');
-    Route::get('/getDisplay', [tenantController::class, 'getDisplay'])->name('tenant');
+    Route::get('/addTenant', [tenantController::class, 'getDisplay'])->name('tenant');
 
 });
 

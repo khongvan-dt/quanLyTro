@@ -184,37 +184,37 @@
 
                             <form action="{{ route('insertRoom') }}" method="POST" class="row g-3">
                                 @csrf
-                                <div class="col-md-12">
-                                    <select name="room_id" id="room_id" class="form-control">
-                                        @foreach ($data as $item)                                            <option value="{{ $item['id'] }}">
-                                                {{ $loop->iteration }}
-                                                {{ $item['city'] }} {{ $item['district'] }}
-                                                {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}
-                                                {{ $item['roomName'] }}
-                                                {{ number_format($item['priceRoom'], 3) }} 
-                                                Tầng {{ $item['number_floors_name'] }}
-                                                {{ $item['capacity'] }}
-                                                {{ $item['interior'] }}
-                                                {{ $item['service_fee_summary_name'] }}
-                                                Tiền điện: {{ number_format($item['electricityBill'], 3) }}
-                                                Tiền Nước: {{ number_format($item['waterBill'], 3) }}
-                                                Tiền wifi: {{ number_format($item['wifiFee'], 3) }}
-                                                Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}
-                                                Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}
-                                                Tiền Phạt: {{ number_format($item['fine'], 3) }}
-                                                Tiền Khác: {{ number_format($item['other_fees'], 3) }}
-                                                {{ number_format($item['sumServices'], 3) }}
-                                            </option>
+                                <div class="col-md-11">
+                                    <select name="room_id" id="room_id" class="form-control" style="font-size: 13px;">
+                                        @foreach ($data as $item)                                       
+                                        <option value="{{ $item['id'] }}">
+                                            {{ $loop->iteration }}: 
+                                            {{ $item['city'] }} {{ $item['district'] }}/
+                                            {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}/
+                                            {{ $item['roomName'] }}-
+                                            Giá:{{ number_format($item['priceRoom'], 3) }} -
+                                            
+                                            {{ $item['capacity'] }}-
+                                            {{ $item['interior'] }}-
+                                            {{ $item['service_fee_summary_name'] }}-
+                                            Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
+                                            Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
+                                            Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
+                                            Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
+                                            Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
+                                            Tiền Phạt: {{ number_format($item['fine'], 3) }}-
+                                            Tiền Khác: {{ number_format($item['other_fees'], 3) }}
+                                        </option>
+                                        
+                                        
                                         @endforeach
                                     </select>
                                     
                                 </div>
-
-
                                 <div class="card-body ">
-                                    <div class="col-md-12">
+                                    <div class="col-md-11">
 
-                                        <label for="priceRoom" class="form-label"><b>Giá Phòng</b></label>
+                                        <label for="priceRoom" class="form-label"><b>Người Thuê</b></label>
 
 
                                         <input type="text" class="form-control thousands-separator"
