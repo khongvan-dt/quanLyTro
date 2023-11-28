@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
             //khóa ngoại
             $table->foreign("idUser")->references("id")->on("users");
-            $table->foreign("idRoomContract")->references("id")->on("room");
+            $table->foreign("idRoomContract")->references("idRoomTenant")->on("tenant");
         });
     }
     //bảng hợp đồng

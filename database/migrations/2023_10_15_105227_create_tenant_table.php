@@ -16,10 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger("idUser");
             $table->unsignedBigInteger("idRoomTenant");
             $table->string("residentName");
+            $table->string("email");
+
             $table->timestamps();
             //khóa ngoại
             $table->foreign("idUser")->references("id")->on("users");
-            $table->foreign("idRoomTenant")->references("idRoomContract")->on("contract");
+            $table->foreign("idRoomTenant")->references("id")->on("room");
         });
     }
     //người trong trọ

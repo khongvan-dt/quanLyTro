@@ -4,11 +4,66 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\tenantModel;
+use App\Models\contractModel;
+
 
 use Illuminate\Support\Facades\Auth;
 
 class tenantController extends Controller
 {
+   
+    public function insertTenant(Request $request){
+        if (Auth::check()) {
+            $id = Auth::id();
+            $request->validate([
+                'tenant'=>'required',
+                'roomId'=>'required',
+                'email'=>'required'
+            ]);
+            $tenant= $request->input('tenant');
+            $roomId= $request->input('roomId');
+            $email=$request->input('email');
+            $insertTenant = new tenantModel();
+            $insertTenant->idUser=$id;
+            $insertTenant->idRoomTenant= $roomId;
+            $insertTenant->residentName= $tenant;
+            $insertTenant->email= $email;
+
+            $saved = $insertTenant->save();
+            if ($saved) {
+                return redirect()->route('tenant')->with('success', true);
+            } else {
+                return redirect()->route('tenant')->with('error', true);
+            }
+        }
+
+
+    }
+    public function deleteTenant($id,Request $request){
+
+        if (Auth::check()) {
+            $userId = Auth::id();
+            
+            // Check if there are records with the specified conditions
+            $idDelete = contractModel::where('idRoomContract', $id)->count(); 
+    
+            if ($idDelete > 0) {
+                return redirect()->route('tenant')->with('errorDelete1', true);
+            } else {
+                $ContractDelete = tenantModel::where('idUser', $userId)->find($id);
+    
+                if ($ContractDelete) {
+                    $ContractDelete->delete();
+                    return redirect()->route('tenant')->with('successDelete', true);
+                } else {
+                    return redirect()->route('tenant')->with('errorDelete', true);
+                }
+            }
+        } else {
+            return redirect()->route('pageLogin');
+        }
+    }
     public function getDisplay(Request $request)
     { 
         $id = Auth::id();
@@ -74,12 +129,52 @@ class tenantController extends Controller
         }
         // dd($rooms);
         // exit();
-        // // Now $combinedData contains the combined information
-        
+        $tenants = TenantModel::select(
+            'tenant.*',
+            'accommodationArea.city',  'accommodationArea.districts',  
+            'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
+            'room.priceRoom  as price',
+            'room.roomName'
+            
+        )
+        ->join('users', 'tenant.idUser', '=', 'users.id')
+        ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
+        ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+        ->join('services', 'tenant.idUser', '=', 'services.idUser')
+        ->where('tenant.idUser', $id)
+        ->get();
+        $data1 = [];
+
+        foreach ($tenants as $row1) {
+            $cityId = $row1->city;
+            $districtId = $row1->districts;
+            $wardCommuneId = $row1->wardsCommunes;
+
+            // Tìm tên tương ứng từ JSON
+            $cityName = $this->findNameById($jsonData, $cityId);
+            $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
+            $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
+
+            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+            $data1[] = [
+                'id' => $row1->id,
+                'city' => $cityName,
+                'district' => $districtName,
+                'wardCommune' => $wardCommuneName,
+                'streetAddress' => $row1->streetAddress,
+                'roomName' => $row1->roomName,
+                'price' => $row1->price,
+                'interior' => $row1->interior,
+                'capacity' => $row1->capacity,
+                'residentName'=>$row1->residentName,
+                'email'=>$row1->email
+
+            ];
+        }
         return view('admin.tenant')->with([
-          
             'data'=> $data,
-            'rooms'=> $rooms
+            'data1'=>$data1,
+            // 'tenants'=> $tenants
         ]);
     }
     
@@ -125,6 +220,6 @@ class tenantController extends Controller
         }
         return 'Không tìm thấy';
     }
-   }
+}
 
 
