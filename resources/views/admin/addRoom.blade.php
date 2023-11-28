@@ -78,6 +78,10 @@
                                 </a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="{{ route('tenant') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Người Thuê
+                        </a>
 
                     </div>
                 </div>
@@ -133,6 +137,22 @@
                                         </line>
                                     </svg>
                                     <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại!
+                                </div>
+                            @endif
+                            @if (session('errorDelete1'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
+                                        <polygon
+                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                        </polygon>
+                                        <line x1="15" y1="9" x2="9" y2="15">
+                                        </line>
+                                        <line x1="9" y1="9" x2="15" y2="15">
+                                        </line>
+                                    </svg>
+                                    <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại Do Còn Đang Sử Dụng!
                                 </div>
                             @endif
                             @if (session('successUpdelete'))
@@ -308,6 +328,7 @@
                                     <?php $i = 1; ?>
                                     @foreach ($combinedData2 as $item)
                                         <tr class="hidden-row">
+
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item['city'] }} {{ $item['district'] }}
                                                 {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}</td>
@@ -327,7 +348,14 @@
                                                 Tiền Khác: {{ number_format($item['other_fees'], 3) }}
                                             </td>
                                             <td>{{ number_format($item['sumServices'], 3) }}</td>
-                                            <td>Xóa</td>
+                                            <td>
+                                                <a href="{{ route('DeleteId', ['id' => $item['id']]) }}"
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
+                                                    class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
+                                                    Xóa
+                                                </a>
+                                            </td>
+                                            
                                         </tr>
                                     @endforeach
 

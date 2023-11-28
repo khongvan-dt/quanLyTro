@@ -10,7 +10,7 @@ use App\Models\numberFloorsModel;
 use App\Models\serviceFeeSummaryModel;
 use App\Models\serviceModel;
 use App\Models\roomsModel;
-
+use App\Models\tenantModel;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -88,6 +88,7 @@ class addRoomController extends Controller
         
             // Thêm dữ liệu đã trích xuất vào mảng kết hợp
             $combinedData2[] = [
+                'id' => $row1->id,
                 'city' => $cityName,
                 'district' => $districtName,
                 'wardCommune' => $wardCommuneName,
@@ -226,8 +227,30 @@ class addRoomController extends Controller
             }
         }
     }
-    public function DeleteId($id){
-        
+    public function DeleteId($id, Request $request)
+    {
+        if (Auth::check()) {
+            $userId = Auth::id();
+            
+            // Check if there are records with the specified conditions
+            $idDelete = tenantModel::where('idRoomTenant', $id)->count(); 
+    
+            if ($idDelete > 0) {
+                return redirect()->route('addRoom')->with('errorDelete1', true);
+            } else {
+                $roomDelete = roomsModel::where('user_id', $userId)->find($id);
+    
+                if ($roomDelete) {
+                    $roomDelete->delete();
+                    return redirect()->route('addRoom')->with('successDelete', true);
+                } else {
+                    return redirect()->route('addRoom')->with('errorDelete', true);
+                }
+            }
+        } else {
+            return redirect()->route('pageLogin');
+        }
     }
+    
     
 }

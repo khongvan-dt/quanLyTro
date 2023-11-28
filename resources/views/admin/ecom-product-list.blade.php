@@ -76,6 +76,10 @@
                                 </a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="{{ route('tenant') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Người Thuê
+                        </a>
                     </div>
                 </div>
             </nav>

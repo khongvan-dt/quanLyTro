@@ -7,6 +7,8 @@ use App\Http\Controllers\addTotalFloorController;
 use App\Http\Controllers\addRoomController;
 use App\Http\Controllers\ServiceFeeSummaryController;
 use App\Http\Controllers\servicesController;
+use App\Http\Controllers\tenantController;
+
 
 
 Route::get('/pageRegister', function () {
@@ -69,9 +71,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/Room', [addRoomController::class, 'getAddress'])->name('addRoom');
     Route::get('/get-number-floors', [addRoomController::class, 'getNumberFloors']);
     Route::post('/Room', [addRoomController::class, 'insertRoom'])->name('insertRoom');
-
-
-
+    Route::get('/deleteRoom/{id}', [addRoomController::class, 'DeleteId'])->name('DeleteId');
 
     Route::get('/ServiceFeeSummary', function () {
         return view('admin.addServiceFeeSummary'); 
@@ -90,6 +90,11 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/deleteService/{id}',[servicesController::class, 'deleteService'])->name('deleteService');
     Route::get('/editService/{id}', [servicesController::class, 'editService'])->name('editService');
     Route::post('/updateServices/{id}', [servicesController::class, 'updateServices'])->name('updateServices');
+
+    Route::get('/addTenant', function () {
+        return view('admin.tenant'); 
+    })->name('tenant');
+    Route::get('/getDisplay', [tenantController::class, 'getDisplay'])->name('tenant');
 
 });
 
