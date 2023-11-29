@@ -205,8 +205,8 @@
                                         @foreach ($data as $item)                                       
                                         <option value="{{ $item['id'] }}">
                                             {{ $loop->iteration }}: 
-                                            {{ $item['city'] }} {{ $item['district'] }}/
-                                            {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}/
+                                            {{ $item['city'] }} {{ $item['district'] }}
+                                            {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}-
                                             {{ $item['roomName'] }}-
                                             Giá:{{ number_format($item['priceRoom'], 3) }} -   
                                             {{ $item['capacity'] }}-

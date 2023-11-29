@@ -98,5 +98,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::post('/insertTenant', [tenantController::class, 'insertTenant'])->name('insertTenant'); 
     Route::get('/deleteTenant/{id}', [tenantController::class, 'deleteTenant'])->name('deleteTenant');
 
+    Route::get('/contract', function () {
+        return view('admin.contract'); 
+    })->name('contract');
 });
 

@@ -47,6 +47,7 @@ class addRoomController extends Controller
         ->select('room.*',
          'accommodationArea.city',  'accommodationArea.districts',  'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
          'room.idNumberFloors  as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
+         'numberFloors.floors',
           'services.electricityBill','services.waterBill','services.wifiFee','services.cleaningFee','services.parkingFee','services.fine',
           'services.other_fees','services.sumServices','room.roomName','room.priceRoom','room.interior','room.capacity')
         ->where('room.user_id', $id)
@@ -107,6 +108,7 @@ class addRoomController extends Controller
                 'priceRoom' => $row1->priceRoom,
                 'interior' => $row1->interior,
                 'capacity' => $row1->capacity,
+                'floors'=> $row1->floors
             ];
         }
         // dd($rooms);
