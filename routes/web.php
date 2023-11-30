@@ -99,12 +99,13 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/addTenant', [tenantController::class, 'getDisplay'])->name('tenant');
     Route::post('/insertTenant', [tenantController::class, 'insertTenant'])->name('insertTenant'); 
     Route::get('/deleteTenant/{id}', [tenantController::class, 'deleteTenant'])->name('deleteTenant');
+    Route::get('/successDownload', [tenantController::class, 'exportToWord'])->name('exportToWord');
 
-    Route::get('/contract', function () {
-        return view('admin.contract'); 
-    })->name('contract');
-    Route::get('/successDownload', [ContractController::class, 'exportToWord'])->name('exportToWord');
-    Route::get('/contract', [ContractController::class, 'getData'])->name('contract');
+    // Route::get('/contract', function () {
+    //     return view('admin.contract'); 
+    // })->name('contract');
+    // Route::get('/successDownload', [ContractController::class, 'exportToWord'])->name('exportToWord');
+    // Route::get('/contract', [ContractController::class, 'getData'])->name('contract');
 
 });
 

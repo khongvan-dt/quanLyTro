@@ -84,10 +84,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                        <a class="nav-link" href="{{ route('contract') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thêm Hợp Đồng
-                        </a>
+                        
                     </div>
                 </div>
             </nav>
