@@ -19,16 +19,24 @@ class tenantController extends Controller
             $request->validate([
                 'tenant'=>'required',
                 'roomId'=>'required',
-                'email'=>'required'
+                'email'=>'required',
+                'phoneNumber'=>'required'
             ]);
             $tenant= $request->input('tenant');
             $roomId= $request->input('roomId');
             $email=$request->input('email');
+            $phoneNumber=$request->input('phoneNumber');
+           
             $insertTenant = new tenantModel();
             $insertTenant->idUser=$id;
             $insertTenant->idRoomTenant= $roomId;
             $insertTenant->residentName= $tenant;
             $insertTenant->email= $email;
+            if($phoneNumber & strlen($phoneNumber)===10){
+                $insertTenant->phoneNumber= $phoneNumber;
+            } else {
+                return redirect()->route('tenant')->with('errorPhoneNumber', true);
+            }
 
             $saved = $insertTenant->save();
             if ($saved) {

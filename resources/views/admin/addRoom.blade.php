@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -81,6 +81,10 @@
                         <a class="nav-link" href="{{ route('tenant') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
+                        </a>
+                        <a class="nav-link" href="{{ route('contract') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Hợp Đồng
                         </a>
 
                     </div>
@@ -249,7 +253,7 @@
                                             <label for="roomName" class="form-label"><b>Tên phòng, Số
                                                     phòng</b></label>
                                             <input type="text" class="form-control thousands-separator"
-                                                name="roomName" id="roomName">
+                                                name="roomName" id="roomName" required>
                                         </div>
 
                                         <div class="col-md-6">
@@ -258,8 +262,7 @@
 
 
                                             <input type="text" class="form-control thousands-separator"
-                                                name="priceRoom" id="priceRoom" placeholder="chỉ nhập số ">
-
+                                                name="priceRoom" id="priceRoom" placeholder="chỉ nhập số " required>
                                         </div>
                                     </div>
 
@@ -267,7 +270,7 @@
                                         <div class="col-md-6">
                                             <label for="interior" class="form-label"><b>Đồ Có Sẵn </b></label>
                                             <input type="text" class="form-control thousands-separator"
-                                                name="interior" id="interior">
+                                                name="interior" id="interior" required>
                                         </div>
 
                                         <div class="col-md-6">

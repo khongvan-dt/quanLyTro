@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("idRoomTenant");
             $table->string("residentName");
             $table->string("email");
+            $table->string("phoneNumber");
 
             $table->timestamps();
             //khóa ngoại

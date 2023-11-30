@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3">Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -82,7 +82,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-
+                        <a class="nav-link" href="{{ route('contract') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Hợp Đồng
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -97,8 +100,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
                                         <polyline points="9 11 12 14 22 4"></polyline>
                                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                         </path>
@@ -201,30 +204,29 @@
                             <form action="{{ route('insertTenant') }}" method="POST" class="row g-3">
                                 @csrf
                                 <div class="col-md-11">
-                                    <select name="roomId" id="room_id" class="form-control" style="font-size: 13px;">
-                                        @foreach ($data as $item)                                       
-                                        <option value="{{ $item['id'] }}">
-                                            {{ $loop->iteration }}: 
-                                            {{ $item['city'] }} {{ $item['district'] }}
-                                            {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}-
-                                            {{ $item['roomName'] }}-
-                                            Giá:{{ number_format($item['priceRoom'], 3) }} -   
-                                            {{ $item['capacity'] }}-
-                                            {{ $item['interior'] }}-
-                                            {{ $item['service_fee_summary_name'] }}-
-                                            Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
-                                            Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
-                                            Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
-                                            Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
-                                            Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
-                                            Tiền Phạt: {{ number_format($item['fine'], 3) }}-
-                                            Tiền Khác: {{ number_format($item['other_fees'], 3) }}
-                                        </option>
-                                        
-                                        
+                                    <select name="roomId" id="room_id" class="form-control"
+                                        style="font-size: 13px;">
+                                        @foreach ($data as $item)
+                                            <option value="{{ $item['id'] }}">
+                                                {{ $loop->iteration }}:
+                                                {{ $item['city'] }} {{ $item['district'] }}
+                                                {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}-
+                                                {{ $item['roomName'] }}-
+                                                Giá:{{ number_format($item['priceRoom'], 3) }} -
+                                                {{ $item['capacity'] }}-
+                                                {{ $item['interior'] }}-
+                                                {{ $item['service_fee_summary_name'] }}-
+                                                Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
+                                                Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
+                                                Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
+                                                Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
+                                                Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
+                                                Tiền Phạt: {{ number_format($item['fine'], 3) }}-
+                                                Tiền Khác: {{ number_format($item['other_fees'], 3) }}
+                                            </option>
                                         @endforeach
                                     </select>
-                                    
+
                                 </div>
                                 <div class="card-body ">
                                     <div class="col-md-11">
@@ -232,15 +234,36 @@
                                         <label for="tenant" class="form-label"><b>Người Thuê</b></label>
 
 
-                                        <input type="text" class="form-control thousands-separator"
-                                            name="tenant" id="tenant" placeholder="Nhập tên người thuê ">
+                                        <input type="text" class="form-control thousands-separator" name="tenant"
+                                            id="tenant" placeholder="Nhập tên người thuê " required>
 
-                                            <label for="Email" class="form-label"><b> Email Người</b></label>
+                                        <label for="Email" class="form-label"><b> Email Người</b></label>
 
 
-                                            <input type="text" class="form-control thousands-separator"
-                                                name="email" id="email" placeholder="Nhập email người thuê ">
-    
+                                        <input type="text" class="form-control thousands-separator" name="email"
+                                            id="email" placeholder="Nhập email người thuê " required>
+
+                                        <label for="Email" class="form-label"><b> Số Điện Thoại Người Thuê</b></label>
+
+
+                                        <input type="text" class="form-control thousands-separator" name="phoneNumber"
+                                            id="phoneNumber" placeholder="Số Điện Thoại Người Thuê" required>
+                                            @if (session('errorPhoneNumber'))
+                                            <div class="alert alert-danger alert-dismissible fade show">
+                                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                                    stroke-width="2" fill="none" stroke-linecap="round"
+                                                    stroke-linejoin="round" class="me-2">
+                                                    <polygon
+                                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                                    </polygon>
+                                                    <line x1="15" y1="9" x2="9" y2="15">
+                                                    </line>
+                                                    <line x1="9" y1="9" x2="15" y2="15">
+                                                    </line>
+                                                </svg>
+                                                <strong>Lỗi!</strong> Số điện thoại sai định dạng
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="col-12" style="margin-top: 10px">
                                         <button type="submit" class="btn btn-primary">Lưu</button>
@@ -280,13 +303,14 @@
 
                                             <td>{{ $loop->iteration }}</td>
 
-                                            <td> 
-                                                {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} - {{ $item['district'] }} - {{ $item['city'] }}  </td>
+                                            <td>
+                                                {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} -
+                                                {{ $item['district'] }} - {{ $item['city'] }} </td>
 
                                             <td>{{ $item['residentName'] }}</td>
                                             <td>{{ $item['email'] }}</td>
-                                            <td> {{ $item['roomName']}}</td>
-                                            <td> {{ number_format($item['price'],3) }}</td>
+                                            <td> {{ $item['roomName'] }}</td>
+                                            <td> {{ number_format($item['price'], 3) }}</td>
                                             <td>
                                                 <a href="{{ route('deleteTenant', ['id' => $item['id']]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
@@ -294,7 +318,7 @@
                                                     Xóa
                                                 </a>
                                             </td>
-                                            
+
                                         </tr>
                                     @endforeach
 

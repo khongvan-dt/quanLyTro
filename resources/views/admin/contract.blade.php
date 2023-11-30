@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -82,7 +82,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-
+                        <a class="nav-link" href="{{ route('contract') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Hợp Đồng
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -90,8 +93,17 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h3 class="mt-4"> Thêm Phòng</h3>
+                  
+                    <h3 class="mt-4"> Hợp Đồng</h3>
+                    <form action="{{ route('exportToWord') }}" method="get" class="row g-3">
+                        @csrf
 
+                        <div class="col-md-5" style="margin-bottom: 10px">
+                            <button type="submit" class="btn btn-primary">Xuất Hợp Đồng</button>
+
+                        </div>
+                    </form> 
+                  
                     <div class="card mb-4">
                         <div class="card-body">
                             @if (session('success'))
@@ -107,6 +119,19 @@
 
                                 </div>
                             @endif
+                            @if (session('successDownload'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                    </path>
+                                </svg>
+                                <strong>Thành Công!</strong>Download success contract!
+
+                            </div>
+                        @endif
                             @if (session('error'))
                                 <div class="alert alert-danger alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
@@ -198,7 +223,7 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertTenant') }}" method="POST" class="row g-3">
+                            <form action="{{ route('exportToWord') }}" method="POST" class="row g-3">
                                 @csrf
                                 <div class="col-md-11">
                                     <select name="roomId" id="room_id" class="form-control" style="font-size: 13px;">
@@ -233,13 +258,13 @@
 
 
                                         <input type="text" class="form-control thousands-separator"
-                                            name="tenant" id="tenant" placeholder="Nhập tên người thuê ">
+                                        required  name="tenant" id="tenant" placeholder="Nhập tên người thuê ">
 
                                             <label for="Email" class="form-label"><b> Email Người</b></label>
 
 
                                             <input type="text" class="form-control thousands-separator"
-                                                name="email" id="email" placeholder="Nhập email người thuê ">
+                                            required  name="email" id="email" placeholder="Nhập email người thuê ">
     
                                     </div>
                                     <div class="col-12" style="margin-top: 10px">

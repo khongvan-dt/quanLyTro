@@ -14,7 +14,8 @@ class tenantModel extends Model
         'idUser',
         'idRoomTenant',
         'residentName',
-        'email'
+        'email',
+        'phoneNumber'
     ];
 
     // Define relationships

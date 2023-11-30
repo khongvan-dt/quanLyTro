@@ -16,7 +16,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -24,7 +24,7 @@
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
+                required    aria-describedby="btnNavbarSearch" />
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -79,6 +79,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
+                        <a class="nav-link" href="{{ route('contract') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Hợp Đồng
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -132,7 +136,7 @@
                                 <div class="col-12">
                                     <label for="inputAddress2" class="form-label"></label>
                                     <input type="text" class="form-control" name="specifically"
-                                        id="inputAddress2" placeholder="Đường Cụ Thể" value="{{ $specifically }}">
+                                    required   id="inputAddress2" placeholder="Đường Cụ Thể" value="{{ $specifically }}">
 
                                 </div>
                                 <div class="col-12">

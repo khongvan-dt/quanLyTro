@@ -8,6 +8,8 @@ use App\Http\Controllers\addRoomController;
 use App\Http\Controllers\ServiceFeeSummaryController;
 use App\Http\Controllers\servicesController;
 use App\Http\Controllers\tenantController;
+use App\Http\Controllers\ContractController;
+
 
 
 
@@ -101,5 +103,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/contract', function () {
         return view('admin.contract'); 
     })->name('contract');
+    Route::get('/successDownload', [ContractController::class, 'exportToWord'])->name('exportToWord');
+
 });
 

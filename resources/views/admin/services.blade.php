@@ -21,7 +21,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -84,7 +84,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-
+                        <a class="nav-link" href="{{ route('contract') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thêm Hợp Đồng
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -177,7 +180,7 @@
                                     <div class="col-md-6">
                                         <label for="electricityBill" class="form-label"><b>Tiền 1 số điện:</b></label>
                                         <input type="text" class="form-control thousands-separator" name="electricityBill"
-                                            id="electricityBill"
+                                        required id="electricityBill"
                                             placeholder="Tiền 1 số điện (nếu có, không có không cần điền)"
                                             >
                                     </div>
@@ -185,7 +188,7 @@
                                     <div class="col-md-6">
                                         <label  for="waterBill" class="form-label"><b>Tiền một khối nước:</b></label>
                                         <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill"
-                                            placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
+                                        required      placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
                                             >
                                     </div>
                                 </div>
@@ -194,7 +197,7 @@
                                     <div class="col-md-6">
                                         <label for="wifiFee" class="form-label"><b>Tiền wifi:</b></label>
                                         <input type="text" class="form-control thousands-separator" name="wifiFee"
-                                            id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
+                                        required       id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
                                            >
                                     </div>
 
@@ -211,7 +214,7 @@
                                     <div class="col-md-6">
                                         <label for="parkingFee" class="form-label"><b>Tiền để xe:</b></label>
                                         <input type="text" class="form-control thousands-separator"
-                                            name="parkingFee" id="parkingFee"
+                                        required   name="parkingFee" id="parkingFee"
                                             placeholder="Tiền để xe (nếu có, không có không cần điền)"
                                             >
                                     </div>
@@ -219,7 +222,7 @@
                                     <div class="col-md-6">
                                         <label for="fine" class="form-label"><b>Tiền phạt:</b></label>
                                         <input type="text" class="form-control thousands-separator" name="fine"
-                                            id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
+                                        required   id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
                                             >
                                     </div>
                                 </div>
@@ -228,7 +231,7 @@
                                     <div class="col-md-6">
                                         <label for="other_fees" class="form-label"><b>Tiền khác:</b></label>
                                         <input type="text" class="form-control" name="other_fees" id="other_fees"
-                                            placeholder="Tiền khác (nếu có, không có không cần điền)"
+                                        required   placeholder="Tiền khác (nếu có, không có không cần điền)"
                                             >
                                     </div>
                                 </div>
