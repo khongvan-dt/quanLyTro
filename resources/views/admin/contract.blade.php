@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
+        <a class="navbar-brand ps-3">Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -93,7 +93,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                  
+
                     <h3 class="mt-4"> Hợp Đồng</h3>
                     <form action="{{ route('exportToWord') }}" method="get" class="row g-3">
                         @csrf
@@ -102,15 +102,15 @@
                             <button type="submit" class="btn btn-primary">Xuất Hợp Đồng</button>
 
                         </div>
-                    </form> 
-                  
+                    </form>
+
                     <div class="card mb-4">
                         <div class="card-body">
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
                                         <polyline points="9 11 12 14 22 4"></polyline>
                                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                         </path>
@@ -120,18 +120,18 @@
                                 </div>
                             @endif
                             @if (session('successDownload'))
-                            <div class="alert alert-success alert-dismissible fade show">
-                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                    class="me-2">
-                                    <polyline points="9 11 12 14 22 4"></polyline>
-                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                    </path>
-                                </svg>
-                                <strong>Thành Công!</strong>Download success contract!
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
+                                        <polyline points="9 11 12 14 22 4"></polyline>
+                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                        </path>
+                                    </svg>
+                                    <strong>Thành Công!</strong>Download success contract!
 
-                            </div>
-                        @endif
+                                </div>
+                            @endif
                             @if (session('error'))
                                 <div class="alert alert-danger alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
@@ -225,82 +225,109 @@
 
                             <form action="{{ route('exportToWord') }}" method="POST" class="row g-3">
                                 @csrf
-                                <div class="col-md-11">
-                                    <select name="roomId" id="room_id" class="form-control" style="font-size: 13px;">
-                                       {{--  @foreach ($data as $item)                                       
-                                        <option value="{{ $item['id'] }}">
-                                            {{ $loop->iteration }}: 
-                                            {{ $item['city'] }} {{ $item['district'] }}
-                                            {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}-
-                                            {{ $item['roomName'] }}-
-                                            Giá:{{ number_format($item['priceRoom'], 3) }} -   
-                                            {{ $item['capacity'] }}-
-                                            {{ $item['interior'] }}-
-                                            {{ $item['service_fee_summary_name'] }}-
-                                            Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
-                                            Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
-                                            Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
-                                            Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
-                                            Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
-                                            Tiền Phạt: {{ number_format($item['fine'], 3) }}-
-                                            Tiền Khác: {{ number_format($item['other_fees'], 3) }}
-                                        </option>
-                                        
-                                        
-                                        @endforeach --}}
-                                    </select>
-                                    
-                                </div>
-                                <div class="card-body ">
-                                    <div class="col-md-11">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label"><b>Chọn tên </b></label>
 
-                                        <label for="tenant" class="form-label"><b>Người Thuê</b></label>
+                                            <select name="roomId" id="room_id" class="form-control">
+                                                @foreach ($data1 as $item)
+                                                    <option value="{{ $item['tenant.id'] }}"
+                                                        data-street="{{ $item['streetAddress'] }}"
+                                                        data-room="{{ $item['roomName'] }}"
+                                                        data-email="{{ $item['email'] }}"
+                                                        data-phone="{{ $item['phoneNumber'] }}">
+                                                        {{ $loop->iteration }}:
+                                                        {{ $item['residentName'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label"><b>Thêm file hợp đồng</b></label>
+                                            <input type="file" name="" id="">
 
-
-                                        <input type="text" class="form-control thousands-separator"
-                                        required  name="tenant" id="tenant" placeholder="Nhập tên người thuê ">
-
-                                            <label for="Email" class="form-label"><b> Email Người</b></label>
-
-
-                                            <input type="text" class="form-control thousands-separator"
-                                            required  name="email" id="email" placeholder="Nhập email người thuê ">
-    
+                                        </div>
                                     </div>
-                                    <div class="col-12" style="margin-top: 10px">
-                                        <button type="submit" class="btn btn-primary">Lưu</button>
+
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="roomName" class="form-label"><b>Room Name</b></label>
+                                                <input type="text" class="form-control" id="roomName" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="tenant" class="form-label"><b>Địa Chỉ</b></label>
+                                                <input type="text" class="form-control thousands-separator"
+                                                    required name="tenant" id="tenant">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="tenant" class="form-label"><b>Ngày bắt đầu hợp
+                                                        đồng</b></label>
+                                                <input type="text" class="form-control thousands-separator"
+                                                    required name="startDate" id="startDate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="email" class="form-label"><b>Email Người</b></label>
+                                                <input type="text" class="form-control thousands-separator"
+                                                    required name="email" id="email">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="phone" class="form-label"><b>Phone Người</b></label>
+                                                <input type="text" class="form-control thousands-separator"
+                                                    required name="phone" id="phone">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="tenant" class="form-label"><b>Ngày kết thúc hợp
+                                                        đồng</b></label>
+                                                <input type="text" class="form-control thousands-separator"
+                                                    required name="endDate" id="endDate">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
 
-
+                                <div class="col-12" style="margin-top: 10px">
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
                         </div>
+                        </form>
+
+
                     </div>
+                </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            DataTable Example
-                        </div>
-                        <div class="card-body">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        DataTable Example
+                    </div>
+                    <div class="card-body">
 
-                            <table id="datatablesSimple" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Địa Chỉ</th>
-                                        <th>Người Thuê</th>
-                                        <th>Email Người Thuê</th>
-                                        <th>Tên phòng</th>
-                                        <th>Giá Phòng</th>
-                                        <th>Chức Năng</th>
-                                    </tr>
-                                </thead>
+                        <table id="datatablesSimple" class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Người Thuê</th>
+                                    <th>Email Người Thuê</th>
+                                    <th>Tên phòng</th>
+                                    <th>Giá Phòng</th>
+                                    <th>Chức Năng</th>
+                                </tr>
+                            </thead>
 
 
-                                <tbody id="tableBody">
-                                    <?php $i = 1; ?>
-                                    {{-- @foreach ($data1 as $item)
+                            <tbody id="tableBody">
+                                <?php $i = 1; ?>
+                                {{-- @foreach ($data1 as $item)
                                         <tr class="hidden-row">
 
                                             <td>{{ $loop->iteration }}</td>
@@ -323,17 +350,37 @@
                                         </tr>
                                     @endforeach --}}
 
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
 
-                        </div>
                     </div>
-
                 </div>
-            </main>
+
         </div>
+        </main>
+    </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('room_id');
+            const tenantInput = document.getElementById('tenant');
+            const emailInput = document.getElementById('email');
+            const phoneInput = document.getElementById('phone');
+            const nameRoomInput = document.getElementById('roomName');
+
+            selectElement.addEventListener('change', function() {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+                tenantInput.value = selectedOption.dataset.street;
+                emailInput.value = selectedOption.dataset.email;
+                phoneInput.value = selectedOption.dataset.phone;
+                // Set the value for the room name input
+                nameRoomInput.value = selectedOption.dataset.room;
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/scripts.js') }}"></script>

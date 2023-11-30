@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
+use App\Models\tenantModel;
+use App\Models\contractModel;
+use Illuminate\Support\Facades\DB;
 
+
+use Illuminate\Support\Facades\Auth;
 class ContractController extends Controller
 {
     public function exportToWord()
@@ -126,12 +131,107 @@ class ContractController extends Controller
         ');
 
        // Lưu tệp tin Word
-$objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-$filePath = storage_path('HopDong.docx'); // Using a relative path
-$objWriter->save($filePath);
+        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+        $filePath = storage_path('HopDong.docx'); // Using a relative path
+        $objWriter->save($filePath);
 
-return redirect()->route('contract')->with('successDownload', true);
-
-
+        return redirect()->route('contract')->with('successDownload', true);
     }
+    public function getData()
+    {
+        $id = Auth::id();
+        
+        // Fetch JSON data
+        $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
+    
+        // Fetch tenants data from the database
+        $tenants = TenantModel::select(
+            'tenant.*',
+            'accommodationArea.*',
+            'room.*'
+        )
+        ->join('users', 'tenant.idUser', '=', 'users.id')
+        ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
+        ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+        ->where('tenant.idUser', $id)
+        ->where('accommodationArea.idUser', $id)
+        ->where('room.user_id', $id)
+        ->get();
+    
+        $data1 = [];
+    
+        foreach ($tenants as $row1) {
+            $cityId = $row1->city;
+            $districtId = $row1->districts;
+            $wardCommuneId = $row1->wardsCommunes;
+    
+            // Tìm tên tương ứng từ JSON
+            $cityName = $this->findNameById($jsonData, $cityId);
+            $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
+            $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
+    
+            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+            $data1[] = [
+                'tenant.id' => $row1->id,
+                'city' => $cityName,
+                'district' => $districtName,
+                'wardCommune' => $wardCommuneName,
+                'streetAddress' => $row1->streetAddress,
+                'roomName' => $row1->roomName,
+                'price' => $row1->price,
+                'interior' => $row1->interior,
+                'capacity' => $row1->capacity,
+                'residentName' => $row1->residentName,
+                'email' => $row1->email,
+                'phoneNumber' => $row1->phoneNumber
+            ];
+        }
+    
+        return view('admin.contract')->with([
+            'data1' => $data1,
+        ]);
+    }
+    
+    private function findNameById($jsonData, $id) {
+        foreach ($jsonData as $entry) {
+            if ($entry['Id'] === $id) {
+                return $entry['Name'];
+            }
+        }
+        return 'Không tìm thấy';
+    }
+
+    // Hàm tìm tên quận huyện dựa trên ID từ JSON
+    private function findDistrictNameById($jsonData, $cityId, $districtId) {
+        foreach ($jsonData as $entry) {
+            if ($entry['Id'] === $cityId) {
+                foreach ($entry['Districts'] as $district) {
+                    if ($district['Id'] === $districtId) {
+                        return $district['Name'];
+                    }
+                }
+            }
+        }
+        return 'Không tìm thấy';
+    }
+
+// Hàm tìm tên phường xã dựa trên ID từ JSON
+    private function findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId) {
+        foreach ($jsonData as $entry) {
+            if ($entry['Id'] === $cityId) {
+                foreach ($entry['Districts'] as $district) {
+                    if ($district['Id'] === $districtId) {
+                        foreach ($district['Wards'] as $ward) {
+                            if ($ward['Id'] === $wardCommuneId) {
+                                return $ward['Name'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return 'Không tìm thấy';
+    }
+
 }
+

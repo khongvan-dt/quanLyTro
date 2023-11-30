@@ -179,11 +179,52 @@ class tenantController extends Controller
 
             ];
         }
+        $tenants2 = TenantModel::select(
+            'tenant.*',
+            'accommodationArea.*',
+            'room.*'
+        )
+        ->join('users', 'tenant.idUser', '=', 'users.id')
+        ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
+        ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+        ->where('tenant.idUser', $id)
+        ->where('accommodationArea.idUser', $id)
+        ->where('room.user_id', $id)
+        ->get();
+    
+        $data2 = [];
+    
+        foreach ($tenants2 as $row1) {
+            $cityId = $row1->city;
+            $districtId = $row1->districts;
+            $wardCommuneId = $row1->wardsCommunes;
+    
+            // Tìm tên tương ứng từ JSON
+            $cityName = $this->findNameById($jsonData, $cityId);
+            $districtName = $this->findDistrictNameById($jsonData, $cityId, $districtId);
+            $wardCommuneName = $this->findWardCommuneNameById($jsonData, $cityId, $districtId, $wardCommuneId);
+    
+            // Thêm dữ liệu đã trích xuất vào mảng kết hợp
+            $data2[] = [
+                'tenant.id' => $row1->id,
+                'city' => $cityName,
+                'district' => $districtName,
+                'wardCommune' => $wardCommuneName,
+                'streetAddress' => $row1->streetAddress,
+                'roomName' => $row1->roomName,
+                'price' => $row1->price,
+                'interior' => $row1->interior,
+                'capacity' => $row1->capacity,
+                'residentName' => $row1->residentName,
+                'email' => $row1->email,
+                'phoneNumber' => $row1->phoneNumber
+            ];
+        }
         return view('admin.tenant')->with([
             'data'=> $data,
             'data1'=>$data1,
-            // 'tenants'=> $tenants
-        ]);
+            'data2' => $data2,       
+         ]);
     }
     
     

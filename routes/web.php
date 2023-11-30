@@ -104,6 +104,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
         return view('admin.contract'); 
     })->name('contract');
     Route::get('/successDownload', [ContractController::class, 'exportToWord'])->name('exportToWord');
+    Route::get('/contract', [ContractController::class, 'getData'])->name('contract');
 
 });
 
