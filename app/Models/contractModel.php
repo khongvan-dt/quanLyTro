@@ -12,7 +12,7 @@ class contractModel extends Model
 
     protected $fillable = [
         'idUser',
-        'idRoomContract',
+        'file',
         'imgContract',
         'startDate',
         'endDate',

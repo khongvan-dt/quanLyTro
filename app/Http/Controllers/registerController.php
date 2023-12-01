@@ -36,7 +36,7 @@ class registerController extends Controller
             $user->name = $username;
             $user->password = bcrypt($password);
             $user->email = $email;
-            $user->role = 'user';
+            $user->role = 'admin';
             $user->save();
             return redirect()->route('pageLogin')->with('success', true);
         } else {
@@ -59,7 +59,7 @@ class registerController extends Controller
             // Kiểm tra tài khoản
             if ($user->role === 'admin') {
                 // Redirect admin users to the 'addAddress' route
-                return redirect()->route('addRoom');
+                return redirect()->route('tenant');
             } elseif ($user->role === 'user') {
                 // Nếu người dùng có vai trò "user", chuyển hướng đến trang lỗi 400 (pageError400)
                 return redirect()->route('pageError400');

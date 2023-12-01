@@ -82,7 +82,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                        
+
                     </div>
                 </div>
             </nav>
@@ -219,28 +219,17 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertTenant') }}" method="POST" class="row g-3">
-                                @csrf
+                            <form action="{{ route('insertTenant') }}" method="POST" enctype="multipart/form-data" class="row g-3">                                @csrf
                                 <div class="col-md-11">
-                                    <select name="roomId" id="room_id" class="form-control"
-                                        style="font-size: 13px;">
+                                    <select name="roomId" id="room_id" class="form-control">
                                         @foreach ($data as $item)
                                             <option value="{{ $item['id'] }}">
                                                 {{ $loop->iteration }}:
-                                                {{ $item['city'] }} {{ $item['district'] }}
-                                                {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}-
-                                                {{ $item['roomName'] }}-
-                                                Giá:{{ number_format($item['priceRoom'], 3) }} -
-                                                {{ $item['capacity'] }}-
-                                                {{ $item['interior'] }}-
-                                                {{ $item['service_fee_summary_name'] }}-
-                                                Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
-                                                Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
-                                                Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
-                                                Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
-                                                Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
-                                                Tiền Phạt: {{ number_format($item['fine'], 3) }}-
-                                                Tiền Khác: {{ number_format($item['other_fees'], 3) }}
+                                                Tên Phòng:
+                                                {{ $item['roomName'] }}--
+                                                Địa Chỉ: {{ $item['streetAddress'] }}--
+                                                Giá:{{ number_format($item['priceRoom'], 3) }} -- Sức Chứa:
+                                                {{ $item['capacity'] }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -272,7 +261,7 @@
                                             <div class="form-group">
                                                 <label for="tenant" class="form-label"><b>Ngày bắt đầu hợp
                                                         đồng</b></label>
-                                                <input type="text" class="form-control thousands-separator"
+                                                <input type="date" class="form-control thousands-separator"
                                                     required name="startDate" id="startDate">
                                             </div>
                                         </div>
@@ -310,12 +299,12 @@
                                             <div class="form-group">
                                                 <label for="phone" class="form-label"><b>File hợp đồng</b></label>
                                                 <input type="file" class="form-control thousands-separator"
-                                                    required name="phone" id="phone">
+                                                    required name="file" id="phone">
                                             </div>
                                             <div class="form-group">
                                                 <label for="tenant" class="form-label"><b>Ngày kết thúc hợp
                                                         đồng</b></label>
-                                                <input type="text" class="form-control thousands-separator"
+                                                <input type="date" class="form-control thousands-separator"
                                                     required name="endDate" id="endDate">
                                             </div>
                                         </div>

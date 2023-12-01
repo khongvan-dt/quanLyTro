@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("idUser");
             $table->unsignedBigInteger("idRoomContract");
-            $table->string("imgContract");
+            $table->string("file")->nullable();
             $table->date("startDate");
             $table->date("endDate");
             $table->timestamps();
