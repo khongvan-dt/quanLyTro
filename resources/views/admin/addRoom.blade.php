@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
+        <a class="navbar-brand ps-3">Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -86,7 +86,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                       
+
                         <a class="nav-link" href="{{ route('collectmoney') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Đóng Tiền
@@ -105,8 +105,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
-                                        class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
                                         <polyline points="9 11 12 14 22 4"></polyline>
                                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                         </path>
@@ -326,6 +326,7 @@
                                         <th>Tiền dịch vụ</th>
                                         <th>Chi tiết</th>
                                         <th>Tổng tiền dịch</th>
+                                        <th>Tình Trạng</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
@@ -333,40 +334,42 @@
 
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    @foreach ($combinedData2 as $item)
+                                    @foreach ($rooms as $item)
                                         <tr class="hidden-row">
-
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item['city'] }} {{ $item['district'] }}
-                                                {{ $item['wardCommune'] }} {{ $item['streetAddress'] }}</td>
-                                            <td>{{ $item['roomName'] }}</td>
-                                            <td>{{ number_format($item['priceRoom'], 3) }}</td>
-                                            <td>Tầng {{ $item['floors'] }}</td>
-                                            <td>{{ $item['capacity'] }}</td>
-                                            <td>{{ $item['interior'] }}</td>
-                                            <td>{{ $item['service_fee_summary_name'] }}</td>
                                             <td>
-                                                Tiền điện: {{ number_format($item['electricityBill'], 3) }}-
-                                                Tiền Nước: {{ number_format($item['waterBill'], 3) }}-
-                                                Tiền wifi: {{ number_format($item['wifiFee'], 3) }}-
-                                                Dọn Dẹp: {{ number_format($item['cleaningFee'], 3) }}-
-                                                Tiền Để Xe: {{ number_format($item['parkingFee'], 3) }}-
-                                                Tiền Phạt: {{ number_format($item['fine'], 3) }}-
-                                                Tiền Khác: {{ number_format($item['other_fees'], 3) }}
+                                                {{ $item->streetAddress }}
                                             </td>
-                                            <td>{{ number_format($item['sumServices'], 3) }}</td>
+                                            <td>{{ $item->roomName }}</td>
+                                            <td>{{ number_format($item->priceRoom, 3) }}</td>
+                                            <td>Tầng {{ $item->floors }}</td>
+                                            <td>{{ $item->capacity }}</td>
+                                            <td>{{ $item->interior }}</td>
+                                            <td>{{ $item->service_fee_summary_name }}</td>
                                             <td>
-                                                <a href="{{ route('DeleteId', ['id' => $item['id']]) }}"
+                                                Tiền điện: {{ number_format($item->electricityBill, 3) }}-
+                                                Tiền Nước: {{ number_format($item->waterBill, 3) }}-
+                                                Tiền wifi: {{ number_format($item->wifiFee, 3) }}-
+                                                Dọn Dẹp: {{ number_format($item->cleaningFee, 3) }}-
+                                                Tiền Để Xe: {{ number_format($item->parkingFee, 3) }}-
+                                                Tiền Phạt: {{ number_format($item->fine, 3) }}-
+                                                Tiền Khác: {{ number_format($item->other_fees, 3) }}
+                                            </td>
+                                            <td>{{ number_format($item->sumServices, 3) }}</td>
+                                            <td>{{ $item->idRoomTenant ? 'Đã Có Người' : 'Chưa Có Người' }}</td>
+                                            <td>
+                                                <a href="{{ route('DeleteId', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
                                                     Xóa
                                                 </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
 
                                 </tbody>
+
+
                             </table>
 
                         </div>

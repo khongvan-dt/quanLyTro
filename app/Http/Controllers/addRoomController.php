@@ -35,23 +35,25 @@ class addRoomController extends Controller
         $listFloors = totalFlorModel::where('idUser', $id)->get();
         $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $id)->get();
         $Services = serviceModel::where('idUser', $id)->get();
-        // $id = 123; // replace with the actual value of idUser you want to filter on
-
         $rooms = DB::table('room')
-        ->join('users', 'room.user_id', '=', 'users.id')
-        ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-        ->join('totalFloors', 'room.idTotalFloors', '=', 'totalFloors.id')
-        ->join('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
-        ->join('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
-        ->join('services', 'room.idServices', '=', 'services.id')
+        ->leftJoin('users', 'room.user_id', '=', 'users.id')
+        ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+        ->leftJoin('totalFloors', 'room.idTotalFloors', '=', 'totalFloors.id')
+        ->leftJoin('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
+        ->leftJoin('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
+        ->leftJoin('services', 'room.idServices', '=', 'services.id')
+        ->leftJoin('tenant', 'room.id', '=', 'tenant.idRoomTenant')
         ->select('room.*',
-         'accommodationArea.city',  'accommodationArea.districts',  'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
-         'room.idNumberFloors  as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
-         'numberFloors.floors',
-          'services.electricityBill','services.waterBill','services.wifiFee','services.cleaningFee','services.parkingFee','services.fine',
-          'services.other_fees','services.sumServices','room.roomName','room.priceRoom','room.interior','room.capacity')
+            'accommodationArea.city', 'accommodationArea.districts', 'accommodationArea.wardsCommunes', 'accommodationArea.streetAddress',
+            'room.idNumberFloors as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
+            'numberFloors.floors',
+            'services.electricityBill', 'services.waterBill', 'services.wifiFee', 'services.cleaningFee', 'services.parkingFee', 'services.fine',
+            'services.other_fees', 'services.sumServices', 'room.roomName', 'room.priceRoom', 'room.interior', 'room.capacity',
+            'tenant.idRoomTenant') // Add the idRoomTenant property to the select statement
         ->where('room.user_id', $id)
         ->get();
+    
+
         // Tạo một mảng kết hợp để lưu dữ liệu đã trích xuất
         $combinedData = [];
     
@@ -111,9 +113,6 @@ class addRoomController extends Controller
                 'floors'=> $row1->floors
             ];
         }
-        // dd($rooms);
-        // exit();
-        // // Now $combinedData contains the combined information
         
         return view('admin.addRoom')->with([
             'combinedData' => $combinedData,
@@ -217,7 +216,7 @@ class addRoomController extends Controller
             $room->idServices = $idServices;
             $room->roomName = $roomName;
             $room->interior = $interior;
-            $room->capacity = $capacity;
+            $room->capacity = $capacity; 
             $room->priceRoom = $priceRoom;
         
             $saved = $room->save();
