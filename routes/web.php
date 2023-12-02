@@ -109,7 +109,9 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/Path', function () {
         return view('admin.Path'); 
     })->name('Path');
+    Route::get('/Path', [pathController::class, 'getPath'])->name('Path');
     Route::post('/insertPath', [pathController::class, 'insertPath'])->name('insertPath');
+    Route::get('/deletePath/{id}', [pathController::class, 'deletePath'])->name('deletePath');
 
     Route::get('/addCollectmoney', function () {
         return view('admin.addCollectmoney'); 

@@ -54,13 +54,7 @@ class collectDayMoneyController extends Controller
     public function getCollectmoney(){
         if(Auth::check()){
             $id = Auth::id();
-            // $listCollectDay =DB::table('tenant')
-            // ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
-            // ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-            // ->join('contract', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
-            // ->select('room.*','tenant.*','accommodationArea.*','contract.*')
-            // ->where('tenant.idUser', $id)
-            // ->get();
+            
             $listCollectDay = DB::table('tenant')
             ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
             ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
@@ -73,23 +67,15 @@ class collectDayMoneyController extends Controller
             })
             ->get();
         
-            // $listCollectDay2 =DB::table('collectmoney')
-            // ->join('contract', 'contract.idRoomContract', '=', 'collectmoney.idRoomCollectMoney')
-            // ->join('room', 'contract.idRoomContract', '=', 'room.id')
-            // ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-            // ->join('tenant', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
-            // ->select('room.*','tenant.*','accommodationArea.*','contract.*','collectmoney.*')
-            // ->where('collectmoney.idUser', $id)
-            // ->get();
 
             $listCollectDay2 = DB::table('contract')
-    ->leftJoin('room', 'contract.idRoomContract', '=', 'room.id')
-    ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-    ->leftJoin('tenant', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
-    ->leftJoin('collectmoney', 'contract.idRoomContract', '=', 'collectmoney.idRoomCollectMoney')
-    ->select('room.*', 'tenant.*', 'accommodationArea.*', 'contract.*', 'collectmoney.id as collectmoney_id', 'collectmoney.time as collectmoney_time')
-    ->where('contract.idUser', $id)
-    ->get();
+            ->leftJoin('room', 'contract.idRoomContract', '=', 'room.id')
+            ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+            ->leftJoin('tenant', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
+            ->leftJoin('collectmoney', 'contract.idRoomContract', '=', 'collectmoney.idRoomCollectMoney')
+            ->select('room.*', 'tenant.*', 'accommodationArea.*', 'contract.*', 'collectmoney.id as collectmoney_id', 'collectmoney.time as collectmoney_time')
+            ->where('contract.idUser', $id)
+            ->get();
             
             return view('admin.addCollectmoney', ['listCollectDay' => $listCollectDay],['listCollectDay2'=>$listCollectDay2]);
         } else {

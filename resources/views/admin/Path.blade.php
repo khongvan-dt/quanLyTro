@@ -252,31 +252,24 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Địa Chỉ</th>
-                                    <th>Người Thuê</th>
-                                    <th>Email Người Thuê</th>
-                                    <th>Tên phòng</th>
-                                    <th>Giá Phòng</th>
-                                    <th>Chức Năng</th>
+                                  
                                 </tr>
                             </thead>
 
 
                             <tbody id="tableBody">
                                 <?php $i = 1; ?>
-                                {{-- @foreach ($data1 as $item)
+                                @foreach ($listPath as $item)
                                         <tr class="hidden-row">
 
                                             <td>{{ $loop->iteration }}</td>
 
                                             <td> 
-                                                {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} - {{ $item['district'] }} - {{ $item['city'] }}  </td>
+                                                {{ $item->path }}</td>
 
-                                            <td>{{ $item['residentName'] }}</td>
-                                            <td>{{ $item['email'] }}</td>
-                                            <td> {{ $item['roomName']}}</td>
-                                            <td> {{ number_format($item['price'],3) }}</td>
+                                          
                                             <td>
-                                                <a href="{{ route('deleteTenant', ['id' => $item['id']]) }}"
+                                                <a href="{{ route('deletePath', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
                                                     Xóa
@@ -284,7 +277,7 @@
                                             </td>
                                             
                                         </tr>
-                                    @endforeach --}}
+                                    @endforeach
 
                             </tbody>
                         </table>
