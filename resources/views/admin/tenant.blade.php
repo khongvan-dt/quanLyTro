@@ -76,6 +76,10 @@
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Tên Khoản Tiền Dịch Vụ
                                 </a>
+                                <a class="nav-link" href="{{ route('Path') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Đường dân file lưu hợp đồng
+                                </a>
                             </nav>
                         </div>
                         <a class="nav-link" href="{{ route('tenant') }}">
@@ -219,8 +223,9 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertTenant') }}" method="POST" enctype="multipart/form-data" class="row g-3">                                @csrf
-                                <div class="col-md-11">
+                            <form action="{{ route('insertTenant') }}" method="POST" enctype="multipart/form-data"
+                                class="row g-3"> @csrf
+                                <div class="col-md-10">
                                     <select name="roomId" id="room_id" class="form-control">
                                         @foreach ($data as $item)
                                             <option value="{{ $item['id'] }}">
@@ -234,6 +239,20 @@
                                         @endforeach
                                     </select>
 
+                                </div>
+                                <div class="col-md-2">
+
+                                    <select name="path" id="path" class="form-control">
+                                        <option value="downloads">Chọn Ổ</option> <!-- Thêm tùy chọn Downloads -->
+
+                                        @foreach ($listPath as $item)
+                                            <option value="{{ $item['path'] }}">
+                                                {{ $loop->iteration }}:
+                                                Tên path:
+                                                {{ $item['path'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="card-body ">
 
@@ -274,7 +293,7 @@
 
                                                 <input type="text" class="form-control thousands-separator"
                                                     name="phoneNumber" id="phoneNumber"
-                                                    placeholder="Số Điện Thoại Người Thuê" required>
+                                                    placeholder="Số Điện Thoại Người Thuê" required maxlength="10">
                                                 @if (session('errorPhoneNumber'))
                                                     <div class="alert alert-danger alert-dismissible fade show">
                                                         <svg viewBox="0 0 24 24" width="24" height="24"
@@ -333,7 +352,8 @@
                                         <th>ID</th>
                                         <th>Địa Chỉ</th>
                                         <th>Người Thuê</th>
-                                        <th>Email Người Thuê</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Hợp đồng</th>
                                         <th>Tên phòng</th>
                                         <th>Giá Phòng</th>
                                         <th>Chức Năng</th>
@@ -353,11 +373,13 @@
                                                 {{ $item['district'] }} - {{ $item['city'] }} </td>
 
                                             <td>{{ $item['residentName'] }}</td>
-                                            <td>{{ $item['email'] }}</td>
+                                            <td>{{ $item['phone'] }}</td>
+                                            <td>{{ $item['file'] }}</td>
+
                                             <td> {{ $item['roomName'] }}</td>
                                             <td> {{ number_format($item['price'], 3) }}</td>
                                             <td>
-                                                <a href="{{ route('deleteTenant', ['id' => $item['id']]) }}"
+                                                <a href="{{ route('deleteContract', ['id' => $item['id']]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
                                                     Xóa

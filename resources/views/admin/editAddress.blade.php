@@ -73,6 +73,10 @@
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Tên Khoản Tiền Dịch Vụ
                                 </a>
+                                <a class="nav-link" href="{{ route('Path') }}">
+                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                    Thêm Đường dân file lưu hợp đồng
+                                </a>
                             </nav>
                         </div>
                         <a class="nav-link" href="{{ route('tenant') }}">

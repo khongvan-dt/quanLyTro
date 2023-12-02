@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\tenantModel;
 use App\Models\contractModel;
+use App\Models\pathModel;
+
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 
@@ -130,16 +132,19 @@ class tenantController extends Controller
         (Ký, ghi rõ họ tên)
         ');
 
-       // Lưu tệp tin Word
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $filePath = storage_path('HopDong.docx'); // Using a relative path
-        $objWriter->save($filePath);
+      // Lưu tệp tin Word
+      $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+      $filePath = storage_path('app/public/HopDong.docx'); // Đổi đường dẫn để lưu vào thư mục public
+      $objWriter->save($filePath);
+  
+      // Trả về đường dẫn tới tệp tin để tải về
+      return response()->download($filePath)->deleteFileAfterSend(true);
 
-        return redirect()->route('contract')->with('successDownload', true);
     }
     public function insertTenant(Request $request){
         if (Auth::check()) {
             $id = Auth::id();
+
             $request->validate([
                 'tenant'=>'required',
                 'roomId'=>'required',
@@ -156,14 +161,44 @@ class tenantController extends Controller
             $insertTenant->idRoomTenant= $roomId;
             $insertTenant->residentName= $tenant;
             $insertTenant->email= $email;
-            if($phoneNumber & strlen($phoneNumber)===10){
-                $insertTenant->phoneNumber= $phoneNumber;
-            } else {
-                return redirect()->route('tenant')->with('errorPhoneNumber', true);
-            }
+            $insertTenant->phoneNumber = $phoneNumber;
+            $saved= $insertTenant->save();
+            $request->validate([
+                'endDate' => 'required',
+                'startDate' => 'required',
+                'file' => 'required|file',
+                'path'=>'required'
+            ]);
+            
+            $file = $request->file('file');
+            $endDate = $request->input('endDate');
+            $startDate = $request->input('startDate');
+            $path = $request->input('path');
 
-            $saved = $insertTenant->save();
-            if ($saved) {
+            
+            // Đường dẫn trên máy tính của bạn
+            $localPath = $path;
+            
+            // Tên file được giữ nguyên từ tên file gốc
+            $originalFileName = $file->getClientOriginalName();
+            
+            // Di chuyển file vào thư mục trên máy tính của bạn và giữ nguyên tên file
+            $file->move($localPath, $originalFileName);
+            
+            // Lấy đường dẫn trên máy tính của bạn
+            $localFilePath = $localPath . $originalFileName;
+            
+            $insertContract = new contractModel();
+            $insertContract->idUser = $id;
+            $insertContract->idRoomContract = $roomId;
+            $insertContract->startDate = $startDate;
+            $insertContract->endDate = $endDate;
+            $insertContract->file = $localFilePath;
+            
+            $saved2 = $insertContract->save();
+            
+            
+            if ($saved &&  $saved2 ) {
                 return redirect()->route('tenant')->with('success', true);
             } else {
                 return redirect()->route('tenant')->with('error', true);
@@ -172,25 +207,27 @@ class tenantController extends Controller
 
 
     }
-    public function deleteTenant($id,Request $request){
-
+    public function deleteContract($id, Request $request)
+    {
         if (Auth::check()) {
             $userId = Auth::id();
-            
-            // Check if there are records with the specified conditions
-            $idDelete = contractModel::where('idRoomContract', $id)->count(); 
+
+            $contract = ContractModel::where('idUser', $userId)->where('idRoomContract', $id)->first();
     
-            if ($idDelete > 0) {
-                return redirect()->route('tenant')->with('errorDelete1', true);
-            } else {
-                $ContractDelete = tenantModel::where('idUser', $userId)->find($id);
+            if ($contract) {
+                
+                $tenant = TenantModel::where('idUser', $userId)->where('idRoomTenant', $id)->first();
+                if ($contract->delete()) {
+                    if ($tenant) {
+                        $tenant->delete();
+                    }
     
-                if ($ContractDelete) {
-                    $ContractDelete->delete();
                     return redirect()->route('tenant')->with('successDelete', true);
                 } else {
                     return redirect()->route('tenant')->with('errorDelete', true);
                 }
+            } else {
+                return redirect()->route('tenant')->with('errorDelete', true);
             }
         } else {
             return redirect()->route('pageLogin');
@@ -204,11 +241,11 @@ class tenantController extends Controller
         ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
         ->where('idUser', $id)
         ->get();
-        // $listFloors = totalFlorModel::all();
+
+        $listPath = pathModel::where('idUser', $id)->get();
         // Lấy dữ liệu từ JSON
         $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
 
-  
         $rooms = DB::table('room')
         ->join('users', 'room.user_id', '=', 'users.id')
         ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
@@ -216,14 +253,33 @@ class tenantController extends Controller
         ->join('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
         ->join('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
         ->join('services', 'room.idServices', '=', 'services.id')
-        ->select('room.*',
-         'accommodationArea.city',  'accommodationArea.districts',  'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
-         'room.idNumberFloors  as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
-          'services.electricityBill','services.waterBill','services.wifiFee','services.cleaningFee','services.parkingFee','services.fine',
-          'services.other_fees','services.sumServices','room.roomName','room.priceRoom','room.interior','room.capacity')
+        ->leftJoin('tenant', 'room.id', '=', 'tenant.idRoomTenant') 
+        ->select(
+            'room.*',
+            'accommodationArea.city',
+            'accommodationArea.districts',
+            'accommodationArea.wardsCommunes',
+            'accommodationArea.streetAddress',
+            'room.idNumberFloors as number_floors_name',
+            'servicefeesummary.name as service_fee_summary_name',
+            'services.electricityBill',
+            'services.waterBill',
+            'services.wifiFee',
+            'services.cleaningFee',
+            'services.parkingFee',
+            'services.fine',
+            'services.other_fees',
+            'services.sumServices',
+            'room.roomName',
+            'room.priceRoom',
+            'room.interior',
+            'room.capacity'
+        )
         ->where('room.user_id', $id)
-        ->get();
-       
+        ->whereNull('tenant.id'); 
+    
+    $rooms = $rooms->get();
+    
         $data = [];
 
         foreach ($rooms as $row1) {
@@ -263,6 +319,7 @@ class tenantController extends Controller
         // exit();
         $tenants = TenantModel::select(
             'tenant.*',
+            'contract.*',
             'accommodationArea.city',  'accommodationArea.districts',  
             'accommodationArea.wardsCommunes','accommodationArea.streetAddress', 
             'room.priceRoom  as price',
@@ -273,6 +330,7 @@ class tenantController extends Controller
         ->join('room', 'tenant.idRoomTenant', '=', 'room.id')
         ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
         ->join('services', 'tenant.idUser', '=', 'services.idUser')
+        ->join('contract', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
         ->where('tenant.idUser', $id)
         ->get();
         $data1 = [];
@@ -289,7 +347,7 @@ class tenantController extends Controller
 
             // Thêm dữ liệu đã trích xuất vào mảng kết hợp
             $data1[] = [
-                'id' => $row1->id,
+                'id' => $row1->idRoomContract,
                 'city' => $cityName,
                 'district' => $districtName,
                 'wardCommune' => $wardCommuneName,
@@ -299,7 +357,10 @@ class tenantController extends Controller
                 'interior' => $row1->interior,
                 'capacity' => $row1->capacity,
                 'residentName'=>$row1->residentName,
-                'email'=>$row1->email
+                'email'=>$row1->email,
+                'phone'=>$row1->phoneNumber,
+
+                'file'=>$row1->file
 
             ];
         }
@@ -347,7 +408,8 @@ class tenantController extends Controller
         return view('admin.tenant')->with([
             'data'=> $data,
             'data1'=>$data1,
-            'data2' => $data2,       
+            'data2' => $data2,     
+            'listPath' => $listPath
          ]);
     }
     

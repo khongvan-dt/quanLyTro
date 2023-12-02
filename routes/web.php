@@ -9,6 +9,7 @@ use App\Http\Controllers\ServiceFeeSummaryController;
 use App\Http\Controllers\servicesController;
 use App\Http\Controllers\tenantController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\pathController;
 
 
 
@@ -98,13 +99,13 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('tenant');
     Route::get('/addTenant', [tenantController::class, 'getDisplay'])->name('tenant');
     Route::post('/insertTenant', [tenantController::class, 'insertTenant'])->name('insertTenant'); 
-    Route::get('/deleteTenant/{id}', [tenantController::class, 'deleteTenant'])->name('deleteTenant');
+    Route::get('/deleteContract/{id}', [tenantController::class, 'deleteContract'])->name('deleteContract');
     Route::get('/successDownload', [tenantController::class, 'exportToWord'])->name('exportToWord');
 
-    // Route::get('/contract', function () {
-    //     return view('admin.contract'); 
-    // })->name('contract');
-    // Route::get('/successDownload', [ContractController::class, 'exportToWord'])->name('exportToWord');
+    Route::get('/Path', function () {
+        return view('admin.Path'); 
+    })->name('Path');
+    Route::post('/insertPath', [pathController::class, 'insertPath'])->name('insertPath');
     // Route::get('/contract', [ContractController::class, 'getData'])->name('contract');
 
 });
