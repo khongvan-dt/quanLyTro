@@ -217,68 +217,68 @@
 
                             </div>
                         @endif
-                        {{-- <form action="{{ route('insertServiceFeeSummary') }}" method="POST" class="row g-3">
-                            @csrf --}}
-                        <div class="card-body ">
+                        <form action="{{ route('insertDB') }}" method="POST" class="row g-3">
+                            @csrf
+                            <div class="card-body ">
 
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label for="roomName" class="form-label"><b>Ngày Thu Tiền</b></label>
-                                    <input type="date" class="form-control thousands-separator" name="roomName"
-                                        id="roomName" required>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="roomName" class="form-label"><b>Ngày Thu Tiền</b></label>
+                                        <input type="date" class="form-control thousands-separator" name="day"
+                                            id="day" required>
+                                    </div>
+
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-12" style="margin-top: 10px">
-                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                <div class="row">
+                                    <div class="col-12" style="margin-top: 10px">
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
                                 </div>
-                            </div>
-                            {{-- </form> --}}
-                        </div>
-
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
-                            <div class="card-body">
-
-                                <table id="datatablesSimple" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Địa Chỉ</th>
-                                            <th>Tên phòng</th>
-                                            <th>Người Thuê</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Email</th>
-                                            <th>Ngày bắt đầu</th>
-                                            <th>Kết thúc</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableBody">
-                                        <?php $i = 1; ?>
-                                        @foreach ($listCollectDay as $item)
-                                            <tr class="hidden-row">
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->streetAddress }}</td>
-                                                <td>{{ $item->roomName }}</td>
-                                                <td>{{ $item->residentName }}</td>
-                                                <td>{{ $item->phoneNumber }}</td>
-                                                <td>{{ $item->email }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($item->startDate)->format('d/m/Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($item->endDate)->format('d/m/Y') }}</td>
-                                            </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-
+                        </form>
                     </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            DataTable Example
+                        </div>
+                        <div class="card-body">
+
+                            <table id="datatablesSimple" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Địa Chỉ</th>
+                                        <th>Tên phòng</th>
+                                        <th>Người Thuê</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Email</th>
+                                        <th>Ngày bắt đầu</th>
+                                        <th>Kết thúc</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody">
+                                    <?php $i = 1; ?>
+                                    @foreach ($listCollectDay as $item)
+                                        <tr class="hidden-row">
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $item->streetAddress }}</td>
+                                            <td>{{ $item->roomName }}</td>
+                                            <td>{{ $item->residentName }}</td>
+                                            <td>{{ $item->phoneNumber }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->startDate)->format('d/m/Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($item->endDate)->format('d/m/Y') }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
             </main>
         </div>
 

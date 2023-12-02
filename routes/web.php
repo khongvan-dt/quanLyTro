@@ -113,6 +113,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
         return view('admin.collectDay'); 
     })->name('collectDay');
     Route::get('/collectDay', [collectDayConTroller::class, 'getData'])->name('collectDay');
+    Route::post('/insertDB', [collectDayConTroller::class, 'insertDB'])->name('insertDB');
+
 
 });
 
