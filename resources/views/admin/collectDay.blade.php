@@ -86,10 +86,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                        <a class="nav-link" href="{{ route('collectDay') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thông báo ngày thu tiền
-                        </a>
+
                     </div>
                 </div>
             </nav>
@@ -231,7 +228,7 @@
                                 <div class="col-md-10">
                                     <select name="roomId" id="room_id" class="form-control">
                                         <option value="downloads">Chọn Thông Tin Phòng</option> 
-                                        @foreach ($data as $item)
+                                        {{-- @foreach ($data as $item)
                                             <option value="{{ $item['id'] }}">
                                                 {{ $loop->iteration }}:
                                                 Tên Phòng:
@@ -240,13 +237,13 @@
                                                 Giá:{{ number_format($item['priceRoom'], 3) }} -- Sức Chứa:
                                                 {{ $item['capacity'] }}
                                             </option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
 
                                 </div>
                                 <div class="col-md-2">
 
-                                    <select name="path" id="path" class="form-control">
+                                    {{-- <select name="path" id="path" class="form-control">
                                         <option value="downloads">Chọn Ổ</option>
 
                                         @foreach ($listPath as $item)
@@ -256,7 +253,7 @@
                                                 {{ $item['path'] }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                 </div>
                                 <div class="card-body ">
 
@@ -367,7 +364,7 @@
 
 
                                 <tbody id="tableBody">
-                                    <?php $i = 1; ?>
+                                    {{-- <?php $i = 1; ?>
                                     @foreach ($data1 as $item)
                                         <tr class="hidden-row">
 
@@ -392,7 +389,7 @@
                                             </td>
 
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
 
                                 </tbody>
                             </table>

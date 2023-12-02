@@ -106,7 +106,9 @@ Route::middleware(['checkRole:admin'])->group(function () {
         return view('admin.Path'); 
     })->name('Path');
     Route::post('/insertPath', [pathController::class, 'insertPath'])->name('insertPath');
-    // Route::get('/contract', [ContractController::class, 'getData'])->name('contract');
 
+    Route::get('/collectDay', function () {
+        return view('admin.collectDay'); 
+    })->name('collectDay');
 });
 
