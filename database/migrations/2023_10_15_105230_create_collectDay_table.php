@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('collectDay', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("idUser");
-            $table->unsignedBigInteger("idRoomcollectDay");
             $table->date("day");//ngày thu
             $table->timestamps();
             //khóa ngoại
             $table->foreign("idUser")->references("id")->on("users");
-            $table->foreign("idRoomcollectDay")->references("idRoomContract")->on("contract");
         });
     }
     //Bảng Ngày Thu Tiền:

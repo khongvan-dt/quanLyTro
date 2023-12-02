@@ -86,7 +86,10 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-
+                        <a class="nav-link" href="{{ route('collectDay') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                            Thông báo ngày thu tiền
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -94,310 +97,188 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h3 class="mt-4"> Thêm Người Thuê-Hợp Đồng</h3>
-                    <form action="{{ route('exportToWord') }}" method="get" class="row g-3">
-                        @csrf
+                    <h3 class="mt-4"> Thông báo thu tiền</h3>
 
-                        <div class="col-md-5" style="margin-bottom: 10px">
-                            <button type="submit" class="btn btn-primary">Xuất Hợp Đồng</button>
-                            - xuất file hợp đồng nếu muốn
-
-                        </div>
-                    </form>
                     <div class="card mb-4">
-                        <div class="card-body">
-                            @if (session('successDownload'))
-                                <div class="alert alert-success alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polyline points="9 11 12 14 22 4"></polyline>
-                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                        </path>
-                                    </svg>
-                                    <strong>Thành Công!</strong>Download success contract!
 
-                                </div>
-                            @endif
-                            @if (session('success'))
-                                <div class="alert alert-success alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polyline points="9 11 12 14 22 4"></polyline>
-                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                        </path>
-                                    </svg>
-                                    <strong>Thành Công!</strong>Thêm Thông Tin Thành Công!
+                        @if (session('successDownload'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                    </path>
+                                </svg>
+                                <strong>Thành Công!</strong>Download success contract!
 
-                                </div>
-                            @endif
-                            @if (session('error'))
-                                <div class="alert alert-danger alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polygon
-                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                        </polygon>
-                                        <line x1="15" y1="9" x2="9" y2="15">
-                                        </line>
-                                        <line x1="9" y1="9" x2="15" y2="15">
-                                        </line>
-                                    </svg>
-                                    <strong>Lỗi!</strong> Thêm Thông Tin!
-                                </div>
-                            @endif
-                            @if (session('errorDelete'))
-                                <div class="alert alert-danger alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polygon
-                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                        </polygon>
-                                        <line x1="15" y1="9" x2="9" y2="15">
-                                        </line>
-                                        <line x1="9" y1="9" x2="15" y2="15">
-                                        </line>
-                                    </svg>
-                                    <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại!
-                                </div>
-                            @endif
-                            @if (session('errorDelete1'))
-                                <div class="alert alert-danger alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polygon
-                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                        </polygon>
-                                        <line x1="15" y1="9" x2="9" y2="15">
-                                        </line>
-                                        <line x1="9" y1="9" x2="15" y2="15">
-                                        </line>
-                                    </svg>
-                                    <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại Do Còn Đang Sử Dụng!
-                                </div>
-                            @endif
-                            @if (session('errorDelete1'))
-                                <div class="alert alert-danger alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polygon
-                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                        </polygon>
-                                        <line x1="15" y1="9" x2="9" y2="15">
-                                        </line>
-                                        <line x1="9" y1="9" x2="15" y2="15">
-                                        </line>
-                                    </svg>
-                                    <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại Do Còn Đang Sử Dụng!
-                                </div>
-                            @endif
-                            @if (session('successUpdelete'))
-                                <div class="alert alert-success alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polyline points="9 11 12 14 22 4"></polyline>
-                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                        </path>
-                                    </svg>
-                                    <strong>Thành Công!</strong>Sửa Thông Tin Thành Công!
+                            </div>
+                        @endif
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                    </path>
+                                </svg>
+                                <strong>Thành Công!</strong>Thêm Thông Tin Thành Công!
 
-                                </div>
-                            @endif
-                            @if (session('successDelete'))
-                                <div class="alert alert-success alert-dismissible fade show">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
-                                        <polyline points="9 11 12 14 22 4"></polyline>
-                                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                        </path>
-                                    </svg>
-                                    <strong>Thành Công!</strong>Xóa Thông Tin Thành Công!
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15">
+                                    </line>
+                                    <line x1="9" y1="9" x2="15" y2="15">
+                                    </line>
+                                </svg>
+                                <strong>Lỗi!</strong> Thêm Thông Tin!
+                            </div>
+                        @endif
+                        @if (session('errorDelete'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15">
+                                    </line>
+                                    <line x1="9" y1="9" x2="15" y2="15">
+                                    </line>
+                                </svg>
+                                <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại!
+                            </div>
+                        @endif
+                        @if (session('errorDelete1'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15">
+                                    </line>
+                                    <line x1="9" y1="9" x2="15" y2="15">
+                                    </line>
+                                </svg>
+                                <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại Do Còn Đang Sử Dụng!
+                            </div>
+                        @endif
+                        @if (session('errorDelete1'))
+                            <div class="alert alert-danger alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polygon
+                                        points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                    </polygon>
+                                    <line x1="15" y1="9" x2="9" y2="15">
+                                    </line>
+                                    <line x1="9" y1="9" x2="15" y2="15">
+                                    </line>
+                                </svg>
+                                <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại Do Còn Đang Sử Dụng!
+                            </div>
+                        @endif
+                        @if (session('successUpdelete'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                    </path>
+                                </svg>
+                                <strong>Thành Công!</strong>Sửa Thông Tin Thành Công!
 
-                                </div>
-                            @endif
+                            </div>
+                        @endif
+                        @if (session('successDelete'))
+                            <div class="alert alert-success alert-dismissible fade show">
+                                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                    stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="me-2">
+                                    <polyline points="9 11 12 14 22 4"></polyline>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                    </path>
+                                </svg>
+                                <strong>Thành Công!</strong>Xóa Thông Tin Thành Công!
 
-                            <form action="{{ route('insertTenant') }}" method="POST" enctype="multipart/form-data"
-                                class="row g-3"> @csrf
-                                <div class="col-md-10">
-                                    <select name="roomId" id="room_id" class="form-control">
-                                        <option value="downloads">Chọn Thông Tin Phòng</option> 
-                                        {{-- @foreach ($data as $item)
-                                            <option value="{{ $item['id'] }}">
-                                                {{ $loop->iteration }}:
-                                                Tên Phòng:
-                                                {{ $item['roomName'] }}--
-                                                Địa Chỉ: {{ $item['streetAddress'] }}--
-                                                Giá:{{ number_format($item['priceRoom'], 3) }} -- Sức Chứa:
-                                                {{ $item['capacity'] }}
-                                            </option>
-                                        @endforeach --}}
-                                    </select>
+                            </div>
+                        @endif
+                        {{-- <form action="{{ route('insertServiceFeeSummary') }}" method="POST" class="row g-3">
+                            @csrf --}}
+                        <div class="card-body ">
 
-                                </div>
+                            <div class="row">
                                 <div class="col-md-2">
-
-                                    {{-- <select name="path" id="path" class="form-control">
-                                        <option value="downloads">Chọn Ổ</option>
-
-                                        @foreach ($listPath as $item)
-                                            <option value="{{ $item['path'] }}">
-                                                {{ $loop->iteration }}:
-                                                Tên path:
-                                                {{ $item['path'] }}
-                                            </option>
-                                        @endforeach
-                                    </select> --}}
+                                    <label for="roomName" class="form-label"><b>Ngày Thu Tiền</b></label>
+                                    <input type="date" class="form-control thousands-separator" name="roomName"
+                                        id="roomName" required>
                                 </div>
-                                <div class="card-body ">
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-
-                                                <label for="tenant" class="form-label"><b>Người Thuê</b></label>
-
-
-                                                <input type="text" class="form-control thousands-separator"
-                                                    name="tenant" id="tenant" placeholder="Nhập tên người thuê "
-                                                    required>
-
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="Email" class="form-label"><b> Email Người</b></label>
-
-
-                                                <input type="text" class="form-control thousands-separator"
-                                                    name="email" id="email"
-                                                    placeholder="Nhập email người thuê " required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tenant" class="form-label"><b>Ngày bắt đầu hợp
-                                                        đồng</b></label>
-                                                <input type="date" class="form-control thousands-separator"
-                                                    required name="startDate" id="startDate">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="Email" class="form-label"><b> Số Điện Thoại Người
-                                                        Thuê</b></label>
-
-
-                                                <input type="text" class="form-control thousands-separator"
-                                                    name="phoneNumber" id="phoneNumber"
-                                                    placeholder="Số Điện Thoại Người Thuê" required maxlength="10">
-                                                @if (session('errorPhoneNumber'))
-                                                    <div class="alert alert-danger alert-dismissible fade show">
-                                                        <svg viewBox="0 0 24 24" width="24" height="24"
-                                                            stroke="currentColor" stroke-width="2" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="me-2">
-                                                            <polygon
-                                                                points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
-                                                            </polygon>
-                                                            <line x1="15" y1="9" x2="9"
-                                                                y2="15">
-                                                            </line>
-                                                            <line x1="9" y1="9" x2="15"
-                                                                y2="15">
-                                                            </line>
-                                                        </svg>
-                                                        <strong>Lỗi!</strong> Số điện thoại sai định dạng
-                                                    </div>
-                                                @endif
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="phone" class="form-label"><b>File hợp đồng</b></label>
-                                                <input type="file" class="form-control thousands-separator"
-                                                    required name="file" id="phone">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="tenant" class="form-label"><b>Ngày kết thúc hợp
-                                                        đồng</b></label>
-                                                <input type="date" class="form-control thousands-separator"
-                                                    required name="endDate" id="endDate">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12" style="margin-top: 10px">
-                                        <button type="submit" class="btn btn-primary">Lưu</button>
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12" style="margin-top: 10px">
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
                                 </div>
-                            </form>
-
-
+                            </div>
+                            {{-- </form> --}}
                         </div>
-                    </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            DataTable Example
-                        </div>
-                        <div class="card-body">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                DataTable Example
+                            </div>
+                            <div class="card-body">
 
-                            <table id="datatablesSimple" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Địa Chỉ</th>
-                                        <th>Tên phòng</th>
-                                        <th>Người Thuê</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Hợp đồng</th>
-                                      
-                                        <th>Giá Phòng</th>
-                                        <th>Chức Năng</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody id="tableBody">
-                                    {{-- <?php $i = 1; ?>
-                                    @foreach ($data1 as $item)
-                                        <tr class="hidden-row">
-
-                                            <td>{{ $loop->iteration }}</td>
-
-                                            <td>
-                                                {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} -
-                                                {{ $item['district'] }} - {{ $item['city'] }} </td>
-                                                <td> {{ $item['roomName'] }}</td>
-
-                                            <td>{{ $item['residentName'] }}</td>
-                                            <td>{{ $item['phone'] }}</td>
-                                            <td>{{ $item['file'] }}</td>
-
-                                            <td> {{ number_format($item['price'], 3) }}</td>
-                                            <td>
-                                                <a href="{{ route('deleteContract', ['id' => $item['id']]) }}"
-                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
-                                                    Xóa
-                                                </a>
-                                            </td>
-
+                                <table id="datatablesSimple" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Địa Chỉ</th>
+                                            <th>Tên phòng</th>
+                                            <th>Người Thuê</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Email</th>
+                                            <th>Ngày bắt đầu</th>
+                                            <th>Kết thúc</th>
                                         </tr>
-                                    @endforeach --}}
+                                    </thead>
+                                    <tbody id="tableBody">
+                                        <?php $i = 1; ?>
+                                        @foreach ($listCollectDay as $item)
+                                            <tr class="hidden-row">
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->streetAddress }}</td>
+                                                <td>{{ $item->roomName }}</td>
+                                                <td>{{ $item->residentName }}</td>
+                                                <td>{{ $item->phoneNumber }}</td>
+                                                <td>{{ $item->email }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->startDate)->format('d/m/Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($item->endDate)->format('d/m/Y') }}</td>
+                                            </tr>
+                                        @endforeach
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
+                            </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
             </main>
         </div>
 

@@ -10,6 +10,8 @@ use App\Http\Controllers\servicesController;
 use App\Http\Controllers\tenantController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\pathController;
+use App\Http\Controllers\collectDayConTroller;
+
 
 
 
@@ -110,5 +112,7 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/collectDay', function () {
         return view('admin.collectDay'); 
     })->name('collectDay');
+    Route::get('/collectDay', [collectDayConTroller::class, 'getData'])->name('collectDay');
+
 });
 
