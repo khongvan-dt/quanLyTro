@@ -111,16 +111,12 @@ Route::middleware(['checkRole:admin'])->group(function () {
     })->name('Path');
     Route::post('/insertPath', [pathController::class, 'insertPath'])->name('insertPath');
 
-    Route::get('/collectDay', function () {
-        return view('admin.collectDay'); 
-    })->name('collectDay');
-    Route::get('/collectDay', [collectDayConTroller::class, 'getData'])->name('collectDay');
-    Route::post('/insertDB', [collectDayConTroller::class, 'insertDB'])->name('insertDB');
-
-    Route::get('/collectmoney', function () {
-        return view('admin.collectmoney'); 
+    Route::get('/addCollectmoney', function () {
+        return view('admin.addCollectmoney'); 
     })->name('collectmoney');
-    Route::get('/collectmoney', [collectDayMoneyController::class, 'getData'])->name('collectmoney');
+   Route::get('/addCollectmoney', [collectDayMoneyController::class, 'getCollectmoney'])->name('collectmoney');
+   Route::post('/insertCollectDayMoney', [collectDayMoneyController::class, 'insertCollectDayMoney'])->name('insertCollectDayMoney');
+   Route::get('/DeleteCollectmoney/{id}', [collectDayMoneyController::class, 'deleteCollectmoney'])->name('deleteCollectmoney');
 
 });
 

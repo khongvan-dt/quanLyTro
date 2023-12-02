@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\tenantModel;
 use App\Models\contractModel;
 use App\Models\pathModel;
+use App\Models\collectDayMoneyModel;
 
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -208,31 +209,45 @@ class tenantController extends Controller
 
     }
     public function deleteContract($id, Request $request)
-    {
-        if (Auth::check()) {
-            $userId = Auth::id();
+{
+    if (Auth::check()) {
+        $userId = Auth::id();
 
-            $contract = ContractModel::where('idUser', $userId)->where('idRoomContract', $id)->first();
-    
+     
+        $collectmoney = collectDayMoneyModel::where('idUser', $userId)
+            ->where('idRoomCollectMoney', $id)
+            ->first();
+
+        if ($collectmoney) {
+            $collectmoney->delete();
+
+          
+            $contract = ContractModel::where('idUser', $userId)
+                ->where('idRoomContract', $id)
+                ->first();
+
             if ($contract) {
-                
-                $tenant = TenantModel::where('idUser', $userId)->where('idRoomTenant', $id)->first();
-                if ($contract->delete()) {
-                    if ($tenant) {
-                        $tenant->delete();
-                    }
-    
-                    return redirect()->route('tenant')->with('successDelete', true);
-                } else {
-                    return redirect()->route('tenant')->with('errorDelete', true);
+                $contract->delete();
+                $tenant = TenantModel::where('idUser', $userId)
+                    ->where('idRoomTenant', $id)
+                    ->first();
+
+                if ($tenant) {
+                    $tenant->delete();
                 }
+
+                return redirect()->route('tenant')->with('successDelete', true);
             } else {
                 return redirect()->route('tenant')->with('errorDelete', true);
             }
         } else {
-            return redirect()->route('pageLogin');
+            return redirect()->route('tenant')->with('errorDelete', true);
         }
+    } else {
+        return redirect()->route('pageLogin');
     }
+}
+
     public function getDisplay(Request $request)
     { 
         $id = Auth::id();

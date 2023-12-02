@@ -87,10 +87,6 @@
                             Thêm Người Thuê
                         </a>
                        
-                        <a class="nav-link" href="{{ route('collectDay') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                            Thông báo ngày thu tiền
-                        </a>
                         <a class="nav-link" href="{{ route('collectmoney') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Đóng Tiền
