@@ -11,6 +11,8 @@ use App\Http\Controllers\tenantController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\pathController;
 use App\Http\Controllers\collectDayConTroller;
+use App\Http\Controllers\collectDayMoneyController;
+
 
 
 
@@ -115,6 +117,10 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/collectDay', [collectDayConTroller::class, 'getData'])->name('collectDay');
     Route::post('/insertDB', [collectDayConTroller::class, 'insertDB'])->name('insertDB');
 
+    Route::get('/collectmoney', function () {
+        return view('admin.collectmoney'); 
+    })->name('collectmoney');
+    Route::get('/collectmoney', [collectDayMoneyController::class, 'getData'])->name('collectmoney');
 
 });
 

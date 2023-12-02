@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger("idUser");
             $table->unsignedBigInteger("idRoomCollectMoney");
             $table->date("time");//thời gian nhận được tiền thu
-            $table->float("totalAmountCollected");// tổng tiền thu được
-            $table->boolean("collectedMoney"); //(sử dụng một cột boolean)
             $table->timestamps();
             //khóa ngoại
             $table->foreign("idUser")->references("id")->on("users");
+            $table->foreign("idRoomCollectMoney")->references("idRoomContract")->on("contract");
+
         });
     }
     // thu tiền
