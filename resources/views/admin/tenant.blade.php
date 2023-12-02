@@ -100,7 +100,7 @@
 
                         <div class="col-md-5" style="margin-bottom: 10px">
                             <button type="submit" class="btn btn-primary">Xuất Hợp Đồng</button>
-                            -xuất file hợp đồng nếu muốn
+                            - xuất file hợp đồng nếu muốn
 
                         </div>
                     </form>
@@ -227,6 +227,7 @@
                                 class="row g-3"> @csrf
                                 <div class="col-md-10">
                                     <select name="roomId" id="room_id" class="form-control">
+                                        <option value="downloads">Chọn Thông Tin Phòng</option> 
                                         @foreach ($data as $item)
                                             <option value="{{ $item['id'] }}">
                                                 {{ $loop->iteration }}:
@@ -243,7 +244,7 @@
                                 <div class="col-md-2">
 
                                     <select name="path" id="path" class="form-control">
-                                        <option value="downloads">Chọn Ổ</option> <!-- Thêm tùy chọn Downloads -->
+                                        <option value="downloads">Chọn Ổ</option>
 
                                         @foreach ($listPath as $item)
                                             <option value="{{ $item['path'] }}">
@@ -351,10 +352,11 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Địa Chỉ</th>
+                                        <th>Tên phòng</th>
                                         <th>Người Thuê</th>
                                         <th>Số điện thoại</th>
                                         <th>Hợp đồng</th>
-                                        <th>Tên phòng</th>
+                                      
                                         <th>Giá Phòng</th>
                                         <th>Chức Năng</th>
                                     </tr>
@@ -371,12 +373,12 @@
                                             <td>
                                                 {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} -
                                                 {{ $item['district'] }} - {{ $item['city'] }} </td>
+                                                <td> {{ $item['roomName'] }}</td>
 
                                             <td>{{ $item['residentName'] }}</td>
                                             <td>{{ $item['phone'] }}</td>
                                             <td>{{ $item['file'] }}</td>
 
-                                            <td> {{ $item['roomName'] }}</td>
                                             <td> {{ number_format($item['price'], 3) }}</td>
                                             <td>
                                                 <a href="{{ route('deleteContract', ['id' => $item['id']]) }}"
