@@ -98,7 +98,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h3 class="mt-4"> Thêm Phòng</h3>
+                    <h3 class="mt-4">  Đóng Tiền</h3>
 
                     <div class="card mb-4">
                         <div class="card-body">
@@ -240,6 +240,7 @@
                         <div class="card-body">
 
                             <table id="datatablesSimple" class="table">
+                             
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -248,7 +249,6 @@
                                         <th>Giá Phòng</th>
                                         <th>Địa Chỉ</th>
                                         <th>Ngày Đóng</th>
-
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
@@ -256,26 +256,29 @@
                                     <?php $i = 1; ?>
                                     @foreach ($listCollectDay2 as $item)
                                         <tr class="hidden-row">
-
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->residentName }}</td>
                                             <td>{{ $item->roomName }}</td>
                                             <td>{{ number_format($item->priceRoom, 3) }}</td>
                                             <td>{{ $item->streetAddress }}</td>
-                                            <td>{{ \Carbon\Carbon::parse( $item->time)->format('d/m/Y') }}</td>
-                                           
-
-                                             <td>
+                                            
+                                            @if ($item->collectmoney_id)
+                                                <td>{{ \Carbon\Carbon::parse($item->collectmoney_time)->format('d/m/Y') }}</td>
+                                            @else
+                                                <td>Chưa đóng</td>
+                                            @endif
+                                            
+                                            <td>
                                                 <a href="{{ route('deleteCollectmoney', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
                                                     Xóa
                                                 </a>
-                                            </td> 
+                                            </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
+                                
                             </table>
 
                         </div>
