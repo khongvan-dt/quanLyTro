@@ -114,9 +114,5 @@ Route::middleware(['checkRole:admin'])->group(function () {
    Route::get('/addCollectmoney', [collectDayMoneyController::class, 'getCollectmoney'])->name('collectmoney');
    Route::post('/insertCollectDayMoney', [collectDayMoneyController::class, 'insertCollectDayMoney'])->name('insertCollectDayMoney');
    Route::get('/DeleteCollectmoney/{id}', [collectDayMoneyController::class, 'deleteCollectmoney'])->name('deleteCollectmoney');
-
-   Route::get('/homeFa', function () {
-    return view('admin.homeFa'); 
-   })->name('homeFa');
 });
 

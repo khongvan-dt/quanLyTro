@@ -59,7 +59,7 @@ class registerController extends Controller
             // Kiểm tra tài khoản
             if ($user->role === 'admin') {
                 // Redirect admin users to the 'addAddress' route
-                return redirect()->route('tenant');
+                return redirect()->route('collectmoney');
             } elseif ($user->role === 'user') {
                 // Nếu người dùng có vai trò "user", chuyển hướng đến trang lỗi 400 (pageError400)
                 return redirect()->route('pageError400');
