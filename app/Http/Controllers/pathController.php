@@ -53,7 +53,8 @@ class pathController extends Controller
             $id = Auth::id();
             
             $listPath= DB::table('path')
-            ->get();
+            ->WHERE('idUser',$id)
+            ->get() ;
              
             return view('admin.Path', ['listPath' => $listPath]);
         } else {

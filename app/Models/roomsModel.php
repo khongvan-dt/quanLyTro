@@ -12,10 +12,9 @@ class roomsModel extends Model
     protected $fillable = [
         'user_id',
         'idAccommodationArea',
-        'idTotalFloors',
         'idNumberFloors',
-        'idserviceFeeSummary',
         'idServices',
+        'chargeAccordingly',
         'roomName',
         'priceRoom',
         'interior',

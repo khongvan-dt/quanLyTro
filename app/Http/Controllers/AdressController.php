@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\accommodationareaModel;
 use App\Models\roomsModel;
+use App\Models\serviceModel;
+
 use App\Http\Controllers\console;
+
 
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +59,7 @@ class AdressController extends Controller
     {
         // Get the authenticated user's ID
         $id = Auth::id();
-    
+        $Services = serviceModel::where('idUser', $id)->get();
         // Retrieve address data from the database for the authenticated user
         $dbData = DB::table('accommodationarea')
             ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
@@ -93,7 +96,7 @@ class AdressController extends Controller
         }
     
         // Return the combined data as JSON
-        return view('admin.addAddress', ['combinedData' => $combinedData]);
+        return view('admin.addAddress', ['combinedData' => $combinedData,'Services'=> $Services]);
     }
     
 

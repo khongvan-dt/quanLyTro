@@ -19,7 +19,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" >Quản Lý Phòng Trọ</a>
+        <a class="navbar-brand ps-3">Quản Lý Phòng Trọ</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -33,15 +33,15 @@
             </div>
         </form>
         <!-- Navbar-->
-       
+
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a id="navbarDropdown" href="{{ route('logout') }}" role="button">
-                    <i class="fa-solid fa-right-from-bracket"></i> 
+                    <i class="fa-solid fa-right-from-bracket"></i>
                 </a>
             </li>
         </ul>
-        
+
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -66,14 +66,6 @@
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Địa Chỉ
                                 </a>
-                                <a class="nav-link" href="{{ route('addTotalFloor') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Tổng Số Tầng
-                                </a>
-                                <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Danh sách các tùy chọn tính tiền
-                                </a>
                                 <a class="nav-link" href="{{ route('addservices') }}">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Tên Khoản Tiền Dịch Vụ
@@ -88,12 +80,12 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                      
+
                         <a class="nav-link" href="{{ route('collectmoney') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Đóng Tiền
                         </a>
-                        
+
                     </div>
                 </div>
             </nav>
@@ -110,8 +102,8 @@
                             @if (session('success'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                                        stroke-width="2" fill="none" stroke-linecap="round"
-                                        stroke-linejoin="round" class="me-2">
+                                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                        class="me-2">
                                         <polyline points="9 11 12 14 22 4"></polyline>
                                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
                                         </path>
@@ -179,30 +171,92 @@
                                 </div>
                             @endif
 
-                            <form action="{{ route('insertAddress') }}" method="POST" class="row g-3">
+                            <form action="{{ route('insertAddress') }}" method="POST">
                                 @csrf
-                                <div class="col-md-4">
-                                    <select class="form-select form-select-sm mb-3 city" aria-label=".form-select-sm"
-                                        name="city">
-                                        <option value="" required selected>Chọn tỉnh thành</option>
-                                    </select>
+                                <div class="row g-4">
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm mb-3 city"
+                                            aria-label=".form-select-sm" name="city">
+                                            <option value="" required selected>Chọn tỉnh thành</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm mb-3 district"
+                                            aria-label=".form-select-sm" name="district">
+                                            <option value="" required selected>Chọn quận huyện</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
+                                            name="commune">
+                                            <option value="" required selected>Chọn phường xã</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="specifically"
+                                            id="inputAddress2" placeholder="Đường Cụ Thể" required>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="district">
-                                        <option value="" required selected>Chọn quận huyện</option>
-                                    </select>
+                                <div class="row g-4">
+
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control" name="idNumberFloors"
+                                            id="idNumberFloors" placeholder=" phòng ở tầng số" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control thousands-separator"
+                                            name="roomName" id="roomName" placeholder=" Tên phòng" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm mb-3 district"
+                                            aria-label=".form-select-sm" name="serviceFeeSummary"
+                                            id="serviceFeeSummary">
+                                            <option value="" selected>Tính tiền dịch vụ</option>
+                                            <option value="Theo Đầu Người">Theo Đầu Người</option>
+                                            <option value="Theo Tháng">Theo Tháng</option>
+                                            <option value="Miễn phí tiền Dịch Vụ">Miễn phí tiền Dịch Vụ</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm mb-3 district"
+                                            aria-label=".form-select-sm" name="capacity" id="capacity">
+                                            <option value="" selected>Số Người Có Thể Ở</option>
+                                            <option value="1 người">1 người</option>
+                                            <option value="2 người">2 người</option>
+                                            <option value="3 người">3 người</option>
+                                            <option value="4 người">4 người</option>
+                                            <option value="5 người">5 người</option>
+                                            <option value="6 người">6 người</option>
+                                            <option value="7 người">7 người</option>
+                                            <option value="8 người">8 người</option>
+                                            <option value="9 người">9 người</option>
+                                            <option value="10 người">10 người</option>
+                                        </select>
+
+                                    </div>
+
+
                                 </div>
-                                <div class="col-md-4">
-                                    <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
-                                        name="commune">
-                                        <option value="" required selected>Chọn phường xã</option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label for="inputAddress2" class="form-label"></label>
-                                    <input type="text" class="form-control" name="specifically"
-                                        id="inputAddress2" placeholder="Đường Cụ Thể" required>
+                                <div class="row g-4">
+                                    <div class="col-md-8">
+                                        <select class="form-select form-select-sm mb-3 district"
+                                            aria-label=".form-select-sm" name="idServices" id="idServices">
+                                            <option value="" selected>Chi Tiết Tiền Dịch Vụ</option>
+                                            @foreach ($Services as $item)
+                                                <option value="{{ $item->id }}">
+                                                    Tiền điện: {{ number_format($item->electricityBill, 3) }},
+                                                    Tiền Nước: {{ number_format($item->waterBill, 3) }},
+                                                    Tiền wifi: {{ number_format($item->wifiFee, 3) }},
+                                                    Dọn Dẹp: {{ number_format($item->cleaningFee, 3) }},
+                                                    Tiền Để Xe: {{ number_format($item->parkingFee, 3) }},
+                                                    Tiền Phạt: {{ number_format($item->fine, 3) }},
+                                                    Tiền Khác: {{ number_format($item->other_fees, 3) }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Lưu</button>

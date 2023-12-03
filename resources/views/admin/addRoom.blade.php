@@ -206,13 +206,7 @@
                                 </div>
 
                                 <div class="col-md-1">
-                                    <select class="form-select form-select-sm mb-3 district"
-                                        aria-label=".form-select-sm" name="idTotalFloors" id="idTotalFloors">
-                                        <option value="" selected>Tổng Tầng</option>
-                                        @foreach ($listFloors as $item)
-                                            <option value="{{ $item->id }}">{{ $item->sumFloors }}</option>
-                                        @endforeach
-                                    </select>
+                                  
                                 </div>
                                 <div class="col-md-1">
                                     <select class="form-select form-select-sm ward" aria-label=".form-select-sm"
@@ -342,7 +336,7 @@
                                             </td>
                                             <td>{{ $item->roomName }}</td>
                                             <td>{{ number_format($item->priceRoom, 3) }}</td>
-                                            <td>Tầng {{ $item->floors }}</td>
+                                           
                                             <td>{{ $item->capacity }}</td>
                                             <td>{{ $item->interior }}</td>
                                             <td>{{ $item->service_fee_summary_name }}</td>

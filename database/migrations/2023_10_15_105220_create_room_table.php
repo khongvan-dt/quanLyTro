@@ -14,12 +14,11 @@ return new class extends Migration
         // Create the 'room' table
         Schema::create('room', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("user_id");
+            $table->unsignedBigInteger("user_id");   
             $table->unsignedBigInteger("idAccommodationArea");
-            $table->unsignedBigInteger("idTotalFloors");
-            $table->unsignedBigInteger("idNumberFloors");
-            $table->unsignedBigInteger("idserviceFeeSummary");
+            $table->integer("idNumberFloors");
             $table->unsignedBigInteger("idServices");
+            $table->unsignedBigInteger("idServiceFeeSummary"); // tính tiền theo
 
             $table->string("roomName"); // Tên phòng, số phòng
             $table->float("priceRoom", 10, 3); // Giá phòng
@@ -31,9 +30,7 @@ return new class extends Migration
             // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('idAccommodationArea')->references('id')->on('accommodationArea');
-            $table->foreign('idTotalFloors')->references('id')->on('totalFloors');
-            $table->foreign('idNumberFloors')->references('id')->on('numberFloors');
-            $table->foreign('idserviceFeeSummary')->references('id')->on('servicefeesummary');
+            $table->foreign('idServiceFeeSummary')->references('id')->on('serviceFeeSummary');
             $table->foreign('idServices')->references('id')->on('services');
         });
     }

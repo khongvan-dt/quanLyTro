@@ -13,36 +13,36 @@ class registerController extends Controller
     {
         $validate = $request->validate([
             'username' => 'required|string|max:100',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|string|email|max:255|unique:users', // Thêm quy tắc xác nhận email và unique
             'password' => 'required|string|min:8',
         ]);
+
         $username = strip_tags($request->input('username'));
         $email = strip_tags($request->input('email'));
         $password = strip_tags($request->input('password'));
-        
 
         $existingUsername = User::where('name', $username)->first();
-        $existingEmail = User::where('email', $email)->first(); 
+
         if ($existingUsername) {
             return redirect()->route('pageRegister')->with('Error1', true);
         }
-        if ($existingEmail) {
-            return redirect()->route('pageRegister')->with('Error2', true);
-        }
-        $role='user';
+
+        // Không cần kiểm tra $existingEmail nữa vì quy tắc 'unique' đã thực hiện kiểm tra đó
+        $role = 'user';
+
         if (strlen($password) >= 8) {
-          
             $user = new User();
             $user->name = $username;
             $user->password = bcrypt($password);
             $user->email = $email;
-            $user->role = 'admin';
+            $user->role = 'admin'; // Bạn có thể muốn sửa thành $role nếu đang sử dụng biến này
             $user->save();
             return redirect()->route('pageLogin')->with('success', true);
         } else {
             return redirect()->route('pageRegister')->with('Error3', true);
         }
     }
+
     public function login(Request $request)
     {
         // Kiểm tra dữ liệu đầu vào

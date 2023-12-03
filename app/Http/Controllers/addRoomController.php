@@ -24,6 +24,7 @@ class addRoomController extends Controller
     { 
         $id = Auth::id();
         // Lấy dữ liệu từ cơ sở dữ liệu
+
         $dbData =  DB::table('accommodationarea')
         ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
         ->where('idUser', $id)
@@ -32,24 +33,21 @@ class addRoomController extends Controller
         // Lấy dữ liệu từ JSON
         $jsonData = json_decode(file_get_contents('https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'), true);
 
-        $listFloors = totalFlorModel::where('idUser', $id)->get();
         $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $id)->get();
         $Services = serviceModel::where('idUser', $id)->get();
         $rooms = DB::table('room')
         ->leftJoin('users', 'room.user_id', '=', 'users.id')
         ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-        ->leftJoin('totalFloors', 'room.idTotalFloors', '=', 'totalFloors.id')
-        ->leftJoin('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
         ->leftJoin('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
         ->leftJoin('services', 'room.idServices', '=', 'services.id')
         ->leftJoin('tenant', 'room.id', '=', 'tenant.idRoomTenant')
         ->select('room.*',
             'accommodationArea.city', 'accommodationArea.districts', 'accommodationArea.wardsCommunes', 'accommodationArea.streetAddress',
             'room.idNumberFloors as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
-            'numberFloors.floors',
+           
             'services.electricityBill', 'services.waterBill', 'services.wifiFee', 'services.cleaningFee', 'services.parkingFee', 'services.fine',
             'services.other_fees', 'services.sumServices', 'room.roomName', 'room.priceRoom', 'room.interior', 'room.capacity',
-            'tenant.idRoomTenant') // Add the idRoomTenant property to the select statement
+            'tenant.idRoomTenant') 
         ->where('room.user_id', $id)
         ->get();
     
@@ -77,7 +75,7 @@ class addRoomController extends Controller
                 'streetAddress' => $row->streetAddress,
             ];
         }
-        // $combinedData2 = [];
+        $combinedData2 = [];
 
         foreach ($rooms as $row1) {
             $cityId = $row1->city;
@@ -110,13 +108,12 @@ class addRoomController extends Controller
                 'priceRoom' => $row1->priceRoom,
                 'interior' => $row1->interior,
                 'capacity' => $row1->capacity,
-                'floors'=> $row1->floors
+            
             ];
         }
         
         return view('admin.addRoom')->with([
             'combinedData' => $combinedData,
-            'listFloors' => $listFloors,
             'serviceFeeSummary' => $serviceFeeSummary,
             'Services'=> $Services,
             'combinedData2'=> $combinedData2,
@@ -169,13 +166,6 @@ class addRoomController extends Controller
         return 'Không tìm thấy';
     }
 
-    public function getNumberFloors(Request $request) {
-        $totalFloorId = $request->input('totalFloorId');
-    
-        // Query the "Tầng" data based on $totalFloorId
-        $numberFloors = NumberFloorsModel::where('idTotalFloors', $totalFloorId)->pluck('floors', 'id')->toArray();
-        return response()->json($numberFloors);
-    }
     
     public function insertRoom(Request $request)
     { 
