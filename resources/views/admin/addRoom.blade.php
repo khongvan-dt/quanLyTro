@@ -422,18 +422,6 @@
         });
     </script>
 
-    {{-- <script>
-        // Hàm để thêm dấu phẩy vào giá trị số
-        function addCommas(inputId) {
-            const inputElement = document.getElementById(inputId);
-            let value = inputElement.value.replace(/\D/g, ''); // Lấy ra chỉ số và loại bỏ các ký tự không phải số
-            inputElement.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu phẩy vào hàng nghìn
-        }
-        document.getElementById('priceRoom').addEventListener('input', function() {
-            addCommas('priceRoom');
-        });
-    </script> --}}
-
     <script>
         $(document).ready(function() {
             $('#idTotalFloors').on('change', function() {

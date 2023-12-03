@@ -13,11 +13,6 @@ use App\Http\Controllers\pathController;
 use App\Http\Controllers\collectDayConTroller;
 use App\Http\Controllers\collectDayMoneyController;
 
-
-
-
-
-
 Route::get('/pageRegister', function () {
     return view('page-register');
 })->name('pageRegister');
@@ -120,5 +115,8 @@ Route::middleware(['checkRole:admin'])->group(function () {
    Route::post('/insertCollectDayMoney', [collectDayMoneyController::class, 'insertCollectDayMoney'])->name('insertCollectDayMoney');
    Route::get('/DeleteCollectmoney/{id}', [collectDayMoneyController::class, 'deleteCollectmoney'])->name('deleteCollectmoney');
 
+   Route::get('/homeFa', function () {
+    return view('admin.homeFa'); 
+   })->name('homeFa');
 });
 
