@@ -48,7 +48,7 @@ class servicesController extends Controller
         $serviceModel->fine = $fine;
         $serviceModel->other_fees = $other_fees;
 
-        $sumServices =  $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
+        $sumServices = $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
         $serviceModel->sumServices = $sumServices;
 
         if ($serviceModel->save()) {
@@ -145,7 +145,7 @@ class servicesController extends Controller
         $serviceModel->other_fees = $other_fees;
 
         // Calculate and set sumServices
-        $sumServices = $wifiFee + $cleaningFee ;
+        $sumServices = $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
         $serviceModel->sumServices = $sumServices;
 
         if ($serviceModel->save()) {

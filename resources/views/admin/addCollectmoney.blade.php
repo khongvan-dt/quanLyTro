@@ -86,6 +86,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h3 class="mt-4">  Đóng Tiền</h3>
+                    <h5><b style="color: green;">Tổng Thu:{{ number_format($totalPriceRoom) }}</b></h5>
 
                     <div class="card mb-4">
                         <div class="card-body">
@@ -234,8 +235,10 @@
                                         <th>Tên</th>
                                         <th>Tên phòng</th>
                                         <th>Giá Phòng</th>
+                                        <th>Tiền dịch vụ</th>
                                         <th>Địa Chỉ</th>
                                         <th>Ngày Đóng</th>
+                                        <th>Tổng</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
@@ -246,7 +249,8 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->residentName }}</td>
                                             <td>{{ $item->roomName }}</td>
-                                            <td>{{ number_format($item->priceRoom, 3) }}</td>
+                                            <td>{{ number_format($item->priceRoom) }}</td>
+                                            <td>{{ number_format($item->sumServices) }}</td>
                                             <td>{{ $item->streetAddress }}</td>
                                             
                                             @if ($item->collectmoney_id)
@@ -254,9 +258,10 @@
                                             @else
                                                 <td>Chưa đóng</td>
                                             @endif
-                                            
+                                            <td>{{ number_format($item->sumServices+$item->priceRoom) }}</td>
+
                                             <td>
-                                                <a href="{{ route('deleteCollectmoney', ['id' => $item->id]) }}"
+                                                <a href="{{ route('deleteCollectmoney', ['id' => $item->idRoomContract]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
                                                     Xóa

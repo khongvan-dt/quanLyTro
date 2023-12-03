@@ -121,14 +121,14 @@
                                         <input type="text" class="form-control thousands-separator" name="electricityBill"
                                             id="electricityBill" required
                                             placeholder="Tiền 1 số điện (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->electricityBill, 3) }}">
+                                            value="{{$service->electricityBill }}">
                                     </div>
                                 
                                     <div class="col-md-6">
                                         <label  for="waterBill" class="form-label"><b>Tiền một khối nước</b></label>
                                         <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill"
                                         required   placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->waterBill, 3) }}">
+                                            value="{{$service->waterBill}}">
                                     </div>
                                 </div>
 
@@ -137,7 +137,7 @@
                                         <label for="wifiFee" class="form-label"><b>Tiền wifi</b></label>
                                         <input type="text" class="form-control thousands-separator" name="wifiFee"
                                         required   id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->wifiFee, 3) }}">
+                                            value="{{$service->wifiFee}}">
                                     </div>
 
                                     <div class="col-md-6">
@@ -145,7 +145,7 @@
                                         <input type="text" class="form-control thousands-separator"
                                             name="cleaningFee" id="cleaningFee"
                                             required  placeholder="Tiền dọn dẹp (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->cleaningFee, 3) }}">
+                                            value="{{$service->cleaningFee }}">
                                     </div>
                                 </div>
 
@@ -155,14 +155,14 @@
                                         <input type="text" class="form-control thousands-separator"
                                             name="parkingFee" id="parkingFee"
                                             required   placeholder="Tiền để xe (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->parkingFee, 3) }}">
+                                            value="{{$service->parkingFee }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="fine" class="form-label"><b>Tiền phạt</b></label>
-                                        <input type="text" class="form-control thousands-separator" name="fine"
+                                        <input type="number" class="form-control thousands-separator" name="fine"
                                         required    id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->fine, 3) }}">
+                                            value="{{$service->fine }}">
                                     </div>
                                 </div>
 
@@ -171,7 +171,7 @@
                                         <label for="other_fees" class="form-label"><b>Tiền khác</b></label>
                                         <input type="text" class="form-control" name="other_fees" id="other_fees"
                                         required   placeholder="Tiền khác (nếu có, không có không cần điền)"
-                                            value="{{number_format($service->other_fees, 3) }}">
+                                            value="{{$service->other_fees }}">
                                     </div>
                                 </div>
 
@@ -201,7 +201,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    {{-- <script>
         // Hàm để thêm dấu phẩy vào giá trị số
         function addCommas(inputId) {
             const inputElement = document.getElementById(inputId);
@@ -234,7 +234,7 @@
         });
 
         // Gán sự kiện cho các trường nhập liệu khác tương tự
-    </script>
+    </script> --}}
 
 
 

@@ -171,7 +171,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="electricityBill" class="form-label"><b>Tiền 1 số điện:</b></label>
-                                        <input type="text" class="form-control thousands-separator" name="electricityBill"
+                                        <input type="number" class="form-control thousands-separator" name="electricityBill"
                                         required id="electricityBill"
                                             placeholder="Tiền 1 số điện (nếu có, không có không cần điền)"
                                             >
@@ -179,7 +179,7 @@
                                 
                                     <div class="col-md-6">
                                         <label  for="waterBill" class="form-label"><b>Tiền một khối nước:</b></label>
-                                        <input type="text" class="form-control thousands-separator" name="waterBill" id="waterBill"
+                                        <input type="number" class="form-control thousands-separator" name="waterBill" id="waterBill"
                                         required      placeholder="Tiền một khối nước (nếu có, không có không cần điền)"
                                             >
                                     </div>
@@ -188,14 +188,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="wifiFee" class="form-label"><b>Tiền wifi:</b></label>
-                                        <input type="text" class="form-control thousands-separator" name="wifiFee"
+                                        <input type="number" class="form-control thousands-separator" name="wifiFee"
                                         required       id="wifiFee" placeholder="Tiền wifi (nếu có, không có không cần điền)"
                                            >
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="cleaningFee" class="form-label"><b>Tiền dọn dẹp:</b></label>
-                                        <input type="text" class="form-control thousands-separator"
+                                        <input type="number" class="form-control thousands-separator"
                                             name="cleaningFee" id="cleaningFee"
                                             placeholder="Tiền dọn dẹp (nếu có, không có không cần điền)"
                                            >
@@ -205,7 +205,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="parkingFee" class="form-label"><b>Tiền để xe:</b></label>
-                                        <input type="text" class="form-control thousands-separator"
+                                        <input type="number" class="form-control thousands-separator"
                                         required   name="parkingFee" id="parkingFee"
                                             placeholder="Tiền để xe (nếu có, không có không cần điền)"
                                             >
@@ -213,7 +213,7 @@
 
                                     <div class="col-md-6">
                                         <label for="fine" class="form-label"><b>Tiền phạt:</b></label>
-                                        <input type="text" class="form-control thousands-separator" name="fine"
+                                        <input type="number" class="form-control thousands-separator" name="fine"
                                         required   id="fine" placeholder="Tiền phạt (nếu có, không có không cần điền)"
                                             >
                                     </div>
@@ -222,7 +222,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="other_fees" class="form-label"><b>Tiền khác:</b></label>
-                                        <input type="text" class="form-control" name="other_fees" id="other_fees"
+                                        <input type="number" class="form-control" name="other_fees" id="other_fees"
                                         required   placeholder="Tiền khác (nếu có, không có không cần điền)"
                                             >
                                     </div>
@@ -260,14 +260,14 @@
                                     @foreach ($listServices as $item)
                                         <tr>
                                             <td> <?php echo $i++ ?></td>
-                                            <td>{{ number_format($item['electricityBill'], 3) }} VND</td>
-                                            <td>{{ number_format($item['waterBill'], 3) }} VND</td>
-                                            <td>{{ number_format($item['wifiFee'], 3) }} VND</td>
-                                            <td>{{ number_format($item['cleaningFee'], 3) }} VND</td>
-                                            <td>{{ number_format($item['parkingFee'], 3) }} VND</td>
-                                            <td>{{ number_format($item['fine'], 3) }} VND</td>
-                                            <td>{{ number_format($item['other_fees'], 3) }} VND</td>
-                                            <td><b>{{ number_format($item['sumServices'], 3) }} VND</b></td>
+                                            <td>{{ number_format($item['electricityBill']) }} VND</td>
+                                            <td>{{ number_format($item['waterBill']) }} VND</td>
+                                            <td>{{ number_format($item['wifiFee']) }} VND</td>
+                                            <td>{{ number_format($item['cleaningFee']) }} VND</td>
+                                            <td>{{ number_format($item['parkingFee']) }} VND</td>
+                                            <td>{{ number_format($item['fine']) }} VND</td>
+                                            <td>{{ number_format($item['other_fees']) }} VND</td>
+                                            <td><b>{{ number_format($item['sumServices']) }} VND</b></td>
                                             <td>
                                                 <a class="btn btn-primary" href="/editService/{{ $item['id'] }}">Sửa</a>
                                                 <a href="{{ route('deleteService', ['id' => $item->id]) }}"
@@ -302,7 +302,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
+    {{-- <script>
         // Hàm để thêm dấu phẩy vào giá trị số
         function addCommas(inputId) {
             const inputElement = document.getElementById(inputId);
@@ -333,7 +333,7 @@
         document.getElementById('other_fees').addEventListener('input', function() {
             addCommas('other_fees');
         });
-    </script>
+    </script> --}}
 
 
 </body>

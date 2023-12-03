@@ -51,11 +51,11 @@ Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/addRoom', function () {
         return view('admin.addAddress'); 
     })->name('addAddres'); 
-    Route::post('/Address', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
+    Route::post('/addRoom', [AdressController::class, 'insertAddress'])->name('insertAddress'); 
     Route::get('/edit/{id}', [AdressController::class, 'editAddress'])->name('editAddress');
     Route::post('/updateaddress/{id}', [AdressController::class, 'updateAddress'])->name('updateAddress');
     Route::get('/DeleteId/{id}', [AdressController::class, 'DeleteId'])->name('DeleteId');
-    Route::get('/Address', [AdressController::class, 'getAddress'])->name('addAddres');
+    Route::get('/addRoom', [AdressController::class, 'getAddress'])->name('addAddres');
 
 
    

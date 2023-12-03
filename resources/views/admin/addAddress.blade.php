@@ -88,7 +88,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h3 class="mt-4"> Thêm Địa Chỉ</h3>
+                    <h3 class="mt-4"> Thêm Phòng</h3>
 
 
                     <div class="card mb-4">
@@ -219,7 +219,7 @@
                                             name="roomName" id="roomName" placeholder=" Tên phòng" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" class="form-control thousands-separator"
+                                        <input type="number" class="form-control thousands-separator"
                                             name="priceRoom" id="priceRoom" placeholder="giá phòng" required>
                                     </div>
 
@@ -337,7 +337,7 @@
                                             <td>{{ number_format($item->sumServices, 3) }}</td>
                                             <td>{{ $item->idRoomTenant ? 'Đã Có Người' : 'Chưa Có Người' }}</td>
                                             <td>
-                                                <a class="btn btn-primary" href="/edit/{{ $item->id}}">Sửa</a>
+                                                <a class="btn btn-primary" href="/edit/{{ $item->accommodationAreaID}}">Sửa</a>
                                                 <a href="{{ route('DeleteId', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
                                                     class="btn btn-primary main__table-btn main__table-btn--banned open-modal">

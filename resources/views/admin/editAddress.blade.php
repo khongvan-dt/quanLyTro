@@ -128,7 +128,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" class="form-control" name="specifically"
-                                            value="{{ $idAddress->streetAddress }}" id="inputAddress2"
+                                            value="{{ $room->streetAddress }}" id="inputAddress2"
                                             placeholder="Đường Cụ Thể" required>
 
                                     </div>

@@ -219,33 +219,30 @@
                                 class="row g-3"> @csrf
                                 <div class="col-md-10">
                                     <select name="roomId" id="room_id" class="form-control">
-                                        <option value="downloads">Chọn Thông Tin Phòng</option> 
-                                        @foreach ($data as $item)
-                                            <option value="{{ $item['id'] }}">
+                                        <option value="downloads">Chọn Thông Tin Phòng</option>
+                                        @foreach ($rooms as $item)
+                                            <option value="{{ $item->id }}">
                                                 {{ $loop->iteration }}:
-                                                Tên Phòng:
-                                                {{ $item['roomName'] }}--
-                                                Địa Chỉ: {{ $item['streetAddress'] }}--
-                                                Giá:{{ number_format($item['priceRoom'], 3) }} -- Sức Chứa:
-                                                {{ $item['capacity'] }}
+                                                Tên Phòng: {{ $item->roomName }}--
+                                                Địa Chỉ: {{ $item->streetAddress }}--
+                                                Giá: {{ number_format($item->priceRoom) }} -- Sức Chứa: {{ $item->capacity }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    
 
                                 </div>
                                 <div class="col-md-2">
 
-                                    <select name="path" id="path" class="form-control">
-                                        <option value="downloads">Chọn Ổ</option>
-
+                                    <select name="path" id="path" class="form-control" required>
+                                        <option value="" disabled selected>Chọn Ổ</option>
                                         @foreach ($listPath as $item)
                                             <option value="{{ $item['path'] }}">
-                                                {{ $loop->iteration }}:
-                                                Tên path:
-                                                {{ $item['path'] }}
+                                                {{ $loop->iteration }}: Tên path: {{ $item['path'] }}
                                             </option>
                                         @endforeach
                                     </select>
+                                    
                                 </div>
                                 <div class="card-body ">
 
@@ -359,19 +356,16 @@
                                     <?php $i = 1; ?>
                                     @foreach ($data1 as $item)
                                         <tr class="hidden-row">
-
-                                            <td>{{ $loop->iteration }}</td>
-
+                                            <td>{{ $i++ }}</td>
                                             <td>
                                                 {{ $item['streetAddress'] }} - {{ $item['wardCommune'] }} -
-                                                {{ $item['district'] }} - {{ $item['city'] }} </td>
-                                                <td> {{ $item['roomName'] }}</td>
-
+                                                {{ $item['district'] }} - {{ $item['city'] }}
+                                            </td>
+                                            <td>{{ $item['roomName'] }}</td>
                                             <td>{{ $item['residentName'] }}</td>
                                             <td>{{ $item['phone'] }}</td>
                                             <td>{{ $item['file'] }}</td>
-
-                                            <td> {{ number_format($item['price'], 3) }}</td>
+                                            <td>{{ number_format($item['price'], 3) }}</td>
                                             <td>
                                                 <a href="{{ route('deleteContract', ['id' => $item['id']]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
@@ -379,10 +373,8 @@
                                                     Xóa
                                                 </a>
                                             </td>
-
                                         </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
 
