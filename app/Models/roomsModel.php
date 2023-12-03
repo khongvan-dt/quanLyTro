@@ -14,7 +14,7 @@ class roomsModel extends Model
         'idAccommodationArea',
         'idNumberFloors',
         'idServices',
-        'chargeAccordingly',
+        'idServiceFeeSummary',
         'roomName',
         'priceRoom',
         'interior',

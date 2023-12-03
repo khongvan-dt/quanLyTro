@@ -50,8 +50,8 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-                        <a class="nav-link" href="{{ route('addRoom') }}">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div> 
+                        <a class="nav-link" href="{{ route('addAddres') }}">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
@@ -60,22 +60,9 @@
                             Thêm Thông Tin
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('addAddres') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Địa Chỉ
-                                </a>
-                                <a class="nav-link" href="{{ route('addTotalFloor') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Tổng Số Tầng
-                                </a>
-                                <a class="nav-link" href="{{ route('addServiceFeeSummary') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Danh sách các tùy chọn tính tiền
-                                </a>
                                 <a class="nav-link" href="{{ route('addservices') }}">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Tên Khoản Tiền Dịch Vụ
@@ -90,7 +77,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Người Thuê
                         </a>
-                       
+
                         <a class="nav-link" href="{{ route('collectmoney') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Đóng Tiền

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\accommodationareaModel;
 use App\Models\roomsModel;
 use App\Models\serviceModel;
+use App\Models\serviceFeeSummaryModel;
+use App\Models\tenantModel;
+
 
 use App\Http\Controllers\console;
 
@@ -17,49 +20,148 @@ use Illuminate\Support\Facades\Auth;
 class AdressController extends Controller
 {
     public function insertAddress(Request $request)
-    {
-        // Check if the user is authenticated
-        if (Auth::check()) {
+{
+    // Check if the user is authenticated
+    if (Auth::check()) {
+        $id = Auth::id();
 
-            $id = Auth::id();
+        $request->validate([
+            'specifically' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+            'commune' => 'required',
+        ]);
+
+        $specifically = $request->input('specifically');
+        $city = $request->input('city');
+        $district = $request->input('district');
+        $commune = $request->input('commune');
+
+        $address = new accommodationareaModel();
+        $address->idUser = $id; // Associate the user with the address
+        $address->city = $city;
+        $address->districts = $district;
+        $address->wardsCommunes = $commune;
+        $address->streetAddress = $specifically;
+
+        $saved = $address->save();
+
+        if ($saved) {
+            $idAccommodationArea = $address->id; // Get the ID of the newly created accommodationareaModel
 
             $request->validate([
-                'specifically' => 'required',
-                'city' => 'required',
-                'district' => 'required',
-                'commune' => 'required',
+                'idNumberFloors' => 'required',
+                'roomName' => 'required',
+                'idserviceFeeSummary' => 'required',
+                'capacity' => 'required',
+                'idServices' => 'required',
+                'priceRoom' => 'required',
+                'interior' => 'required',
             ]);
 
-            $specifically = $request->input('specifically');
-            $city = $request->input('city');
-            $district = $request->input('district');
-            $commune = $request->input('commune');
+            $idNumberFloors = $request->input('idNumberFloors');
+            $idserviceFeeSummary = $request->input('idserviceFeeSummary');
+            $idServices = $request->input('idServices');
+            $roomName = $request->input('roomName');
+            $interior = $request->input('interior');
+            $capacity = $request->input('capacity');
+            $priceRoom = $request->input('priceRoom');
+ 
+            $room = new roomsModel();
+            $room->user_id = $id;
+            $room->idAccommodationArea = $idAccommodationArea;
+            $room->idNumberFloors = $idNumberFloors;
+            $room->idserviceFeeSummary = $idserviceFeeSummary;
+            $room->idServices = $idServices;
+            $room->roomName = $roomName;
+            $room->interior = $interior;
+            $room->capacity = $capacity;
+            $room->priceRoom = $priceRoom;
 
-            $address = new accommodationareaModel();
-            $address->idUser = $id; // Associate the user with the address
-            $address->city = $city;
-            $address->districts = $district;
-            $address->wardsCommunes = $commune;
-            $address->streetAddress = $specifically;
+            $roomSaved = $room->save();
 
-            $saved = $address->save();
-
-            if ($saved) {
+            if ($roomSaved) {
                 return redirect()->route('insertAddress')->with('success', true);
             } else {
+                // If saving room fails, you might want to handle this scenario accordingly
                 return redirect()->route('insertAddress')->with('error', true);
             }
         } else {
-            return redirect()->route('pageLogin');
+            return redirect()->route('insertAddress')->with('error', true);
         }
+    } else {
+        return redirect()->route('pageLogin');
     }
+}
+
    
+public function DeleteId($id, Request $request)
+{
+    if (Auth::check()) {
+        $userId = Auth::id();
+        
+        // Check if there are records with the specified conditions
+        $idDelete = tenantModel::where('idRoomTenant', $id)->count(); 
     
-    public function getAddress(Request $request)
+        if ($idDelete > 0) {
+            return redirect()->route('addAddres')->with('errorDelete1', true);
+        } else {
+            $roomDelete = roomsModel::where('user_id', $userId)->find($id);
+    
+            if ($roomDelete) {
+                // Tìm địa chỉ của người dùng dựa trên idAccommodationArea
+                $userAddress = accommodationareaModel::find($roomDelete->idAccommodationArea);
+    
+                // Kiểm tra xem địa chỉ có tồn tại không
+                if ($userAddress) {
+                    // Kiểm tra xem địa chỉ có đang được sử dụng bởi phòng không
+                    $isAddressInUse = roomsModel::where('idAccommodationArea', $userAddress->id)->exists();
+     
+                    if (!$isAddressInUse) {
+                        // Xóa địa chỉ
+                        $userAddress->delete();
+                    }
+                } else {
+                    return redirect()->route('addAddres')->with('errorDelete1', true);
+                }
+    
+                // Xóa phòng
+                $roomDelete->delete();
+    
+                // Chuyển hướng với thông báo thành công
+                return redirect()->route('addAddres')->with('successDelete', true);
+            } else {
+                return redirect()->route('addAddres')->with('errorDelete1', true);
+            }
+        }
+    } else {
+        return redirect()->route('pageLogin');
+    }
+    
+}
+
+    public function getAddress(Request $request) 
     {
         // Get the authenticated user's ID
         $id = Auth::id();
+        $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $id)->get();
+
         $Services = serviceModel::where('idUser', $id)->get();
+        $rooms = DB::table('room')
+        ->leftJoin('users', 'room.user_id', '=', 'users.id')
+        ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
+        ->leftJoin('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
+        ->leftJoin('services', 'room.idServices', '=', 'services.id')
+        ->leftJoin('tenant', 'room.id', '=', 'tenant.idRoomTenant')
+        ->select('room.*',
+            'accommodationArea.city', 'accommodationArea.districts', 'accommodationArea.wardsCommunes', 'accommodationArea.streetAddress',
+            'room.idNumberFloors as number_floors_name', 'servicefeesummary.name as service_fee_summary_name',
+           
+            'services.electricityBill', 'services.waterBill', 'services.wifiFee', 'services.cleaningFee', 'services.parkingFee', 'services.fine',
+            'services.other_fees', 'services.sumServices', 'room.roomName', 'room.priceRoom', 'room.interior', 'room.capacity',
+            'tenant.idRoomTenant') 
+        ->where('room.user_id', $id)
+        ->get();
         // Retrieve address data from the database for the authenticated user
         $dbData = DB::table('accommodationarea')
             ->select('id', 'idUser', 'city', 'districts', 'wardsCommunes', 'streetAddress')
@@ -96,7 +198,7 @@ class AdressController extends Controller
         }
     
         // Return the combined data as JSON
-        return view('admin.addAddress', ['combinedData' => $combinedData,'Services'=> $Services]);
+        return view('admin.addAddress', ['combinedData' => $combinedData,'Services'=> $Services, 'rooms'=> $rooms,'serviceFeeSummary'=>$serviceFeeSummary]);
     }
     
 
@@ -144,10 +246,13 @@ class AdressController extends Controller
     }
 
     public function editAddress(Request $request, $id) {
+        $idUser = Auth::id();
         // Lấy đối tượng accommodationareaModel dựa trên ID
         $idAddress = accommodationareaModel::find($id);
-    
-        // Kiểm tra xem đối tượng có tồn tại không
+        $Services = serviceModel::where('idUser', $idUser)->get();
+        $serviceFeeSummary = serviceFeeSummaryModel::where('idUser', $idUser)->get();
+        $room = roomsModel::where('user_id', $idUser)->first();
+      
         if (!$idAddress) {
             return response()->json(['error' => 'Không tồn tại'], 404);
         }
@@ -168,7 +273,7 @@ class AdressController extends Controller
         return view('admin.editAddress', [
             'specifically' => $specifically,
             'importProducts' => $importProducts,
-            'firstItemId' => $firstItemId
+            'firstItemId' => $firstItemId,'serviceFeeSummary'=>$serviceFeeSummary,'Services'=> $Services,'idAddress'=>$idAddress,'room'=> $room
         ]);
     }
     
@@ -181,6 +286,11 @@ class AdressController extends Controller
                 'city' => 'required',
                 'district' => 'required',
                 'commune' => 'required',
+                'idNumberFloors' => 'required',
+                'roomName' => 'required',
+                'priceRoom' => 'required',
+                'capacity' => 'required',
+                'interior' => 'required',
             ]);
     
             // Find the user's address by their ID
@@ -193,9 +303,21 @@ class AdressController extends Controller
             $userAddress->wardsCommunes = $request->input('commune');
             $userAddress->streetAddress = $request->input('specifically');
     
-            $saved = $userAddress->save();
+            $savedAddress = $userAddress->save();
     
-            if ($saved) {
+            // Find the user's room by their user_id (assuming user can have multiple rooms)
+            $userRoom = RoomsModel::where('user_id', $idUser)->first();
+    
+            // Update the room fields
+            $userRoom->idNumberFloors = $request->input('idNumberFloors');
+            $userRoom->roomName = $request->input('roomName');
+            $userRoom->priceRoom = $request->input('priceRoom');
+            $userRoom->capacity = $request->input('capacity');
+            $userRoom->interior = $request->input('interior');
+    
+            $savedRoom = $userRoom->save();
+    
+            if ($savedAddress && $savedRoom) {
                 // Redirect with success message
                 return redirect()->route('addAddres')->with('successUpdelete', true);
             } else {
@@ -207,33 +329,6 @@ class AdressController extends Controller
             return redirect()->route('pageLogin');
         }
     }
-    public function deleteAddress($id) {
-        if (Auth::check()) {
-            // Tìm địa chỉ của người dùng dựa trên ID
-            $userAddress = accommodationareaModel::find($id);
     
-            // Kiểm tra xem địa chỉ có tồn tại không
-            if ($userAddress) {
-                // Kiểm tra xem địa chỉ có đang được sử dụng bởi phòng không
-                $isAddressInUse = roomsModel::where('idAccommodationArea', $id)->exists();
-     
-                if ($isAddressInUse) {
-                    // Nếu địa chỉ đang được sử dụng, trả về thông báo lỗi
-                    return redirect()->route('addAddres')->with('errorDelete', true);
-                } else {
-                    // Xóa địa chỉ
-                    $userAddress->delete();
-                    // Chuyển hướng với thông báo thành công
-                    return redirect()->route('addAddres')->with('successDelete', true);
-                }
-            } else {
-                // Nếu địa chỉ không tồn tại, trả về thông báo lỗi
-                return redirect()->route('addAddres')->with('errorDelete', true);
-            }
-        } else {
-            // Người dùng chưa xác thực, chuyển hướng đến trang đăng nhập
-            return redirect()->route('pageLogin');
-        }
-    }    
     
 }

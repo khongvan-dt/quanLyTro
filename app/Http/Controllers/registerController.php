@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\serviceFeeSummaryModel;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -13,35 +15,53 @@ class registerController extends Controller
     {
         $validate = $request->validate([
             'username' => 'required|string|max:100',
-            'email' => 'required|string|email|max:255|unique:users', // Thêm quy tắc xác nhận email và unique
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
-
+    
         $username = strip_tags($request->input('username'));
         $email = strip_tags($request->input('email'));
         $password = strip_tags($request->input('password'));
-
+    
         $existingUsername = User::where('name', $username)->first();
-
+    
         if ($existingUsername) {
             return redirect()->route('pageRegister')->with('Error1', true);
         }
-
-        // Không cần kiểm tra $existingEmail nữa vì quy tắc 'unique' đã thực hiện kiểm tra đó
+    
         $role = 'user';
-
+    
         if (strlen($password) >= 8) {
             $user = new User();
             $user->name = $username;
             $user->password = bcrypt($password);
             $user->email = $email;
-            $user->role = 'admin'; // Bạn có thể muốn sửa thành $role nếu đang sử dụng biến này
+            $user->role = 'admin';
+    
+          
             $user->save();
+    
+            $id = $user->id; 
+    
+            $mang = ['Theo Đầu Người', 'Theo Tháng', 'Miễn phí tiền Dịch Vụ'];
+    
+            foreach ($mang as $value) {
+                $serviceFeeSummary = new serviceFeeSummaryModel();
+                $serviceFeeSummary->idUser = $id;
+                $serviceFeeSummary->name = $value;
+                $save = $serviceFeeSummary->save();
+    
+                if (!$save) {
+                    return redirect()->route('insertServiceFeeSummary')->with('error', true);
+                }
+            }
+    
             return redirect()->route('pageLogin')->with('success', true);
         } else {
             return redirect()->route('pageRegister')->with('Error3', true);
         }
     }
+    
 
     public function login(Request $request)
     {

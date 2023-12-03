@@ -48,7 +48,7 @@ class servicesController extends Controller
         $serviceModel->fine = $fine;
         $serviceModel->other_fees = $other_fees;
 
-        $sumServices = $electricityBill + $waterBill + $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
+        $sumServices =  $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
         $serviceModel->sumServices = $sumServices;
 
         if ($serviceModel->save()) {
@@ -106,54 +106,57 @@ class servicesController extends Controller
             return redirect()->route('pageLogin');
         }
     }
-    public function updateServices($id, Request $request) {
-        if (Auth::check()) {
-            $idUser = Auth::id();
-    
-            $request->validate([
-                "electricityBill" => "nullable|numeric",
-                "waterBill" => "nullable|numeric",
-                "wifiFee" => "nullable|numeric",
-                "cleaningFee" => "nullable|numeric",
-                "parkingFee" => "nullable|numeric",
-                "fine" => "nullable|numeric",
-                "other_fees" => "nullable|numeric",
-            ]);
-    
-            $electricityBill = $request->input("electricityBill") ?? 0;
-            $waterBill = $request->input("waterBill") ?? 0;
-            $wifiFee = $request->input("wifiFee") ?? 0;
-            $cleaningFee = $request->input("cleaningFee") ?? 0;
-            $parkingFee = $request->input("parkingFee") ?? 0;
-            $fine = $request->input("fine") ?? 0;
-            $other_fees = $request->input("other_fees") ?? 0;
-    
-            $serviceModel = serviceModel::find($id);
-            
-            if (!$serviceModel) {
-                return redirect()->route('addservices')->with('error', true);
-            }
-    
-            $serviceModel->idUser  = $idUser;
-            $serviceModel->electricityBill = $electricityBill;
-            $serviceModel->waterBill = $waterBill;
-            $serviceModel->wifiFee = $wifiFee;
-            $serviceModel->cleaningFee = $cleaningFee;
-            $serviceModel->parkingFee = $parkingFee;
-            $serviceModel->fine = $fine;
-            $serviceModel->other_fees = $other_fees;
-    
-            $sumServices = $electricityBill + $waterBill + $wifiFee + $cleaningFee + $parkingFee + $fine + $other_fees;
-            $serviceModel->sumServices = $sumServices;
-    
-            if ($serviceModel->save()) {
-                return redirect()->route('addservices')->with('successUpdelete', true);
-            } else {
-                return redirect()->route('editService', ['id' => $id])->with('error', true);
-            }
-        } else {
-            return redirect()->route('pageLogin');
+    public function updateServices($id, Request $request)
+{
+    if (Auth::check()) {
+        $idUser = Auth::id();
+
+        $request->validate([
+            "electricityBill" => "nullable|numeric",
+            "waterBill" => "nullable|numeric",
+            "wifiFee" => "nullable|numeric",
+            "cleaningFee" => "nullable|numeric",
+            "parkingFee" => "nullable|numeric",
+            "fine" => "nullable|numeric",
+            "other_fees" => "nullable|numeric",
+        ]);
+
+        $electricityBill = $request->input("electricityBill") ?? 0;
+        $waterBill = $request->input("waterBill") ?? 0;
+        $wifiFee = $request->input("wifiFee") ?? 0;
+        $cleaningFee = $request->input("cleaningFee") ?? 0;
+        $parkingFee = $request->input("parkingFee") ?? 0;
+        $fine = $request->input("fine") ?? 0;
+        $other_fees = $request->input("other_fees") ?? 0;
+
+        $serviceModel = serviceModel::find($id);
+
+        if (!$serviceModel) {
+            return redirect()->route('addservices')->with('error', true);
         }
+
+        $serviceModel->idUser  = $idUser;
+        $serviceModel->electricityBill = $electricityBill;
+        $serviceModel->waterBill = $waterBill;
+        $serviceModel->wifiFee = $wifiFee;
+        $serviceModel->cleaningFee = $cleaningFee;
+        $serviceModel->parkingFee = $parkingFee;
+        $serviceModel->fine = $fine;
+        $serviceModel->other_fees = $other_fees;
+
+        // Calculate and set sumServices
+        $sumServices = $wifiFee + $cleaningFee ;
+        $serviceModel->sumServices = $sumServices;
+
+        if ($serviceModel->save()) {
+            return redirect()->route('addservices')->with('successUpdelete', true);
+        } else {
+            return redirect()->route('editService', ['id' => $id])->with('error', true);
+        }
+    } else {
+        return redirect()->route('pageLogin');
     }
+}
+
     
 }

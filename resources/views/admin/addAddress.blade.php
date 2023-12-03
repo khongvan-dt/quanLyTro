@@ -48,7 +48,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <a class="nav-link" href="{{ route('addRoom') }}">
+                        <a class="nav-link" href="{{ route('addAddres') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                             Thêm Phòng
                         </a>
@@ -58,14 +58,9 @@
                             Thêm Thông Tin
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('addAddres') }}">
-                                    <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
-                                    Thêm Địa Chỉ
-                                </a>
                                 <a class="nav-link" href="{{ route('addservices') }}">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
                                     Thêm Tên Khoản Tiền Dịch Vụ
@@ -144,6 +139,22 @@
                                     <strong>Lỗi!</strong> Xóa Thông Tin Thất Bại!
                                 </div>
                             @endif
+                            @if (session('errorDelete1'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                        stroke-width="2" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="me-2">
+                                        <polygon
+                                            points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2">
+                                        </polygon>
+                                        <line x1="15" y1="9" x2="9" y2="15">
+                                        </line>
+                                        <line x1="9" y1="9" x2="15" y2="15">
+                                        </line>
+                                    </svg>
+                                    <strong>Lỗi!</strong>Thông tin đang được sử dụng, Xóa Thông Tin Thất Bại!
+                                </div>
+                            @endif
                             @if (session('successUpdelete'))
                                 <div class="alert alert-success alert-dismissible fade show">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
@@ -208,19 +219,13 @@
                                             name="roomName" id="roomName" placeholder=" Tên phòng" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <select class="form-select form-select-sm mb-3 district"
-                                            aria-label=".form-select-sm" name="serviceFeeSummary"
-                                            id="serviceFeeSummary">
-                                            <option value="" selected>Tính tiền dịch vụ</option>
-                                            <option value="Theo Đầu Người">Theo Đầu Người</option>
-                                            <option value="Theo Tháng">Theo Tháng</option>
-                                            <option value="Miễn phí tiền Dịch Vụ">Miễn phí tiền Dịch Vụ</option>
-                                        </select>
-
+                                        <input type="text" class="form-control thousands-separator"
+                                            name="priceRoom" id="priceRoom" placeholder="giá phòng" required>
                                     </div>
+
                                     <div class="col-md-3">
-                                        <select class="form-select form-select-sm mb-3 district"
-                                            aria-label=".form-select-sm" name="capacity" id="capacity">
+                                        <select class="form-select form-select-sm mb-3 " aria-label=".form-select-sm"
+                                            name="capacity">
                                             <option value="" selected>Số Người Có Thể Ở</option>
                                             <option value="1 người">1 người</option>
                                             <option value="2 người">2 người</option>
@@ -238,10 +243,24 @@
 
 
                                 </div>
-                                <div class="row g-4">
-                                    <div class="col-md-8">
-                                        <select class="form-select form-select-sm mb-3 district"
-                                            aria-label=".form-select-sm" name="idServices" id="idServices">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control thousands-separator"
+                                            name="interior" id="interior" placeholder="Nội thất" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select form-select-sm mb-3 " aria-label=".form-select-sm"
+                                            name="idserviceFeeSummary" id="idserviceFeeSummary">
+                                            <option value="" selected>Tính tiền Dịch vụ</option>
+                                            @foreach ($serviceFeeSummary as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <select class="form-select form-select-sm mb-3 " aria-label=".form-select-sm"
+                                            name="idServices" id="idServices">
                                             <option value="" selected>Chi Tiết Tiền Dịch Vụ</option>
                                             @foreach ($Services as $item)
                                                 <option value="{{ $item->id }}">
@@ -257,6 +276,7 @@
 
                                         </select>
                                     </div>
+
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">Lưu</button>
@@ -275,33 +295,61 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Thành Phố</th>
-                                        <th>Quận/Huyện</th>
-                                        <th>Phường/Xã</th>
-                                        <th>Đường</th>
+                                        <th>Địa Chỉ</th>
+                                        <th>Tên phòng</th>
+                                        <th>Giá Phòng</th>
+                                        <th>Tầng</th>
+                                        <th>Số người</th>
+                                        <th>Đồ Có Sẵn</th>
+                                        <th>Tiền dịch vụ</th>
+                                        <th>Chi tiết</th>
+                                        <th>Tổng tiền dịch</th>
+                                        <th>Tình Trạng</th>
                                         <th>Chức Năng</th>
                                     </tr>
                                 </thead>
+
+
                                 <tbody id="tableBody">
                                     <?php $i = 1; ?>
-                                    @foreach ($combinedData as $item)
-                                        <tr>
-                                            <td> <?php echo $i++; ?></td>
-                                            <td>{{ $item['city'] }}</td>
-                                            <td>{{ $item['district'] }}</td>
-                                            <td>{{ $item['wardCommune'] }}</td>
-                                            <td>{{ $item['streetAddress'] }}</td>
+                                    @foreach ($rooms as $item)
+                                        <tr class="hidden-row">
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>
-                                                <a href="/editAddress/{{ $item['id'] }}"
-                                                    class="btn btn-primary">Sửa</a>
+                                                {{ $item->streetAddress }}
+                                            </td>
+                                            <td>{{ $item->roomName }}</td>
+                                            <td>{{ number_format($item->priceRoom, 3) }}</td>
+                                            <td>{{ $item->idNumberFloors }}</td>
 
-                                                <a href="/deleteAddress/{{ $item['id'] }}"
+                                            <td>{{ $item->capacity }}</td>
+                                            <td>{{ $item->interior }}</td>
+                                            <td>{{ $item->service_fee_summary_name }}</td>
+                                            <td>
+                                                Tiền điện: {{ number_format($item->electricityBill, 3) }}-
+                                                Tiền Nước: {{ number_format($item->waterBill, 3) }}-
+                                                Tiền wifi: {{ number_format($item->wifiFee, 3) }}-
+                                                Dọn Dẹp: {{ number_format($item->cleaningFee, 3) }}-
+                                                Tiền Để Xe: {{ number_format($item->parkingFee, 3) }}-
+                                                Tiền Phạt: {{ number_format($item->fine, 3) }}-
+                                                Tiền Khác: {{ number_format($item->other_fees, 3) }}
+                                            </td>
+                                            <td>{{ number_format($item->sumServices, 3) }}</td>
+                                            <td>{{ $item->idRoomTenant ? 'Đã Có Người' : 'Chưa Có Người' }}</td>
+                                            <td>
+                                                <a class="btn btn-primary" href="/edit/{{ $item->id}}">Sửa</a>
+                                                <a href="{{ route('DeleteId', ['id' => $item->id]) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                                                    class=" btn btn-primary main__table-btn main__table-btn--banned open-modal">Xóa</a>
+                                                    class="btn btn-primary main__table-btn main__table-btn--banned open-modal">
+                                                    Xóa
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
+
                                 </tbody>
+
+
                             </table>
 
 

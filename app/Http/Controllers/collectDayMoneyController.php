@@ -73,11 +73,17 @@ class collectDayMoneyController extends Controller
             ->leftJoin('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
             ->leftJoin('tenant', 'contract.idRoomContract', '=', 'tenant.idRoomTenant')
             ->leftJoin('collectmoney', 'contract.idRoomContract', '=', 'collectmoney.idRoomCollectMoney')
-            ->select('room.*', 'tenant.*', 'accommodationArea.*', 'contract.*', 'collectmoney.id as collectmoney_id', 'collectmoney.time as collectmoney_time')
+            ->select('room.*','tenant.*', 'accommodationArea.*', 'contract.*', 'collectmoney.id as collectmoney_id', 'collectmoney.time as collectmoney_time')
             ->where('contract.idUser', $id)
             ->get();
-            
-            return view('admin.addCollectmoney', ['listCollectDay' => $listCollectDay],['listCollectDay2'=>$listCollectDay2]);
+
+            $totalPriceRoom = DB::table('room')
+            ->join('collectmoney', 'collectmoney.idRoomCollectMoney', '=', 'room.id')
+            ->selectRaw('SUM(room.priceRoom) as total_price')
+            ->where('room.user_id', $id)
+            ->value('total_price');
+
+            return view('admin.addCollectmoney', ['listCollectDay' => $listCollectDay],['listCollectDay2'=>$listCollectDay2],['totalPriceRoom'=>$totalPriceRoom]);
         } else {
             return redirect()->route('pageLogin');
         }

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign("idUser")->references("id")->on("users");
             $table->foreign("idRoomContract")->references("idRoomTenant")->on("tenant");
         });
-    }
+    } 
     //bảng hợp đồng
     
     public function down(): void

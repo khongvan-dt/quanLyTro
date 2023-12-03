@@ -264,8 +264,6 @@ class tenantController extends Controller
         $rooms = DB::table('room')
         ->join('users', 'room.user_id', '=', 'users.id')
         ->join('accommodationArea', 'room.idAccommodationArea', '=', 'accommodationArea.id')
-        ->join('totalFloors', 'room.idTotalFloors', '=', 'totalFloors.id')
-        ->join('numberFloors', 'room.idNumberFloors', '=', 'numberFloors.id')
         ->join('servicefeesummary', 'room.idserviceFeeSummary', '=', 'servicefeesummary.id')
         ->join('services', 'room.idServices', '=', 'services.id')
         ->leftJoin('tenant', 'room.id', '=', 'tenant.idRoomTenant') 
